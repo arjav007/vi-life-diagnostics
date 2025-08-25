@@ -122,7 +122,7 @@ const Homepage = () => {
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="border-2 border-white text-white hover:bg-white hover:text-teal-800 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300"
+                  className="border-2 border-white text-white hover:bg-emerald-600 hover:text-teal-800 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300"
                 >
                   View Packages
                 </Button>
@@ -359,84 +359,209 @@ const Homepage = () => {
   </div>
 </section>
 
-      {/* Multiple Clinics Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <div className="bg-white rounded-2xl p-2 shadow-lg">
-                <div className="bg-gray-100 rounded-xl h-96 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPinIcon className="w-16 h-16 text-teal-600 mx-auto mb-4" />
-                    <p className="text-gray-600">Interactive Map</p>
-                    <p className="text-sm text-gray-500">4 Locations Across Mumbai</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                Multiple Clinics, One Promise of Care
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                With locations across Mumbai, we bring quality healthcare closer to you.
-              </p>
-              
-              <div className="space-y-4 mb-8">
-                {locations.map((location, index) => (
-                  <div key={index} className="flex items-start space-x-3 p-4 bg-white rounded-lg shadow-sm">
-                    <MapPinIcon className="w-5 h-5 text-teal-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-semibold text-gray-800">{location.name}</h4>
-                      <p className="text-sm text-gray-600">{location.address}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+       {/* Clinical Trials Section */}
+<section className="py-20 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold text-teal-700 mb-4">
+        Centralized Pathology Laboratory for Multicentric Clinical Trials
+      </h2>
+      <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        Reliable end-to-end sample solutions tailored for clinical trials
+      </p>
+    </div>
 
-              <Link href="/locations">
-                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors duration-300">
-                  Find Nearest Location
-                </Button>
-              </Link>
+    {/* Features Grid */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      {[
+        {
+          icon: (
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7V10C2 16 6 20.9 12 22C18 20.9 22 16 22 10V7L12 2ZM11 16H13V18H11V16ZM11 10H13V14H11V10Z"/>
+            </svg>
+          ),
+          title: "State of the Art Technology",
+          bgColor: "bg-blue-100"
+        },
+        {
+          icon: (
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.9 1 3 1.9 3 3V21C3 22.1 3.9 23 5 23H19C20.1 23 21 22.1 21 21V9ZM19 21H5V3H13V9H19V21ZM12 13C13.1 13 14 13.9 14 15S13.1 17 12 17 10 16.1 10 15 10.9 13 12 13M8 18H16V19H8V18Z"/>
+            </svg>
+          ),
+          title: "Specialized Testing Expertise",
+          bgColor: "bg-blue-100"
+        },
+        {
+          icon: (
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 12L11 14L15 10M21 12C21 16.97 17.97 21 12 21C7.03 21 2 16.97 2 12C2 7.03 7.03 2 12 2C16.97 2 21 7.03 21 12Z"/>
+            </svg>
+          ),
+          title: "Uncompromised Sample Integrity",
+          bgColor: "bg-blue-100"
+        },
+        {
+          icon: (
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/>
+            </svg>
+          ),
+          title: "Nationwide Coverage",
+          bgColor: "bg-blue-100"
+        }
+      ].map((feature, index) => (
+        <div key={index} className="text-center">
+          <div className={`${feature.bgColor} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}>
+            <div className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center">
+              {feature.icon}
             </div>
           </div>
+          <h3 className="text-lg font-semibold text-teal-700 leading-tight">
+            {feature.title}
+          </h3>
         </div>
-      </section>
+      ))}
+    </div>
+
+    {/* CTA Button */}
+    <div className="text-center">
+      <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
+        Connect for Clinical Trial Support
+      </button>
+    </div>
+  </div>
+</section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Why Customers Love Vi-Life Diagnostics?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Don't just take our word for it. Here's what our customers have to say about their experience with us.
-            </p>
-          </div>
+<section className="py-20 bg-blue-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold text-teal-700 mb-4">
+        Why Customers Love ViLife Diagnostics?
+      </h2>
+      <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+        Here are some reviews of what our customers are saying about us and that's what makes us work hard each and every day.
+      </p>
+    </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-8 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div className="flex justify-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-gray-600 italic mb-6 leading-relaxed">"{testimonial.text}"</p>
-                <div>
-                  <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-500">{testimonial.location}</p>
-                </div>
-              </Card>
-            ))}
+    <div className="grid md:grid-cols-3 gap-8">
+      {[
+        {
+          name: "Pooja Katkar",
+          text: "I would highly recommend this ViLife diagnostics to others. Their patients service is excellent and results are Fast Very polite staff. Quick Response. and they keep their...",
+          avatar: "👩‍💼"
+        },
+        {
+          name: "Vishal Tekale", 
+          text: "New diagnostic lab with high-tech equipment and experienced and supportive staff leads to most accurate reporting in health care. Best wishes to ViLife Diagnostics.",
+          avatar: "👨‍💼"
+        },
+        {
+          name: "Suman Maurya",
+          text: "Had a very good Experience here. The new process of sample collection was very smooth and the staff was coordinating in a good manners",
+          avatar: "👩‍🦰"
+        }
+      ].map((testimonial, index) => (
+        <div key={index} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <p className="text-gray-700 mb-6 leading-relaxed text-sm">
+            {testimonial.text}
+          </p>
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl">
+              {testimonial.avatar}
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
+              <div className="flex space-x-1 mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* Multiple Clinics Section */}
+<section className="py-20 bg-white">
+  <div className="container mx-auto px-4">
+    <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <img 
+            src="/images/GmapsLocation.png" 
+            alt="ViLife Diagnostics locations on Google Maps"
+            className="w-full h-96 object-cover"
+          />
+        </div>
+      </div>
+      
+      <div>
+        <h2 className="text-4xl font-bold text-teal-700 mb-6">
+          Multiple Clinics, One Promise of Care
+        </h2>
+        <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+          Our clinics are strategically located near airports and major transport hubs, ensuring quick and easy access. Each center is equipped with world-class diagnostic facilities to deliver the highest standards of healthcare.
+        </p>
+        
+        {/* Location List */}
+        <div className="space-y-3 mb-8">
+          {[
+            {
+              name: "Thane",
+              address: "Thane Location",
+              googleMapsUrl: "https://maps.google.com/?q=Thane+ViLife+Diagnostics"
+            },
+            {
+              name: "Bhiwandi", 
+              address: "Bhiwandi Location",
+              googleMapsUrl: "https://maps.google.com/?q=Bhiwandi+ViLife+Diagnostics"
+            },
+            {
+              name: "Vashi",
+              address: "Vashi Location", 
+              googleMapsUrl: "https://maps.google.com/?q=Vashi+ViLife+Diagnostics"
+            },
+            {
+              name: "Dombivli",
+              address: "Dombivli Location",
+              googleMapsUrl: "https://maps.google.com/?q=Dombivli+ViLife+Diagnostics"
+            }
+          ].map((location, index) => (
+            <div 
+              key={index} 
+              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+              onClick={() => window.open(location.googleMapsUrl, '_blank')}
+            >
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                  {index + 1}
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800">{location.name}</h4>
+                  <p className="text-sm text-gray-600">{location.address}</p>
+                </div>
+              </div>
+              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          ))}
+        </div>
+        
+        <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
+          View All Locations
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* FAQ Section */}
       <section className="py-20 bg-gray-50">
@@ -480,20 +605,38 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-teal-600 to-emerald-600">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
-            Book Your Home Collection
-          </h2>
-          <p className="text-xl text-teal-100 mb-8 max-w-2xl mx-auto">
-            Get exclusive packages on your first healthcare test with convenient home sample collection.
-          </p>
-          <Button className="bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl transition-colors duration-300">
-            Book a Home Visit
-          </Button>
-        </div>
-      </section>
+      {/* Home Collection CTA Section */}
+<section className="relative py-16 overflow-hidden">
+  {/* Background Image Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/70"></div>
+  
+  {/* Background Image */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style={{
+      backgroundImage: `url('/images/BookHomeCollection.jpg')` // This is a placeholder - replace with your actual image path
+    }}
+  ></div>
+
+  <div className="relative container mx-auto px-4">
+    <div className="flex items-center justify-between">
+      <div className="text-white">
+        <h2 className="text-4xl font-bold mb-4">
+          Book Your Home Collection
+        </h2>
+        <p className="text-xl text-gray-200">
+          Get exclusive packages on your first healthcare test.
+        </p>
+      </div>
+      
+      <div className="flex-shrink-0">
+        <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+          Book a Home Visit
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
     </>
   );
 };

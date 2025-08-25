@@ -1,49 +1,131 @@
+import React from 'react';
+import { Phone, MapPin, Mail, Clock } from 'lucide-react';
+
 const Footer = () => {
   return (
-    <footer className="bg-slate-800 text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Vi-Life Diagnostics</h3>
-            <p className="text-gray-300 text-sm">
-              Your Health, Our Priority. Delivering accurate, reliable pathology testing services.
+    <footer className="bg-[#244d59] text-white py-12">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Company Info Section */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3 mb-6">
+              <img 
+                src="/images/logo.png" 
+                alt="ViLife Diagnostics" 
+                className="h-12 w-auto"
+              />
+            </div>
+            <h3 className="text-xl font-semibold mb-4">ViLife Diagnostics</h3>
+            <p className="text-white leading-relaxed">
+              ViLife Diagnostics delivers accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. With expert professionals and trusted accreditations, we're committed to your well-being at every step.
             </p>
           </div>
-          
-          <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="/" className="text-gray-300 hover:text-white">Home</a></li>
-              <li><a href="/packages" className="text-gray-300 hover:text-white">Health Packages</a></li>
-              <li><a href="/locations" className="text-gray-300 hover:text-white">Our Locations</a></li>
-              <li><a href="/about" className="text-gray-300 hover:text-white">About Us</a></li>
+
+          {/* Quick Links Section */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold mb-4">Quick Link</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="#home" className="text-teal-200 hover:text-white transition-colors">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#about" className="text-teal-200 hover:text-white transition-colors">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#packages" className="text-teal-200 hover:text-white transition-colors">
+                  Health Packages
+                </a>
+              </li>
+              <li>
+                <a href="#prescription" className="text-teal-200 hover:text-white transition-colors">
+                  Upload Prescription
+                </a>
+              </li>
+              <li>
+                <a href="#reports" className="text-teal-200 hover:text-white transition-colors">
+                  Download Reports
+                </a>
+              </li>
+              <li>
+                <a href="#blogs" className="text-teal-200 hover:text-white transition-colors">
+                  Blogs
+                </a>
+              </li>
             </ul>
           </div>
-          
-          <div>
-            <h4 className="font-semibold mb-4">Services</h4>
-            <ul className="space-y-2 text-sm">
-              <li className="text-gray-300">Home Sample Collection</li>
-              <li className="text-gray-300">Digital Reports</li>
-              <li className="text-gray-300">Health Checkups</li>
-              <li className="text-gray-300">Pathology Tests</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold mb-4">Contact Info</h4>
-            <div className="space-y-2 text-sm">
-              <p className="text-gray-300">📞 +91 982-882-6646</p>
-              <p className="text-gray-300">📧 info@vlifediagnostics.com</p>
-              <p className="text-gray-300">🕒 6:30 AM - 7:30 PM</p>
+
+          {/* Contact Us Section */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-lime-400 flex-shrink-0" />
+                <span className="text-teal-200">+91 882-882-6646</span>
+              </div>
+              
+              <div className="flex items-start space-x-3">
+                <MapPin className="h-5 w-5 text-lime-400 flex-shrink-0 mt-1" />
+                <div className="text-teal-200">
+                  <p>Casting Company, Unit 1A & B, 1st Floor, Shreeji Arcade,</p>
+                  <p>opp. Nitin - Cadbury Flyover, Panch Pakhdi, Thane,</p>
+                  <p>Maharashtra 400602</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <Mail className="h-5 w-5 text-lime-400 flex-shrink-0" />
+                <a href="mailto:info@viliifediagnostics.com" className="text-teal-200 hover:text-white transition-colors">
+                  info@viliifediagnostics.com
+                </a>
+              </div>
+              
+              <div className="flex items-start space-x-3">
+                <Clock className="h-5 w-5 text-lime-400 flex-shrink-0 mt-1" />
+                <div className="text-teal-200">
+                  <p>Call Center: 24x7</p>
+                  <p>Collection Centers: 6:30 AM - 7:30 PM</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        
-        <hr className="border-gray-700 my-8" />
-        
-        <div className="text-center text-sm text-gray-400">
-          © 2025 Vi-Life Diagnostics. All Rights Reserved.
+
+        {/* Bottom Section */}
+        <div className="border-t border-teal-600 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-teal-200 text-sm">
+              © 2025 ViLife Diagnostics. All Rights Reserved.
+            </p>
+            
+            {/* Social Media Icons */}
+            <div className="flex space-x-3 mt-4 md:mt-0">
+              <a 
+                href="#" 
+                className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
+                aria-label="Phone"
+              >
+                <Phone className="h-5 w-5 text-white" />
+              </a>
+              <a 
+                href="#" 
+                className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
+                aria-label="Location"
+              >
+                <MapPin className="h-5 w-5 text-white" />
+              </a>
+              <a 
+                href="#" 
+                className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
+                aria-label="Email"
+              >
+                <Mail className="h-5 w-5 text-white" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
