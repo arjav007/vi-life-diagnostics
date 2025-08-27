@@ -18,6 +18,9 @@ module.exports = {
         },
         'custom-green': '#244d59', // Move the custom color here
         'custom-greeen': '#1e535e',
+        'search-color': '#eeeeee',
+        'category-color': '#ddf3fc',
+        'book-color': '#7ac144'
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

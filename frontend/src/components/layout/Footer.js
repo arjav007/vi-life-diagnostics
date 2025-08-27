@@ -15,43 +15,43 @@ const Footer = () => {
                 className="h-12 w-auto"
               />
             </div>
-            <h3 className="text-xl font-semibold mb-4">ViLife Diagnostics</h3>
-            <p className="text-white leading-relaxed">
+            <h3 className="text-xl font-semibold mb-4">Your Health Our Priority</h3>
+            <p className="text-gray-300 leading-relaxed">
               ViLife Diagnostics delivers accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. With expert professionals and trusted accreditations, we're committed to your well-being at every step.
             </p>
           </div>
 
           {/* Quick Links Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 ">
             <h3 className="text-xl font-semibold mb-4">Quick Link</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#home" className="text-teal-200 hover:text-white transition-colors">
+                <a href="#home" className="text-gray-300 hover:text-white transition-colors">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-teal-200 hover:text-white transition-colors">
+                <a href="#about" className="text-gray-300 hover:text-white transition-colors">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#packages" className="text-teal-200 hover:text-white transition-colors">
+                <a href="#packages" className="text-gray-300 hover:text-white transition-colors">
                   Health Packages
                 </a>
               </li>
               <li>
-                <a href="#prescription" className="text-teal-200 hover:text-white transition-colors">
+                <a href="#prescription" className="text-gray-300 hover:text-white transition-colors">
                   Upload Prescription
                 </a>
               </li>
               <li>
-                <a href="#reports" className="text-teal-200 hover:text-white transition-colors">
+                <a href="#reports" className="text-gray-300 hover:text-white transition-colors">
                   Download Reports
                 </a>
               </li>
               <li>
-                <a href="#blogs" className="text-teal-200 hover:text-white transition-colors">
+                <a href="#blogs" className="text-gray-300 hover:text-white transition-colors">
                   Blogs
                 </a>
               </li>
@@ -64,12 +64,12 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-lime-400 flex-shrink-0" />
-                <span className="text-teal-200">+91 882-882-6646</span>
+                <span className="text-gray-300">+91 882-882-6646</span>
               </div>
               
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-lime-400 flex-shrink-0 mt-1" />
-                <div className="text-teal-200">
+                <div className="text-gray-300">
                   <p>Casting Company, Unit 1A & B, 1st Floor, Shreeji Arcade,</p>
                   <p>opp. Nitin - Cadbury Flyover, Panch Pakhdi, Thane,</p>
                   <p>Maharashtra 400602</p>
@@ -78,14 +78,14 @@ const Footer = () => {
               
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-lime-400 flex-shrink-0" />
-                <a href="mailto:info@viliifediagnostics.com" className="text-teal-200 hover:text-white transition-colors">
+                <a href="mailto:info@viliifediagnostics.com" className="text-gray-300 hover:text-white transition-colors">
                   info@viliifediagnostics.com
                 </a>
               </div>
               
               <div className="flex items-start space-x-3">
                 <Clock className="h-5 w-5 text-lime-400 flex-shrink-0 mt-1" />
-                <div className="text-teal-200">
+                <div className="text-gray-300">
                   <p>Call Center: 24x7</p>
                   <p>Collection Centers: 6:30 AM - 7:30 PM</p>
                 </div>
@@ -97,7 +97,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-teal-600 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-teal-200 text-sm">
+            <p className="text-gray-300 text-sm">
               © 2025 ViLife Diagnostics. All Rights Reserved.
             </p>
             

@@ -29,9 +29,9 @@ const Header = () => {
   const quickActions = [
     { name: 'Call', href: 'tel:+919828826646', icon: PhoneIcon },
     { name: 'Mail', href: 'mailto:info@vlifediagnostics.com', icon: null },
-    { name: 'Whatsapp', href: 'https://wa.me/919828826646', icon: null },
-    { name: 'Upload Prescription', href: '/upload-prescription', icon: null },
-    { name: 'Download Reports', href: '/dashboard/reports', icon: null },
+    { name: 'Whatsapp', href: 'https://wa.me/918828826646', icon: null },
+    { name: 'Upload Prescription', href: 'https://wa.me/918828826646?text=Hello%2CViLife%20Diagnostics.Here%20is%20my%20doctor%27s%20prescription.', icon: null },
+    { name: 'Download Reports', href: 'https://wa.me/918828826646?text=Hello%2C%20ViLife%20Diagnostics.Kindly%20share%20me%20my%20reports.', icon: null },
     { name: 'Blogs', href: '/blogs', icon: null },
   ];
 
@@ -115,64 +115,14 @@ const Header = () => {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
-              {/* User Menu */}
-              {user ? (
-                <div className="relative group">
-                  <button className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 transition-colors duration-200">
-                    <UserCircleIcon className="w-6 h-6" />
-                    <span className="hidden md:block font-medium">{user.name}</span>
-                  </button>
-                  
-                  {/* Dropdown Menu */}
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
-                    <div className="py-2">
-                      <Link
-                        href="/dashboard"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition-colors duration-200"
-                      >
-                        Dashboard
-                      </Link>
-                      <Link
-                        href="/dashboard/reports"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition-colors duration-200"
-                      >
-                        My Reports
-                      </Link>
-                      <Link
-                        href="/dashboard/bookings"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition-colors duration-200"
-                      >
-                        My Bookings
-                      </Link>
-                      <Link
-                        href="/dashboard/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition-colors duration-200"
-                      >
-                        Profile
-                      </Link>
-                      <hr className="my-2" />
-                      <button
-                        onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition-colors duration-200"
-                      >
-                        Sign Out
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <Link
-                  href="/auth/login"
-                  className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 transition-colors duration-200"
-                >
-                  <UserCircleIcon className="w-6 h-6" />
-                  <span className="hidden md:block font-medium">Sign In</span>
-                </Link>
-              )}
+              {/* No user menu as per screenshot */}
 
               {/* CTA Button */}
-              <Link href="/book-home-visit">
-                <button className="bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 hidden md:block">
+              <Link
+                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+                passHref
+              >
+                <button className="bg-[#7ac144] text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg  transition-all duration-300 hidden md:block">
                   Book a Home Visit
                 </button>
               </Link>
@@ -231,8 +181,11 @@ const Header = () => {
               <hr className="my-4" />
               
               {/* CTA Button Mobile */}
-              <Link href="/book-home-visit" onClick={() => setIsMenuOpen(false)}>
-                <button className="w-full bg-gradient-to-r from-teal-500 to-emerald-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+              <Link
+                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+                passHref
+              >
+                <button className="w-full bg-[#8fc048] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
                   Book a Home Visit
                 </button>
               </Link>

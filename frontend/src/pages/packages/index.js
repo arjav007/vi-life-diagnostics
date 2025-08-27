@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 export default function PackagesPage() {
   const [packages, setPackages] = useState([]);
@@ -11,11 +12,8 @@ export default function PackagesPage() {
     popular: '',
   });
 
-  // This effect simulates fetching data and can be replaced with your actual API call.
-  // It also adds new properties (gender, category, etc.) to the dummy data for filtering.
   useEffect(() => {
     // This is where you would fetch your data.
-    // For now, a dummy array is used to simulate the package list.
     const dummyPackages = [
       { id: 1, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
       { id: 2, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
@@ -37,23 +35,17 @@ export default function PackagesPage() {
     setPackages(dummyPackages);
   }, []);
 
-  // Filter packages based on state
   const filteredPackages = packages.filter((pkg) => {
     const matchesSearch = pkg.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filters.category ? pkg.category === filters.category : true;
     const matchesGender = filters.gender ? pkg.gender === filters.gender : true;
-    // Add more filter logic here as needed for age and popular
     return matchesSearch && matchesCategory && matchesGender;
   });
 
-  // Helper functions to manage filter tags
   const getActiveFilterTags = () => {
     const tags = [];
-    if (searchTerm) tags.push(searchTerm);
-    if (filters.category) tags.push(filters.category);
     if (filters.gender) tags.push(filters.gender);
-    if (filters.age) tags.push(filters.age);
-    if (filters.popular) tags.push(filters.popular);
+    if (filters.category) tags.push(filters.category);
     return tags;
   };
 
@@ -63,14 +55,13 @@ export default function PackagesPage() {
   };
 
   const removeFilter = (tagToRemove) => {
-    if (tagToRemove === searchTerm) setSearchTerm('');
-    else if (tagToRemove === filters.category) setFilters({ ...filters, category: '' });
-    else if (tagToRemove === filters.gender) setFilters({ ...filters, gender: '' });
-    else if (tagToRemove === filters.age) setFilters({ ...filters, age: '' });
-    else if (tagToRemove === filters.popular) setFilters({ ...filters, popular: '' });
+    if (tagToRemove === filters.gender) setFilters({ ...filters, gender: '' });
+    if (tagToRemove === filters.category) setFilters({ ...filters, category: '' });
   };
 
   return (
+    <>
+    
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section with Background Image */}
       <div 
@@ -87,63 +78,86 @@ export default function PackagesPage() {
       </div>
       
       {/* Main Content Section */}
-      <div className="container mx-auto -mt-12 py-8 px-6 sm:px-12">
-        {/* Search and Filters */}
-        <div className="bg-white p-6 rounded-lg shadow-md flex flex-wrap items-center space-y-4 md:space-y-0 md:space-x-4">
-          {/* UPDATED SEARCH BAR */}
-          <div className="flex-grow relative">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+      <div className="container mx-auto -mt-1 py-8 px-6 sm:px-12">
+        
+        {/* Search Bar */}
+        <div className="bg-[#eeeeee] rounded-full -md w-[459px] h-[36px] p-0 flex items-center mb-4">
+          <div className="relative w-full">
             <input
               type="text"
               placeholder="Search by package name, health condition, or parameter..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border-gray-300 rounded-full shadow-sm focus:border-green-500 focus:ring-green-500 text-gray-900 placeholder-gray-500 pl-10 pr-4 py-2 transition-all duration-300"
+              className="w-full bg-transparent border-none focus:outline-none focus:ring-0 text-gray-900 placeholder-gray-500 pl-5 pr-12 py-2"
             />
+            <MagnifyingGlassIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          </div>
+        </div>
+
+        {/* Filter Buttons Container */}
+        <div className="flex flex-wrap items-center space-x-2 md:space-x-4 mb-4" style={{ width: '440px', height: '31px' }}>
+          {/* Category Dropdown */}
+          <div className="relative w-[109px] h-[31px]">
+            <select 
+              className="w-full px-4 py-2 bg-[#ddf3fc] text-gray-700 rounded-[23px] appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm"
+              value={filters.category}
+              onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+            >
+              <option value="">Category</option>
+              <option value="General">General</option>
+              <option value="Diabetes">Diabetes</option>
+            </select>
+            <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           </div>
 
-          <select 
-            className="border-gray-300 rounded-md text-gray-900"
-            value={filters.category}
-            onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          >
-            <option value="">Category</option>
-            <option value="General">General</option>
-            <option value="Diabetes">Diabetes</option>
-          </select>
-          <select 
-            className="border-gray-300 rounded-md text-gray-900"
-            value={filters.age}
-            onChange={(e) => setFilters({ ...filters, age: e.target.value })}
-          >
-            <option value="">Age</option>
-            {/* Add age options */}
-          </select>
-          <select 
-            className="border-gray-300 rounded-md text-gray-900"
-            value={filters.gender}
-            onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
-          >
-            <option value="">Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Both">Both</option>
-          </select>
-          <select 
-            className="border-gray-300 rounded-md text-gray-900"
-            value={filters.popular}
-            onChange={(e) => setFilters({ ...filters, popular: e.target.value })}
-          >
-            <option value="">Popular Packages</option>
-            {/* Add popular options */}
-          </select>
+          {/* Age Dropdown */}
+          <div className="relative w-[79px] h-[31px]">
+            <select 
+              className="w-full px-4 py-2 bg-[#ddf3fc] text-gray-700 rounded-[30px] appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm"
+              value={filters.age}
+              onChange={(e) => setFilters({ ...filters, age: e.target.value })}
+            >
+              <option value="">Age</option>
+              <option value="20-30">20-30</option>
+              <option value="30-40">30-40</option>
+            </select>
+            <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
+          
+          {/* Gender Dropdown */}
+          <div className="relative w-[102px] h-[31px]">
+            <select 
+              className="w-full px-4 py-2 bg-[#ddf3fc] text-gray-700 rounded-[23px] appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm"
+              value={filters.gender}
+              onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
+            >
+              <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Both">Both</option>
+            </select>
+            <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
+          
+          {/* Popular Packages Dropdown */}
+          <div className="relative w-[102px] h-[31px]">
+            <select 
+              className="w-full px-4 py-2 bg-[#ddf3fc] text-gray-700 rounded-[23px] appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm"
+              value={filters.popular}
+              onChange={(e) => setFilters({ ...filters, popular: e.target.value })}
+            >
+              <option value="">Popular Packages</option>
+              <option value="Most Booked">Most Booked</option>
+            </select>
+            <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
         </div>
         
-        {/* Active Filter Tags */}
-        <div className="flex items-center space-x-2 mt-4">
+        {/* Active Filter Tags Container */}
+        <div className="flex flex-wrap items-center space-x-2 mt-4" style={{ width: '241px', height: '31px' }}>
           {getActiveFilterTags().map((tag) => (
-            <span key={tag} className="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
-              {tag} <button onClick={() => removeFilter(tag)} className="text-green-500 hover:text-green-700 ml-1">x</button>
+            <span key={tag} className="bg-[#1e535e] text-white text-sm font-medium px-2.5 py-0.5 rounded-full">
+              {tag} <button onClick={() => removeFilter(tag)} className="text-white hover:text-gray-200 ml-1">x</button>
             </span>
           ))}
           {getActiveFilterTags().length > 0 && (
@@ -162,17 +176,57 @@ export default function PackagesPage() {
             <div key={pkg.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
               <h3 className="text-lg font-semibold mb-2 text-[#1e535e]">{pkg.name}</h3>
               <p className="text-gray-600 mb-2">
-                <span className="text-xl font-bold text-green-600">₹{pkg.price}</span>{" "}
+                <span className="text-xl font-bold ">₹{pkg.price}</span>{" "}
                 <span className="line-through">₹{pkg.oldPrice}</span>
               </p>
               <p className="text-gray-500 text-sm mb-4">{pkg.parameters} Parameters</p>
-              <button className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300">
-                Book Now
-              </button>
+              <Link 
+                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+                passHref
+              >
+                <button className="w-full bg-[#7ac144] text-white py-2 rounded-md hover:bg-green-700 transition duration-300">
+                  Book Now
+                </button>
+              </Link>
             </div>
           ))}
         </div>
       </div>
     </div>
+    {/* Home Collection CTA Section */}
+<section className="relative py-16 overflow-hidden">
+  {/* Background Image */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style={{
+      backgroundImage: `url('/images/BookHomeCollection.jpg')`
+    }}
+  >
+    {/* Background Image Overlay */}
+    <div className="absolute inset-0 bg-black/80"></div>
+  </div>
+
+  <div className="relative container mx-auto px-4">
+    <div className="flex items-center justify-between">
+      <div className="text-white">
+        <h2 className="text-4xl font-bold mb-4">
+          Book Your Home Collection
+        </h2>
+        <p className="text-xl text-gray-200">
+          Get exclusive packages on your first healthcare test.
+        </p>
+      </div>
+      
+      <div className="flex-shrink-0">
+        <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+          <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+            Book a Home Visit
+          </button>
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
+    </>
   );
 }

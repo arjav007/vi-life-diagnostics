@@ -87,16 +87,14 @@ const Homepage = () => {
       </Head>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-emerald-900 via-teal-800 to-cyan-900 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-32 h-32 border-2 border-white/20 rounded-full"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 border-2 border-white/15 rounded-full"></div>
-          <div className="absolute bottom-40 left-1/4 w-40 h-40 border-2 border-white/10 rounded-full"></div>
+      <section className="relative min-h-screen bg-gray-900 overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('/images/HomePhoto.jpg')` }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
-
-        {/* Medical Equipment Overlay */}
-        <div className="absolute inset-0 bg-black/20"></div>
         
         <div className="relative container mx-auto px-4 py-20 lg:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -107,52 +105,19 @@ const Homepage = () => {
                   <span className="text-emerald-300"> Our Priority</span>
                 </h1>
                 <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed">
-                  Vi-Life Diagnostics delivers accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health.
+                  ViLife Diagnostics provides accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. Whatsapp us for home collection.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  variant="primary" 
-                  size="lg"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  Book a Home Visit
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="border-2 border-white text-white hover:bg-emerald-600 hover:text-teal-800 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300"
-                >
-                  View Packages
-                </Button>
-              </div>
-
-              {/* Contact Info */}
-              <div className="flex flex-wrap gap-6 text-sm text-gray-300">
-                <div className="flex items-center gap-2">
-                  <PhoneIcon className="w-5 h-5 text-emerald-300" />
-                  <span>+91 882-882-6646</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ClockIcon className="w-5 h-5 text-emerald-300" />
-                  <span>6:30 AM - 7:30 PM</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Features Grid */}
-            <div className="grid grid-cols-2 gap-4 lg:gap-6">
-              {heroFeatures.map((feature, index) => (
-                <Card 
-                  key={index}
-                  className="bg-white/10 backdrop-blur-lg border-white/20 p-6 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105"
-                >
-                  <div className="text-3xl mb-3">{feature.icon}</div>
-                  <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-                  <p className="text-gray-200 text-sm leading-relaxed">{feature.description}</p>
-                </Card>
-              ))}
+              {/* Book a Test Now Button */}
+              <Link
+                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20test."
+                passHref
+              >
+                <button className="bg-[#7ac144] hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105">
+                  Book a Test Now
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -162,11 +127,11 @@ const Homepage = () => {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
               Why Choose ViLife Diagnostics?
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We combine cutting-edge technology with expert care to deliver reliable diagnostic services you can trust.
+            <p className="text-xl text-gray-800 max-w-3xl mx-auto">
+              ViLife Diagnostics firmly believes in providing quality healthcare with excellent customer service. Here are top 4 reasons why you should choose us.
             </p>
           </div>
 
@@ -175,27 +140,27 @@ const Homepage = () => {
               {
                 icon: '🎯',
                 title: 'Quality Assurance',
-                description: 'NABL accredited laboratory with stringent quality control measures'
+                description: 'Reliable diagnostics backed by strict quality control standards'
               },
               {
                 icon: '🔬',
                 title: 'Precision Testing',
-                description: 'Advanced equipment and experienced pathologists for accurate results'
+                description: 'Accurate and detailed results for informed healthcare decisions.'
               },
               {
                 icon: '👨‍⚕️',
                 title: 'Experienced Pathologists',
-                description: 'Expert team with years of experience in diagnostic medicine'
+                description: 'Our team of experts brings years of experience to every diagnosis'
               },
               {
                 icon: '⭐',
                 title: '4.9 out of 5',
-                description: 'Highly rated by thousands of satisfied customers across Mumbai'
+                description: 'Highly rated by patients for service excellence and reliable results.'
               }
             ].map((item, index) => (
               <Card key={index} className="text-center p-8 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">{item.title}</h3>
+                <h3 className="text-xl font-semibold text-[#1e535e] mb-3">{item.title}</h3>
                 <p className="text-gray-600">{item.description}</p>
               </Card>
             ))}
@@ -207,7 +172,7 @@ const Homepage = () => {
       <section className="py-16 bg-blue-50">
   <div className="container mx-auto px-6 md:px-12 lg:px-20 text-center">
     {/* Heading */}
-    <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+    <h2 className="text-3xl md:text-4xl font-bold text-[#1c515c] mb-6">
       Trusted Accreditations
     </h2>
 
@@ -239,90 +204,99 @@ const Homepage = () => {
 
       {/* Healthcare Packages Section */}
       <section className="py-20 bg-gray-50">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16">
-      <h2 className="text-4xl font-bold text-gray-800 mb-4">
-        Healthcare Packages for Everyone
-      </h2>
-      <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-        Find the most suitable package for you from our range of ViLife Packages
-      </p>
-    </div>
-
-    {/* Category Tabs */}
-    <div className="flex justify-center mb-12">
-      <div className="flex space-x-2 bg-white rounded-full p-1 shadow-sm">
-        <button className="px-6 py-2 bg-teal-600 text-white rounded-full font-medium text-sm">
-          Most Booked
-        </button>
-        <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
-          Heart Health
-        </button>
-        <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
-          Full Body Checkup
-        </button>
-        <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
-          Sexual Health
-        </button>
-      </div>
-    </div>
-
-    {/* Package Cards */}
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-      {[
-        {
-          name: "ViLife Adult Female",
-          price: "2,999",
-          originalPrice: "5,999",
-          parameters: "9 Parameters"
-        },
-        {
-          name: "ViLife Adult Female",
-          price: "2,999",
-          originalPrice: "5,999",
-          parameters: "9 Parameters"
-        },
-        {
-          name: "ViLife Adult Male",
-          price: "2,999",
-          originalPrice: "5,999",
-          parameters: "9 Parameters"
-        },
-        {
-          name: "ViLife Diabetes Advance",
-          price: "2,999",
-          originalPrice: "5,999",
-          parameters: "9 Parameters"
-        }
-      ].map((pkg, index) => (
-        <div key={index} className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow duration-300">
-          <h3 className="text-lg font-semibold text-teal-700 mb-4">{pkg.name}</h3>
-          <div className="mb-3">
-            <span className="text-2xl font-bold text-gray-800">INR {pkg.price}</span>
-            <span className="text-sm text-gray-500 line-through ml-2">{pkg.originalPrice}</span>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
+              Healthcare Packages for Everyone
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Find the most suitable package for you from our range of ViLife Packages
+            </p>
           </div>
-          <p className="text-sm text-gray-600 mb-6">{pkg.parameters}</p>
-          <button className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-colors duration-300">
-            Book Now
-          </button>
+
+          {/* Category Tabs */}
+          <div className="flex justify-center mb-12">
+            <div className="flex space-x-2 bg-white rounded-full p-1 shadow-sm">
+              <button className="px-6 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm">
+                Most Booked
+              </button>
+              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
+                Heart Health
+              </button>
+              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
+                Full Body Checkup
+              </button>
+              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
+                Sexual Health
+              </button>
+            </div>
+          </div>
+
+          {/* Package Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {[
+              {
+                name: "ViLife Adult Female",
+                price: "2,999",
+                originalPrice: "5,999",
+                parameters: "9 Parameters"
+              },
+              {
+                name: "ViLife Adult Female",
+                price: "2,999",
+                originalPrice: "5,999",
+                parameters: "9 Parameters"
+              },
+              {
+                name: "ViLife Adult Male",
+                price: "2,999",
+                originalPrice: "5,999",
+                parameters: "9 Parameters"
+              },
+              {
+                name: "ViLife Diabetes Advance",
+                price: "2,999",
+                originalPrice: "5,999",
+                parameters: "9 Parameters"
+              }
+            ].map((pkg, index) => (
+              <div key={index} className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow duration-300">
+                <h3 className="text-lg font-semibold text-teal-700 mb-4">{pkg.name}</h3>
+                <div className="mb-3">
+                  <span className="text-2xl font-bold text-gray-800">INR {pkg.price}</span>
+                  <span className="text-sm text-gray-500 line-through ml-2">{pkg.originalPrice}</span>
+                </div>
+                <p className="text-sm text-gray-600 mb-6">{pkg.parameters}</p>
+                {/* Updated "Book Now" button */}
+                <Link 
+                  href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+                  passHref
+                >
+                  <button className="w-full bg-[#7ac144] hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-colors duration-300">
+                    Book Now
+                  </button>
+                </Link>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <Link href="/packages" passHref>
+              <button className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                View All Packages
+              </button>
+            </Link>
+          </div>
         </div>
-      ))}
-    </div>
-    
-    <div className="text-center">
-      <button className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
-        View All Packages
-      </button>
-    </div>
-  </div>
-</section>
+      </section>
+
 
       {/* Get Reports Faster Section */}
       <section className="py-20 bg-blue-50">
   <div className="container mx-auto px-4">
     <div className="grid lg:grid-cols-2 gap-12 items-center">
       <div>
-        <h2 className="text-4xl font-bold text-gray-800 mb-6">
+        <h2 className="text-4xl font-bold text-[#1c515c] mb-6">
           Get Your Test Reports Faster Than Ever
         </h2>
         <p className="text-lg text-gray-600 mb-8">
@@ -363,7 +337,7 @@ const Homepage = () => {
 <section className="py-20 bg-gray-50">
   <div className="container mx-auto px-4">
     <div className="text-center mb-16">
-      <h2 className="text-4xl font-bold text-teal-700 mb-4">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
         Centralized Pathology Laboratory for Multicentric Clinical Trials
       </h2>
       <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -413,11 +387,11 @@ const Homepage = () => {
       ].map((feature, index) => (
         <div key={index} className="text-center">
           <div className={`${feature.bgColor} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}>
-            <div className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 bg-[#1c515c] rounded-full flex items-center justify-center">
               {feature.icon}
             </div>
           </div>
-          <h3 className="text-lg font-semibold text-teal-700 leading-tight">
+          <h3 className="text-lg font-semibold text-[#1c515c] leading-tight">
             {feature.title}
           </h3>
         </div>
@@ -426,9 +400,11 @@ const Homepage = () => {
 
     {/* CTA Button */}
     <div className="text-center">
-      <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
-        Connect for Clinical Trial Support
-      </button>
+      <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+        <button className="bg-[#7ac144] hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
+          Connect for Clinical Trial Support
+        </button>
+      </Link>
     </div>
   </div>
 </section>
@@ -437,7 +413,7 @@ const Homepage = () => {
 <section className="py-20 bg-blue-50">
   <div className="container mx-auto px-4">
     <div className="text-center mb-16">
-      <h2 className="text-4xl font-bold text-teal-700 mb-4">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
         Why Customers Love ViLife Diagnostics?
       </h2>
       <p className="text-lg text-gray-600 max-w-4xl mx-auto">
@@ -503,7 +479,7 @@ const Homepage = () => {
       </div>
       
       <div>
-        <h2 className="text-4xl font-bold text-teal-700 mb-6">
+        <h2 className="text-4xl font-bold text-[#1c515c] mb-6">
           Multiple Clinics, One Promise of Care
         </h2>
         <p className="text-lg text-gray-600 mb-8 leading-relaxed">
@@ -540,7 +516,7 @@ const Homepage = () => {
               onClick={() => window.open(location.googleMapsUrl, '_blank')}
             >
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                <div className="w-8 h-8 bg-[#7ac144] text-white rounded-full flex items-center justify-center text-sm font-bold">
                   {index + 1}
                 </div>
                 <div>
@@ -555,68 +531,104 @@ const Homepage = () => {
           ))}
         </div>
         
-        <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
-          View All Locations
-        </button>
+        <Link href="/locations" passHref>
+          <button className="bg-[#7ac144] hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
+            View All Locations
+          </button>
+        </Link>
       </div>
     </div>
   </div>
 </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Frequently Asked Questions
-            </h2>
-          </div>
+{/* FAQ Section  */}
+<section className="py-20 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold text-gray-800 mb-4">
+        Frequently Asked Questions
+      </h2>
+    </div>
 
-          <div className="max-w-4xl mx-auto space-y-4">
-            {[
-              {
-                question: "How many samples does ViLife Laboratory have in Bhiwandi?",
-                answer: "We have multiple collection centers in Bhiwandi to serve you better with convenient sample collection services."
-              },
-              {
-                question: "How long does it take to get my test results back?",
-                answer: "Most test results are available within 24-48 hours. Some specialized tests may take 2-3 days. We provide same-day reports for routine tests."
-              },
-              {
-                question: "What types of testing does ViLife Diagnostics offer?",
-                answer: "We offer comprehensive diagnostic services including blood tests, urine analysis, health packages, diabetes monitoring, and specialized pathology tests."
-              },
-              {
-                question: "Do you provide home sample collection?",
-                answer: "Yes, we provide convenient home sample collection services across all our service areas in Mumbai and surrounding regions."
-              }
-            ].map((faq, index) => (
-              <details key={index} className="group bg-white rounded-lg shadow-sm">
-                <summary className="flex justify-between items-center p-6 cursor-pointer hover:bg-gray-50 transition-colors duration-200">
-                  <span className="font-semibold text-gray-800">{faq.question}</span>
-                  <ChevronRightIcon className="w-5 h-5 text-gray-400 group-open:rotate-90 transition-transform duration-200" />
-                </summary>
-                <div className="px-6 pb-6">
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+        {[
+          {
+            question: "How many centers does ViLife Laboratory have in Maharashtra?",
+            answer: "ViLife Diagnostics has multiple labs and collection centers located in Thane, Dombivli, and Navi Mumbai, with plans for more expansion in the future."
+          },
+          {
+            question: "How long does it take to get my test results back?",
+            answer: "Most test results are available within 24-48 hours. Some specialized tests may take 2-3 days. We provide same-day reports for routine tests."
+          },
+          {
+            question: "How do you ensure the accuracy of your test results?",
+            answer: "Our laboratory is NABL and ISO certified. We are equipped with technologically advanced fully automated machinery and conduct daily quality controls to ensure accurate results."
+          },
+          {
+            question: "Can I request a copy of my pathology report?",
+            answer: "Yes, you can request a digital copy of your pathology report via WhatsApp or email. Reports are also available for download on our patient portal."
+          },
+          {
+            question: "What types of pathology tests does ViLife Laboratory offer?",
+            answer: "We offer comprehensive diagnostic services including blood tests, urine analysis, health packages, diabetes monitoring, and specialized pathology tests."
+          },
+          {
+            question: "What to check before selecting a diagnostic lab for blood tests?",
+            answer: "You should look for a lab with NABL and ISO certifications, experienced pathologists, and a reputation for using modern technology to ensure accuracy and reliability."
+          },
+          {
+            question: "Are your staff and lab technicians certified and licensed?",
+            answer: "Yes, all of our staff and lab technicians are certified and licensed professionals with extensive experience in pathology and diagnostic services."
+          },
+          {
+            question: "How will I receive my test results?",
+            answer: "You will receive your test results digitally via WhatsApp and email. You can also download them directly from our website's patient dashboard."
+          },
+          {
+            question: "Why is ViLife Laboratory the best in Mumbai?",
+            answer: "ViLife Diagnostics is highly-rated for our commitment to quality, cutting-edge technology, NABL accreditation, and our convenient home collection and digital report services."
+          },
+          {
+            question: "Do I need to make an appointment to have a pathology test done?",
+            answer: "While walk-ins are welcome, we recommend booking an appointment in advance for home collection services or to minimize your waiting time at our centers."
+          },
+          {
+            question: "What are the hours of operation for your lab?",
+            answer: "Our collection centers are open from 6:30 AM to 7:30 PM. Please note that hours may vary on holidays, so it's best to call ahead."
+          },
+          {
+            question: "Does ViLife Laboratory offer free home blood sampling in Mumbai?",
+            answer: "Yes, we provide convenient home sample collection services across all our service areas in Mumbai and surrounding regions for most of our packages."
+          },
+        ].map((faq, index) => (
+          <details key={index} className="group bg-white rounded-lg shadow-sm">
+            <summary className="flex justify-between items-center p-6 cursor-pointer hover:bg-gray-50 transition-colors duration-200">
+              <span className="font-semibold text-gray-800">{faq.question}</span>
+              {/* This ChevronDownIcon will rotate 90 degrees when the details tag is open */}
+              <ChevronRightIcon className="w-5 h-5 text-gray-400 group-open:rotate-90 transition-transform duration-200" />
+            </summary>
+            <div className="px-6 pb-6">
+              <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
       {/* Home Collection CTA Section */}
 <section className="relative py-16 overflow-hidden">
-  {/* Background Image Overlay */}
-  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/70"></div>
-  
   {/* Background Image */}
   <div 
     className="absolute inset-0 bg-cover bg-center bg-no-repeat"
     style={{
-      backgroundImage: `url('/images/BookHomeCollection.jpg')` // This is a placeholder - replace with your actual image path
+      backgroundImage: `url('/images/BookHomeCollection.jpg')`
     }}
-  ></div>
+  >
+    {/* Background Image Overlay */}
+    <div className="absolute inset-0 bg-black/80"></div>
+  </div>
 
   <div className="relative container mx-auto px-4">
     <div className="flex items-center justify-between">
@@ -630,9 +642,11 @@ const Homepage = () => {
       </div>
       
       <div className="flex-shrink-0">
-        <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
-          Book a Home Visit
-        </button>
+        <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+          <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+            Book a Home Visit
+          </button>
+        </Link>
       </div>
     </div>
   </div>
