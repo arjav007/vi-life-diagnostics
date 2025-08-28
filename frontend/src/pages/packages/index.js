@@ -16,21 +16,23 @@ export default function PackagesPage() {
     // This is where you would fetch your data.
     const dummyPackages = [
       { id: 1, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 2, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 3, name: 'ViLife Adult Male', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Male', category: 'General' },
-      { id: 4, name: 'ViLife Diabetes Advance', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Both', category: 'Diabetes' },
-      { id: 5, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 6, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 7, name: 'ViLife Adult Male', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Male', category: 'General' },
-      { id: 8, name: 'ViLife Diabetes Advance', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Both', category: 'Diabetes' },
-      { id: 9, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 10, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 11, name: 'ViLife Adult Male', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Male', category: 'General' },
-      { id: 12, name: 'ViLife Diabetes Advance', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Both', category: 'Diabetes' },
-      { id: 13, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 14, name: 'ViLife Adult Female', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Female', category: 'General' },
-      { id: 15, name: 'ViLife Adult Male', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Male', category: 'General' },
-      { id: 16, name: 'ViLife Diabetes Advance', price: '2,999', oldPrice: '5,999', parameters: 9, gender: 'Both', category: 'Diabetes' },
+      { id: 2, name: 'ViLife Adult Male', price: '2,999', oldPrice: '5,999', parameters: 10, gender: 'Male', category: 'General' },
+      { id: 3, name: 'ViLife Adult Anaemia', price: '1,499', oldPrice: '2,999', parameters: 16, gender: 'Both', category: 'General' },
+      { id: 4, name: 'ViLife Diabetes Advance', price: '1,399', oldPrice: '2,999', parameters: 8, gender: 'Both', category: 'Diabetes' },
+      { id: 5, name: 'ViLife Diabetes Basic', price: '399', oldPrice: '699', parameters: 3, gender: 'Both', category: 'General' },
+      { id: 6, name: 'ViLife Fever Advance', price: '2,499', oldPrice: '4,499', parameters: 16, gender: 'Female', category: 'General' },
+      { id: 7, name: 'ViLife Fever Basic', price: '1,699', oldPrice: '2,699', parameters: 16, gender: 'Both', category: 'General' },
+      { id: 8, name: 'ViLife Health', price: '2,499', oldPrice: '6,599', parameters: 16, gender: 'Both', category: 'General' },
+      { id: 9, name: 'ViLife Healthy Heart Advance', price: '2,999', oldPrice: '5,999', parameters: 16, gender: 'Both', category: 'General' },
+      { id: 10, name: 'ViLife Healthy Heart Basic', price: '1,499', oldPrice: '2,799', parameters: 16, gender: 'Female', category: 'General' },
+      { id: 11, name: 'ViLife Healthy Heart Plus', price: '4,999', oldPrice: '9,999', parameters: 16, gender: 'Both', category: 'General' },
+      { id: 12, name: 'ViLife Hormone', price: '5,999', oldPrice: '9,999', parameters: 16, gender: 'Both', category: 'General' },
+      { id: 13, name: 'ViLife Infertility Female', price: '5,099', oldPrice: '5,999', parameters: 13, gender: 'Female', category: 'General' },
+      { id: 14, name: 'ViLife Infertility Male', price: '4,499', oldPrice: '6,899', parameters: 9, gender: 'Male', category: 'General' },
+      { id: 15, name: 'ViLife Junior', price: '899', oldPrice: '1,799', parameters: 5, gender: 'Both', category: 'General' },
+      { id: 16, name: 'ViLife Mother', price: '1,299', oldPrice: '2,499', parameters: 9, gender: 'Both', category: 'General' },
+      { id: 17, name: 'ViLife Senior 60+ Male', price: '3,499', oldPrice: '8,399', parameters: 12, gender: 'Male', category: 'General' },
+      { id: 18, name: 'ViLife Senior 60+ Female', price: '2,999', oldPrice: '5,999', parameters: 12, gender: 'Female', category: 'Diabetes' },
     ];
     setPackages(dummyPackages);
   }, []);
@@ -153,8 +155,8 @@ export default function PackagesPage() {
           </div>
         </div>
         
-        {/* Active Filter Tags Container */}
-        <div className="flex flex-wrap items-center space-x-2 mt-4" style={{ width: '241px', height: '31px' }}>
+        {/* Active Filter Tags */}
+        <div className="flex items-center space-x-2 mt-4">
           {getActiveFilterTags().map((tag) => (
             <span key={tag} className="bg-[#1e535e] text-white text-sm font-medium px-2.5 py-0.5 rounded-full">
               {tag} <button onClick={() => removeFilter(tag)} className="text-white hover:text-gray-200 ml-1">x</button>
@@ -173,60 +175,65 @@ export default function PackagesPage() {
         {/* Package Cards Grid */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredPackages.map((pkg) => (
-            <div key={pkg.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h3 className="text-lg font-semibold mb-2 text-[#1e535e]">{pkg.name}</h3>
-              <p className="text-gray-600 mb-2">
-                <span className="text-xl font-bold ">₹{pkg.price}</span>{" "}
-                <span className="line-through">₹{pkg.oldPrice}</span>
-              </p>
-              <p className="text-gray-500 text-sm mb-4">{pkg.parameters} Parameters</p>
-              <Link 
-                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                passHref
-              >
-                <button className="w-full bg-[#7ac144] text-white py-2 rounded-md hover:bg-green-700 transition duration-300">
+            <Link 
+              key={pkg.id} 
+              href={`/packages/${pkg.name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()}`}
+              passHref
+            >
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300">
+                <h3 className="text-lg font-semibold mb-2 text-[#1e535e]">{pkg.name}</h3>
+                <p className="text-gray-600 mb-2">
+                  <span className="text-xl font-bold ">₹{pkg.price}</span>{" "}
+                  <span className="line-through">₹{pkg.oldPrice}</span>
+                </p>
+                <p className="text-gray-500 text-sm mb-4">{pkg.parameters} Parameters</p>
+                <button 
+                  className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
+                  onClick={(e) => {
+                    e.stopPropagation(); 
+                    window.open("https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit.", "_blank");
+                  }}
+                >
                   Book Now
                 </button>
-              </Link>
-            </div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
     </div>
     {/* Home Collection CTA Section */}
-<section className="relative py-16 overflow-hidden">
-  {/* Background Image */}
-  <div 
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-    style={{
-      backgroundImage: `url('/images/BookHomeCollection.jpg')`
-    }}
-  >
-    {/* Background Image Overlay */}
-    <div className="absolute inset-0 bg-black/80"></div>
-  </div>
+    <section className="relative py-16 overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url('/images/BookHomeCollection.jpg')` }}
+      >
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 bg-black/80"></div>
+      </div>
 
-  <div className="relative container mx-auto px-4">
-    <div className="flex items-center justify-between">
-      <div className="text-white">
-        <h2 className="text-4xl font-bold mb-4">
-          Book Your Home Collection
-        </h2>
-        <p className="text-xl text-gray-200">
-          Get exclusive packages on your first healthcare test.
-        </p>
+      <div className="relative container mx-auto px-4">
+        <div className="flex items-center justify-between">
+          <div className="text-white">
+            <h2 className="text-4xl font-bold mb-4">
+              Book Your Home Collection
+            </h2>
+            <p className="text-xl text-gray-200">
+              Get exclusive packages on your first healthcare test.
+            </p>
+          </div>
+          
+          <div className="flex-shrink-0">
+            <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+              <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+                Book a Home Visit
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
-      
-      <div className="flex-shrink-0">
-        <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-          <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
-            Book a Home Visit
-          </button>
-        </Link>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
     </>
   );
 }

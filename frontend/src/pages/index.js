@@ -11,12 +11,13 @@ const Homepage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch featured packages
+    // Fetch all packages to get the top 4
     const fetchPackages = async () => {
       try {
-        const response = await fetch('/api/packages?featured=true');
+        const response = await fetch('http://localhost:3000/api/packages');
         const data = await response.json();
-        setPackages(data.packages || []);
+        // Slice the first 4 packages to display on the homepage
+        setPackages(data.slice(0, 4) || []);
       } catch (error) {
         console.error('Error fetching packages:', error);
       } finally {
@@ -202,94 +203,75 @@ const Homepage = () => {
 </section>
 
 
-      {/* Healthcare Packages Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
-              Healthcare Packages for Everyone
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Find the most suitable package for you from our range of ViLife Packages
-            </p>
-          </div>
+     {/* Healthcare Packages Section */}
+<section className="py-20 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
+        Healthcare Packages for Everyone
+      </h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        Find the most suitable package for you from our range of ViLife Packages
+      </p>
+    </div>
 
-          {/* Category Tabs */}
-          <div className="flex justify-center mb-12">
-            <div className="flex space-x-2 bg-white rounded-full p-1 shadow-sm">
-              <button className="px-6 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm">
-                Most Booked
-              </button>
-              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
-                Heart Health
-              </button>
-              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
-                Full Body Checkup
-              </button>
-              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
-                Sexual Health
-              </button>
+    {/* Category Tabs */}
+    <div className="flex justify-center mb-12">
+      <div className="flex space-x-2 bg-white rounded-full p-1 shadow-sm">
+        <button className="px-6 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm">
+          Most Booked
+        </button>
+        <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
+          Heart Health
+        </button>
+        <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
+          Full Body Checkup
+        </button>
+        <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">
+          Sexual Health
+        </button>
+      </div>
+    </div>
+
+    {/* Package Cards */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      {packages.map((pkg) => (
+        <Link 
+          key={pkg.id} 
+          href={`/packages/${pkg.name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()}`}
+          passHref
+        >
+          <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow duration-300 cursor-pointer">
+            <h3 className="text-lg font-semibold text-teal-700 mb-4">{pkg.name}</h3>
+            <div className="mb-3">
+              <span className="text-2xl font-bold text-gray-800">INR {pkg.price}</span>
+              <span className="text-sm text-gray-500 line-through ml-2">{pkg.original_price}</span>
             </div>
+            <p className="text-sm text-gray-600 mb-6">{pkg.parameter_count} Parameters</p>
+            {/* Updated "Book Now" button */}
+            <button 
+              className="w-full bg-[#7ac144] hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-colors duration-300"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open("https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit.", "_blank");
+              }}
+            >
+              Book Now
+            </button>
           </div>
-
-          {/* Package Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {[
-              {
-                name: "ViLife Adult Female",
-                price: "2,999",
-                originalPrice: "5,999",
-                parameters: "9 Parameters"
-              },
-              {
-                name: "ViLife Adult Female",
-                price: "2,999",
-                originalPrice: "5,999",
-                parameters: "9 Parameters"
-              },
-              {
-                name: "ViLife Adult Male",
-                price: "2,999",
-                originalPrice: "5,999",
-                parameters: "9 Parameters"
-              },
-              {
-                name: "ViLife Diabetes Advance",
-                price: "2,999",
-                originalPrice: "5,999",
-                parameters: "9 Parameters"
-              }
-            ].map((pkg, index) => (
-              <div key={index} className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow duration-300">
-                <h3 className="text-lg font-semibold text-teal-700 mb-4">{pkg.name}</h3>
-                <div className="mb-3">
-                  <span className="text-2xl font-bold text-gray-800">INR {pkg.price}</span>
-                  <span className="text-sm text-gray-500 line-through ml-2">{pkg.originalPrice}</span>
-                </div>
-                <p className="text-sm text-gray-600 mb-6">{pkg.parameters}</p>
-                {/* Updated "Book Now" button */}
-                <Link 
-                  href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                  passHref
-                >
-                  <button className="w-full bg-[#7ac144] hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-colors duration-300">
-                    Book Now
-                  </button>
-                </Link>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <Link href="/packages" passHref>
-              <button className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
-                View All Packages
-              </button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
+        </Link>
+      ))}
+    </div>
+    
+    <div className="text-center">
+      <Link href="/packages" passHref>
+        <button className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+          View All Packages
+        </button>
+      </Link>
+    </div>
+  </div>
+</section>
 
       {/* Get Reports Faster Section */}
       <section className="py-20 bg-blue-50">

@@ -1,6 +1,11 @@
 -- Vi-Life Diagnostics Database Schema
 -- PostgreSQL Database Setup
 
+-- Drop existing objects to allow for clean re-creation
+DROP TABLE IF EXISTS audit_logs, reports, bookings, notifications, users, staff, locations, packages, contact_inquiries, blog_posts, discount_codes CASCADE;
+DROP VIEW IF EXISTS booking_summary, report_summary;
+DROP FUNCTION IF EXISTS update_updated_at_column, generate_booking_number, generate_report_number;
+
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pg_trgm";
@@ -82,6 +87,7 @@ CREATE TABLE packages (
     home_collection_available BOOLEAN DEFAULT TRUE,
     preparation_instructions TEXT[],
     included_tests JSONB,
+    reviews JSONB, -- Added reviews column
     age_group VARCHAR(50), -- e.g., "Adult", "Child", "Senior", "All"
     gender_specific VARCHAR(20) CHECK (gender_specific IN ('Male', 'Female', 'Both')),
     popularity_score INTEGER DEFAULT 0,
@@ -346,12 +352,12 @@ CREATE INDEX idx_notifications_scheduled_at ON notifications(scheduled_at);
 -- TRIGGERS FOR UPDATED_AT
 -- =====================================================
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $
+RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
 END;
-$ language 'plpgsql';
+$$ language 'plpgsql';
 
 -- Apply triggers to all tables with updated_at column
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -387,15 +393,103 @@ INSERT INTO locations (name, address, city, state, pincode, phone, email, operat
 '{"Blood Collection", "Home Sample Collection", "Health Packages", "Pathology Tests"}');
 
 -- Insert sample packages
-INSERT INTO packages (name, slug, description, detailed_description, price, original_price, parameter_count, category, gender_specific, duration, sample_type, fasting_required, included_tests) VALUES
+INSERT INTO packages (name, slug, description, detailed_description, price, original_price, parameter_count, category, gender_specific, duration, sample_type, fasting_required, included_tests, reviews, age_group) VALUES
 ('ViLife Adult Female', 'vilife-adult-female', 'Comprehensive health checkup package designed specifically for adult women', 'A complete health assessment package tailored for adult women, including hormone tests, reproductive health markers, and general wellness parameters.', 2999.00, 5999.00, 9, 'Health Checkup', 'Female', 'Same Day', 'Blood', true,
-'{"CBC": "Complete Blood Count", "Lipid Profile": "Cholesterol and Triglycerides", "Thyroid Profile": "TSH, T3, T4", "Blood Glucose": "Fasting and Random", "Liver Function": "SGPT, SGOT, Bilirubin", "Kidney Function": "Creatinine, BUN", "Iron Studies": "Serum Iron, TIBC", "Vitamin D": "25-OH Vitamin D", "HbA1c": "Diabetes Monitoring"}'),
+'{"CBC": "Complete Blood Count", "Lipid Profile": "Cholesterol and Triglycerides", "Thyroid Profile": "TSH, T3, T4", "Blood Glucose": "Fasting and Random", "Liver Function": "SGPT, SGOT, Bilirubin", "Kidney Function": "Creatinine, BUN", "Iron Studies": "Serum Iron, TIBC", "Vitamin D": "25-OH Vitamin D", "HbA1c": "Diabetes Monitoring"}',
+'[{"text": "I rarely rate Diagnostic centers on Google. But this one was special. The staff were very courteous and kind. The results were promptly communicated and the staff was prompt replying to queries. Hope these service levels are maintained going ahead as well.", "author": "Kumar Nyare"}, {"text": "It was a nice experience. Very kind and soft spoken experienced staff, quick services, most trustworthy reports. I highly recommend Vlife for blood investigations.", "author": "Bhushan Wankhade"}]', 'Adult'),
 
 ('ViLife Adult Male', 'vilife-adult-male', 'Comprehensive health checkup package designed specifically for adult men', 'A complete health assessment package tailored for adult men, including prostate health markers, cardiac risk assessment, and general wellness parameters.', 2999.00, 5999.00, 9, 'Health Checkup', 'Male', 'Same Day', 'Blood', true,
-'{"CBC": "Complete Blood Count", "Lipid Profile": "Cholesterol and Triglycerides", "Thyroid Profile": "TSH, T3, T4", "Blood Glucose": "Fasting and Random", "Liver Function": "SGPT, SGOT, Bilirubin", "Kidney Function": "Creatinine, BUN", "PSA": "Prostate Specific Antigen", "Vitamin D": "25-OH Vitamin D", "HbA1c": "Diabetes Monitoring"}'),
+'{"CBC": "Complete Blood Count", "ESR": "Erythrocyte Sedimentation Rate", "Vit-D3": "Vitamin D3", "Vit-B12": "Vitamin B12", "Urine routine": "Urine Routine", "Serum iron": "Serum Iron", "LFT": "Liver Function Test", "RFT": "Renal Function Test", "Testosterone": "Testosterone", "Lipid Profile": "Lipid Profile"}',
+'[{"text": "The best diagnostic center in the area. The staff is professional and the reports are very accurate.", "author": "Suman Kumar"}, {"text": "Quick service and friendly staff. Highly recommend for a full body checkup.", "author": "Aniket Raj"}]', 'Adult'),
+
+(
+    'ViLife Adult Anaemia',
+    'vilife-adult-anaemia',
+    'It covers tests for your vital organs along with important tests like HbA1c for diabetes & Thyroid profile for hormone levels.',
+    'A comprehensive health assessment package to detect and monitor various types of anaemia.',
+    1499.00,
+    2999.00,
+    16,
+    'Health Checkup',
+    'Both',
+    'Same Day',
+    'Blood',
+    true,
+    '{"Iron Basic": "Iron Basic", "PS for morphology": "PS for morphology", "Reticulocyte count": "Reticulocyte count", "LDH": "Lactate Dehydrogenase", "Serum Iron": "Serum Iron", "Serum Ferritin": "Serum Ferritin", "TIBC": "Total Iron Binding Capacity", "% transferrin saturation": "% Transferrin Saturation", "Haemoglobin": "Haemoglobin", "Mean Corpuscular Volume": "MCV", "Red Cell Distribution Width": "RDW", "Mean Corpuscular Haemoglobin": "MCH", "Total Protein": "Total Protein", "Albumin": "Albumin", "Creatinine": "Creatinine", "Vitamin B12": "Vitamin B12"}',
+    '[{"text": "I rarely rate Diagnostic centers on Google. But this one was special. The staff were very courteous and kind. The results were promptly communicated and the staff was prompt replying to queries. Hope these service levels are maintained going ahead as well.", "author": "Kumar Nyare"}]',
+    'Adult'
+),
+
 
 ('ViLife Diabetes Advance', 'vilife-diabetes-advance', 'Advanced diabetes monitoring and management package', 'Comprehensive diabetes assessment including glucose monitoring, HbA1c, kidney function, and diabetes-related complications screening.', 2999.00, 5999.00, 9, 'Diabetes', 'Both', '24 Hours', 'Blood + Urine', true,
-'{"HbA1c": "3-month average glucose", "Fasting Glucose": "Blood sugar fasting", "Post Meal Glucose": "Blood sugar after meal", "Microalbumin": "Kidney function", "Lipid Profile": "Cholesterol screening", "Kidney Function": "Creatinine, BUN", "Liver Function": "SGPT, SGOT", "Thyroid Profile": "TSH", "Urine Analysis": "Complete urine examination"}');
+'{"HbA1c": "3-month average glucose", "Fasting Glucose": "Blood sugar fasting", "Post Meal Glucose": "Blood sugar after meal", "Microalbumin": "Kidney function", "Lipid Profile": "Cholesterol screening", "Kidney Function": "Creatinine, BUN", "Liver Function": "SGPT, SGOT", "Thyroid Profile": "TSH", "Urine Analysis": "Complete urine examination"}',
+'[{"text": "A great package for diabetes management. Detailed report and prompt delivery.", "author": "Rakesh Mehta"}]', 'Adult'),
+
+('ViLife Diabetes Basic', 'vilife-diabetes-basic', 'Essential tests for early detection and basic monitoring of blood sugar levels.', 'A basic package for diabetes screening, including fasting blood sugar and HbA1c.', 399.00, 699.00, 3, 'Diabetes', 'Both', 'Same Day', 'Blood', true,
+'{"Fasting Blood Sugar": "Fasting Blood Sugar", "Postprandial Blood Sugar": "Postprandial Blood Sugar", "HbA1c": "HbA1c"}',
+'[{"text": "Affordable and reliable. Recommended for anyone needing a quick check.", "author": "Meera Patel"}]', 'Adult'),
+
+('ViLife Fever Advance', 'vilife-fever-advance', 'Comprehensive panel for fever diagnosis, including tests for viral, bacterial, and parasitic infections.', 'An extensive battery of tests for fever diagnosis and management.', 2499.00, 4499.00, 16, 'Infectious Disease', 'Both', '24 Hours', 'Blood', true,
+'{"CBC": "Complete Blood Count", "ESR": "Erythrocyte Sedimentation Rate", "CRP": "C-Reactive Protein", "Dengue NS1": "Dengue NS1 Antigen", "Dengue IgM": "Dengue IgM Antibody", "Typhoid IgG": "Typhoid IgG Antibody", "Malaria Antigen": "Malarial Antigen", "Urine Routine": "Urine Routine", "Leptospira IgM": "Leptospira IgM", "Chikungunya IgM": "Chikungunya IgM", "PSMP": "Peripheral Smear for Malarial Parasite", "WIDAL": "WIDAL Test", "SGOT": "Liver enzyme", "SGPT": "Liver enzyme", "Total Bilirubin": "Total Bilirubin", "Procalcitonin": "Procalcitonin"}',
+'[{"text": "The staff was very professional and helped me get a clear diagnosis quickly.", "author": "Sagar Jadhav"}]', 'Adult'),
+
+('ViLife Fever Basic', 'vilife-fever-basic', 'Fundamental tests to help identify common causes of fever and inflammation.', 'A basic package for fever screening.', 1699.00, 2699.00, 16, 'Infectious Disease', 'Both', 'Same Day', 'Blood', true,
+'{"CBC": "Complete Blood Count", "ESR": "Erythrocyte Sedimentation Rate", "CRP": "C-Reactive Protein", "Dengue NS1": "Dengue NS1 Antigen", "Dengue IgM": "Dengue IgM Antibody", "Malaria Antigen": "Malarial Antigen", "Typhoid IgG": "Typhoid IgG Antibody", "Urine Routine": "Urine Routine", "Leptospira IgM": "Leptospira IgM", "Chikungunya IgM": "Chikungunya IgM", "PSMP": "Peripheral Smear for Malarial Parasite", "WIDAL": "WIDAL Test", "SGOT": "Liver enzyme", "SGPT": "Liver enzyme", "Total Bilirubin": "Total Bilirubin", "Procalcitonin": "Procalcitonin"}',
+'[{"text": "Quick results and a straightforward test package.", "author": "Anjali Desai"}]', 'Adult'),
+
+('ViLife Health', 'vilife-health', 'A comprehensive full body checkup for a complete overview of your health status.', 'A general health package to assess the health of your vital organs.', 2499.00, 6599.00, 16, 'Health Checkup', 'Both', '24 Hours', 'Blood', true,
+'{"CBC": "Complete Blood Count", "FBS": "Fasting Blood Sugar", "HB1AC": "HbA1c", "Iron Studies": "Iron Studies", "LFT": "Liver Function Test", "RFT": "Renal Function Test", "Electrolytes": "Electrolytes", "Lipid Profile": "Lipid Profile", "TFT": "Thyroid Function Test", "Vit D": "Vitamin D", "Vit B12": "Vitamin B12", "Urine": "Urine Routine"}',
+'[{"text": "Very thorough checkup. The doctors explained the results clearly.", "author": "Vivek Singh"}]', 'Adult'),
+
+('ViLife Healthy Heart Advance', 'vilife-healthy-heart-advance', 'An advanced panel for heart health, including cholesterol, triglycerides, and other cardiac risk markers.', 'A specialized package for advanced cardiac risk assessment.', 2999.00, 5999.00, 16, 'Cardiology', 'Both', '24 Hours', 'Blood', true,
+'{"Lipid Profile": "Lipid Profile", "HS-CRP": "High-Sensitivity C-Reactive Protein", "Apolipoprotein A1 & B": "Apolipoprotein A1 & B", "Homocysteine": "Homocysteine", "Troponin I": "Cardiac Troponin I", "CKMB": "Creatine Kinase-MB", "Total CPK": "Total Creatine Phosphokinase", "D-Dimer": "D-Dimer", "NT Pro BNP": "NT Pro BNP", "eGFR": "Estimated Glomerular Filtration Rate", "TSH": "Thyroid Stimulating Hormone", "Fasting Glucose": "Fasting Glucose", "Uric Acid": "Uric Acid", "Serum Calcium": "Serum Calcium", "Serum Phosphorus": "Serum Phosphorus", "Magnesium": "Magnesium"}',
+'[{"text": "Excellent package for monitoring heart health. Highly recommended.", "author": "Sunita Nair"}]', 'Adult'),
+
+('ViLife Healthy Heart Basic', 'vilife-healthy-heart-basic', 'Essential tests to assess your basic heart health and risk factors.', 'A basic cardiac health package.', 1499.00, 2799.00, 16, 'Cardiology', 'Both', 'Same Day', 'Blood', true,
+'{"Trop I": "Troponin I", "CKMB": "Creatine Kinase-MB", "Total CPK": "Total Creatine Phosphokinase", "Lipid Profile": "Lipid Profile", "Homocysteine": "Homocysteine", "FBS": "Fasting Blood Sugar", "Uric Acid": "Uric Acid", "Serum Electrolytes": "Serum Electrolytes", "ECG": "Electrocardiogram", "X-Ray Chest PA View": "X-Ray Chest PA View", "Echocardiography": "Echocardiography", "Stress Test (TMT)": "Stress Test (TMT)"}',
+'[]',
+'Adult'),
+
+('ViLife Healthy Heart Plus', 'vilife-healthy-heart-plus', 'A comprehensive checkup for heart health.', 'A full cardiac health package combining essential and advanced tests.', 4999.00, 9999.00, 16, 'Cardiology', 'Both', '24 Hours', 'Blood', true,
+'{"Trop I": "Troponin I", "CKMB": "Creatine Kinase-MB", "Total CPK": "Total Creatine Phosphokinase", "Homocysteine": "Homocysteine", "Lipid profile (fasting)": "Lipid Profile (Fasting)", "Apolipoprotein A1": "Apolipoprotein A1", "Apolipoprotein B": "Apolipoprotein B", "D-Dimer": "D-Dimer", "NT Pro BNP": "NT Pro BNP", "eGFR": "Estimated Glomerular Filtration Rate", "TSH": "Thyroid Stimulating Hormone", "Fasting Glucose": "Fasting Glucose", "Uric Acid": "Uric Acid", "Serum Calcium": "Serum Calcium", "Serum Phosphorus": "Serum Phosphorus", "Magnesium": "Magnesium"}',
+'[]',
+'Adult'),
+
+('ViLife Hormone', 'vilife-hormone', 'A panel of tests to evaluate hormone levels.', 'A comprehensive hormone panel for men and women.', 5999.00, 9999.00, 16, 'Hormone', 'Both', '24 Hours', 'Blood', true,
+'{"T3": "Triiodothyronine", "T4": "Thyroxine", "TSH": "Thyroid Stimulating Hormone", "LH": "Luteinizing Hormone", "FSH": "Follicle-Stimulating Hormone", "PTH": "Parathyroid Hormone", "Prolactin": "Prolactin", "Cortisol": "Cortisol", "Free testosterone": "Free Testosterone", "ACTH": "Adrenocorticotropic Hormone", "Calcitonin": "Calcitonin", "DHEA-S": "Dehydroepiandrosterone Sulfate", "Estradiol": "Estradiol", "Progesterone": "Progesterone", "SHBG": "Sex Hormone-Binding Globulin", "Growth Hormone": "Growth Hormone"}',
+'[]',
+'Adult'),
+
+('ViLife Infertility Female', 'vilife-infertility-female', 'Tests for females to assess fertility factors.', 'A specialized package for female fertility assessment.', 5099.00, 5999.00, 13, 'Fertility', 'Female', '24 Hours', 'Blood', true,
+'{"CBC": "Complete Blood Count", "FBS": "Fasting Blood Sugar", "PPBS": "Postprandial Blood Sugar", "Creatinine": "Creatinine", "BUN": "Blood Urea Nitrogen", "Urine routine": "Urine Routine", "Sperm antibody": "Sperm Antibody", "FSH": "Follicle-Stimulating Hormone", "LH": "Luteinizing Hormone", "Prolactin": "Prolactin", "TSH": "Thyroid Stimulating Hormone", "DHEAS": "Dehydroepiandrosterone Sulfate", "Vitamin B12": "Vitamin B12"}',
+'[]',
+'Adult'),
+
+('ViLife Infertility Male', 'vilife-infertility-male', 'Diagnostic tests for men to evaluate fertility.', 'A specialized package for male fertility assessment.', 4499.00, 6899.00, 9, 'Fertility', 'Male', '24 Hours', 'Blood', true,
+'{"CBC": "Complete Blood Count", "FBS": "Fasting Blood Sugar", "PPBS": "Postprandial Blood Sugar", "Creatinine": "Creatinine", "BUN": "Blood Urea Nitrogen", "Urine routine": "Urine Routine", "Semen Analysis": "Semen Analysis", "FSH": "Follicle-Stimulating Hormone", "LH": "Luteinizing Hormone", "Prolactin": "Prolactin", "Testosterone Vit B12": "Testosterone Vitamin B12", "TSH": "Thyroid Stimulating Hormone", "Sperm Antibody": "Sperm Antibody"}',
+'[]',
+'Adult'),
+
+('ViLife Junior', 'vilife-junior', 'A basic health checkup package for children.', 'A general health package for children.', 899.00, 1799.00, 5, 'Pediatric', 'Both', 'Same Day', 'Blood', true,
+'{"CBC": "Complete Blood Count", "Blood group": "Blood Group", "Bilirubin": "Bilirubin", "G6PD": "Glucose-6-Phosphate Dehydrogenase", "TSH": "Thyroid Stimulating Hormone"}',
+'[{"text": "My child felt comfortable, and the staff was very gentle.", "author": "Pooja Katkar"}]', 'Child'),
+
+('ViLife Mother', 'vilife-mother', 'Essential tests for women for general and reproductive health.', 'A checkup package tailored for new and expecting mothers.', 1299.00, 2499.00, 9, 'Maternity', 'Female', 'Same Day', 'Blood', true,
+'{"CBC": "Complete Blood Count", "Blood group": "Blood Group", "Urine routine": "Urine Routine", "HIV": "HIV", "HBsAG": "Hepatitis B Surface Antigen", "HCV": "Hepatitis C Virus", "TSH": "Thyroid Stimulating Hormone", "RBS": "Random Blood Sugar", "VDRL": "Venereal Disease Research Laboratory"}',
+'[{"text": "A great package for a mother\"s health. Affordable and comprehensive.", "author": "Kavita Singh"}]', 'Adult'),
+
+('ViLife Senior 60+ Male', 'vilife-senior-60-male', 'A specialized health checkup for senior men.', 'A comprehensive health package for men over 60, focusing on age-related conditions.', 3499.00, 8399.00, 12, 'Senior', 'Male', '24 Hours', 'Blood', true,
+'{"CBC": "Complete Blood Count", "ESR": "Erythrocyte Sedimentation Rate", "LFT": "Liver Function Test", "RFT": "Renal Function Test", "CRP": "C-Reactive Protein", "Lipid": "Lipid Profile", "Vit-B12": "Vitamin B12", "Vit-D": "Vitamin D", "CA125": "Cancer Antigen 125", "Electrolytes": "Electrolytes", "TSH": "Thyroid Stimulating Hormone", "PTH": "Parathyroid Hormone"}',
+'[{"text": "The tests were very thorough and the report was easy to understand.", "author": "John Doe"}]', 'Senior'),
+
+('ViLife Senior 60+ Female', 'vilife-senior-60-female', 'A specialized health checkup for senior women.', 'A comprehensive health package for women over 60, focusing on age-related conditions.', 2999.00, 5999.00, 12, 'Senior', 'Female', '24 Hours', 'Blood', true,
+'{"CBC": "Complete Blood Count", "ESR": "Erythrocyte Sedimentation Rate", "LFT": "Liver Function Test", "RFT": "Renal Function Test", "CRP": "C-Reactive Protein", "Lipid": "Lipid Profile", "Vit-B12": "Vitamin B12", "Vit-D": "Vitamin D", "CA125": "Cancer Antigen 125", "Electrolytes": "Electrolytes", "TSH": "Thyroid Stimulating Hormone", "PTH": "Parathyroid Hormone"}',
+'[{"text": "Comprehensive and useful package. The home collection service was excellent.", "author": "Suman Maurya"}]', 'Senior'),
+
+('ViLife Total Health', 'vilife-total-health', 'A complete health assessment package for all ages.', 'The most comprehensive package for a complete health overview.', 6999.00, 12999.00, 25, 'Health Checkup', 'Both', '48 Hours', 'Blood + Urine', true,
+'{"CBC": "Complete Blood Count", "ESR": "Erythrocyte Sedimentation Rate", "LFT": "Liver Function Test", "RFT": "Renal Function Test", "Lipid Profile": "Lipid Profile", "TFT": "Thyroid Function Test", "HbA1c": "Diabetes Monitoring", "Vit-D": "Vitamin D", "Vit-B12": "Vitamin B12", "Iron Studies": "Iron Studies", "Urine Routine": "Urine Routine", "Electrolytes": "Electrolytes", "CRP": "C-Reactive Protein", "PSA": "Prostate Specific Antigen (Male)", "CA-125": "Cancer Antigen 125 (Female)", "Ultrasound Abdomen": "Ultrasound Abdomen", "ECG": "Electrocardiogram"}',
+'[{"text": "The most comprehensive health checkup I have ever had. Worth every penny.", "author": "Shobit Agrawal"}]', 'Adult');
+
 
 -- Insert sample discount codes
 INSERT INTO discount_codes (code, description, discount_type, discount_value, minimum_amount, maximum_discount, usage_limit, valid_from, valid_until) VALUES
@@ -457,7 +551,7 @@ JOIN users u ON r.user_id = u.id;
 
 -- Function to generate booking number
 CREATE OR REPLACE FUNCTION generate_booking_number()
-RETURNS TEXT AS $
+RETURNS TEXT AS $$
 DECLARE
     new_number TEXT;
     counter INTEGER;
@@ -476,11 +570,11 @@ BEGIN
     
     RETURN new_number;
 END;
-$ LANGUAGE plpgsql;
+$$ language 'plpgsql';
 
 -- Function to generate report number
 CREATE OR REPLACE FUNCTION generate_report_number()
-RETURNS TEXT AS $
+RETURNS TEXT AS $$
 DECLARE
     new_number TEXT;
     counter INTEGER;
@@ -499,4 +593,4 @@ BEGIN
     
     RETURN new_number;
 END;
-$ LANGUAGE plpgsql;
+$$ language 'plpgsql';

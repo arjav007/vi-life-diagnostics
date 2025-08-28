@@ -5,8 +5,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon server.js"
-  },
+    "dev": "nodemon server.js",
+    "migrate": "psql -h localhost -p 5432 -U postgres -d vilife_diagnostics -f migrations/001_initial_schema.sql"  },
+    
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "compression": "^1.8.1",
