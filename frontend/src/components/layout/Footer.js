@@ -1,7 +1,15 @@
 import React from 'react';
+import Link from 'next/link';
 import { Phone, MapPin, Mail, Clock } from 'lucide-react';
 
 const Footer = () => {
+  const whatsappNumber = '918828826646';
+
+  const whatsappMessage = {
+    prescription: 'Hello, ViLife Diagnostics. Here is my doctor\'s prescription.',
+    reports: 'Hello, ViLife Diagnostics. Kindly share me my reports.'
+  };
+
   return (
     <footer className="bg-[#244d59] text-white py-12">
       <div className="max-w-7xl mx-auto px-6">
@@ -22,31 +30,41 @@ const Footer = () => {
           </div>
 
           {/* Quick Links Section */}
-          <div className="space-y-4 ">
+          <div className="space-y-4">
             <h3 className="text-xl font-semibold mb-4">Quick Link</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#home" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/" className="text-gray-300 hover:text-white transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#about" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#packages" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/packages" className="text-gray-300 hover:text-white transition-colors">
                   Health Packages
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#prescription" className="text-gray-300 hover:text-white transition-colors">
+                <a 
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage.prescription)}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Upload Prescription
                 </a>
               </li>
               <li>
-                <a href="#reports" className="text-gray-300 hover:text-white transition-colors">
+                <a 
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage.reports)}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Download Reports
                 </a>
               </li>
@@ -104,21 +122,21 @@ const Footer = () => {
             {/* Social Media Icons */}
             <div className="flex space-x-3 mt-4 md:mt-0">
               <a 
-                href="#" 
+                href={`tel:+${whatsappNumber}`} 
                 className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
                 aria-label="Phone"
               >
                 <Phone className="h-5 w-5 text-white" />
               </a>
               <a 
-                href="#" 
+                href="/locations" 
                 className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
                 aria-label="Location"
               >
                 <MapPin className="h-5 w-5 text-white" />
               </a>
               <a 
-                href="#" 
+                href="mailto:info@viliifediagnostics.com" 
                 className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
                 aria-label="Email"
               >
