@@ -72,7 +72,7 @@ const PackageDetailsPage = () => {
                 href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
                 passHref
               >
-                <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300">
+                <button className="bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300">
                   Book Now
                 </button>
               </Link>

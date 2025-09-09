@@ -188,7 +188,7 @@ export default function PackagesPage() {
                 </p>
                 <p className="text-gray-500 text-sm mb-4">{pkg.parameters} Parameters</p>
                 <button 
-                  className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
+                  className="w-full bg-[#7ac144] text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
                   onClick={(e) => {
                     e.stopPropagation(); 
                     window.open("https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit.", "_blank");

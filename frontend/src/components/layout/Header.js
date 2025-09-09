@@ -46,36 +46,8 @@ const Header = () => {
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="bg-gray-50 border-b border-gray-200">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-2 text-sm">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2 text-gray-600">
-                <PhoneIcon className="w-4 h-4" />
-                <span>+91 882-882-6646</span>
-              </div>
-              <div className="hidden md:flex items-center space-x-2 text-gray-600">
-                <MapPinIcon className="w-4 h-4" />
-                <span>Multiple Locations in Mumbai</span>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              {quickActions.map((action, index) => (
-                <Link
-                  key={index}
-                  href={action.href}
-                  className="text-gray-600 hover:text-teal-600 transition-colors duration-200 text-xs hidden lg:block"
-                >
-                  {action.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {/* Top Bar removed from here */}
+      
       {/* Main Header */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled 

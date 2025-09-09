@@ -60,6 +60,44 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
+      {/* Accreditations Section */}
+<section className="py-16 bg-blue-50">
+  <div className="container mx-auto px-6 md:px-12 lg:px-20"> {/* Removed text-center */}
+    
+    {/* Use flexbox for the two-column layout */}
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12">
+      
+      {/* Left side: Content and Heading */}
+      <div className="md:w-1/2 text-center md:text-left">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#1c515c] mb-6">
+          Trusted Accreditations
+        </h2>
+        <p className="text-gray-600 mx-auto md:mx-0 text-lg mb-10 leading-relaxed max-w-xl">
+          National Accreditation Board for Testing and Calibration Laboratories (NABL) and International Laboratory Accreditation Cooperation (ILAC) accreditations ensure that labs follow the stringent quality protocols set up by these bodies. ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
+        </p>
+      </div>
+      
+      {/* Right side: Logos */}
+      <div className="md:w-1/2 flex justify-center md:justify-end items-center gap-12">
+        <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+          <img
+            src="/images/ILAC.png"
+            alt="ILAC Accredited"
+            className="object-contain w-full h-full"
+          />
+        </div>
+        <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+          <img
+            src="/images/NABL-FINAL.png"
+            alt="NABL Accredited"
+            className="object-contain w-full h-full"
+          />
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
 
       {/* Our Values Section */}
       <section className="py-20 bg-gray-100">

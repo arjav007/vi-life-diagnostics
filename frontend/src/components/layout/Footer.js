@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3 mb-6">
               <img 
-                src="/images/logo.png" 
+                src="/images/footer-logo.png" 
                 alt="ViLife Diagnostics" 
                 className="h-12 w-auto"
               />
@@ -113,7 +113,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-teal-600 mt-8 pt-8">
+        <div className="border-t border-teal-100 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-300 text-sm">
               © 2025 ViLife Diagnostics. All Rights Reserved.

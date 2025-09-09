@@ -30,32 +30,7 @@ const LocationsPage = () => {
         { type: 'Bus Station', title: 'Bus Station', description: 'Bus depot MIDC', distance: '10.7 km', duration: '25 min drive' },
       ]
     },
-    { 
-      name: 'Vashi', 
-      address: 'Global 5 Heights, F 2/0-1 Main Road, Sector 9, Vashi, Navi Mumbai, Maharashtra 400703', 
-      mapLink: 'http://google.com/maps?q=Global+5+Heights+Vashi', 
-      connectivity: [
-        { type: 'Airport', title: 'Airport', description: 'Navi Mumbai International Airport', distance: '15.8 km', duration: '35 min drive' },
-        { type: 'Train Station', title: 'Train Station', description: 'Vashi Railway Station', distance: '3.6 km', duration: '12 min drive' },
-        { type: 'Bus Station', title: 'Bus Station', description: 'Vashi Bus Depot', distance: '800m', duration: '11 min walk' },
-      ]
-    },
-    { 
-      name: 'Bhiwandi', 
-      address: 'Arnav Diagnostic,House no 278, Old Mumbai-Agra Rd, opp. Sympathy Hospital, Dhamankar Naka, Bhiwandi, Maharashtra 421302', 
-      mapLink: 'http://google.com/maps?q=House+nohttps://www.google.com/maps/place/Arnav+diagnostic/@19.2909906,73.0551273,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7bd350b156d11:0xfcc45d3351f3c02a!8m2!3d19.2909906!4d73.0577022!16s%2Fg%2F11q9hr9bdf?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D+278+Bhiwandi', 
-      connectivity: [
-        { type: 'Bus Station', title: 'Bus Station', description: 'Bhiwandi Bus Stand', distance: '2.1 km', duration: '9 min drive' },
-      ]
-    },
-    { 
-      name: ' Bhiwandi(Second Location)', 
-      address: 'Life Line, Jyoti Appartments, opp Indian Oil Petrol Pump, Bypass Ranjnoli Naka, Bhiwandi, Maharashtra 421302', 
-      mapLink: 'http://google.https://www.google.com/maps/place/Life+Line/@19.2684054,73.0819253,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7bda916831619:0x58572c78132a8125!8m2!3d19.2684054!4d73.0845002!16s%2Fg%2F11gbzcby7n?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3Dcom/maps?q=A%2F202%2C+Bhuvan%2C+Opp.+Indian+Oil+Petrol+Pump%2C+By-pass+Bajmot+Naka%2C+Bhiwandi', 
-      connectivity: [
-        { type: 'Bus Station', title: 'Bus Station', description: 'Bhiwandi Bypass Bus Stop', distance: '4.9 km', duration: '17 min walk' },
-      ]
-    },
+    
   ];
 
   const allConnectivityTypes = [...new Set(locations.flatMap(loc => loc.connectivity.map(c => c.type)))];

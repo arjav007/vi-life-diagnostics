@@ -87,6 +87,23 @@ const Homepage = () => {
         <meta name="keywords" content="pathology lab, blood tests, health checkup, NABL accredited, Mumbai, Thane, home collection" />
       </Head>
 
+      {/* Sticky WhatsApp Icon */}
+      <a 
+        href="https://wa.me/918828826646" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-3 rounded-full transition-transform hover:scale-110"
+      >
+        <svg 
+          className="w-8 h-8" 
+          fill="currentColor" 
+          viewBox="0 0 24 24" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M20.52 3.44A10.82 10.82 0 0012.04 1.5C6.07 1.5 1 6.32 1 12.16c0 1.94.51 3.82 1.48 5.48L1 23l6.55-1.72a10.9 10.9 0 005.49 1.48c5.97 0 10.99-4.82 10.99-10.66C23.03 6.64 21.82 4.67 20.52 3.44zM12.04 21.31a8.91 8.91 0 01-4.63-1.29l-.33-.19L4.41 21.3l1.1-3.95-.21-.34a9.14 9.14 0 01-1.39-5.11C3.91 7.42 7.55 3.75 12.04 3.75c2.47 0 4.79 1 6.55 2.76a8.91 8.91 0 012.63 6.39c0 4.7-3.79 8.54-8.49 8.54zM17.15 15.11c-.24-.12-.42-.19-.8-.38-.4-.2-.59-.28-.84-.33-.2-.04-.42-.04-.61.03-.17.06-.39.19-.59.4-.2.2-.42.22-.59.13-.24-.13-.99-.36-1.89-1.15a8.2 8.2 0 01-1.35-1.57c-.29-.38-.08-.59.18-.84.18-.18.4-.44.59-.65.2-.24.26-.38.4-.7a.9.9 0 00.12-.59c-.06-.15-.59-1.42-.81-1.92-.19-.46-.37-.39-.55-.39-.17 0-.39.03-.59.03-.2 0-.42.06-.61.25-.2.19-.77.75-.77 1.84s.82 2.13.94 2.29c.15.19 1.51 2.31 3.59 3.29.98.47 1.76.75 2.37.95.49.16.8.13 1.05.08.31-.06.99-.4 1.13-.78.14-.37.14-.69.1-.75-.03-.06-.11-.1-.23-.17z" />
+        </svg>
+      </a>
+
       {/* Hero Section */}
       <section className="relative min-h-screen bg-gray-900 overflow-hidden">
         {/* Background Image with Overlay */}
@@ -159,45 +176,54 @@ const Homepage = () => {
                 description: 'Highly rated by patients for service excellence and reliable results.'
               }
             ].map((item, index) => (
-              <Card key={index} className="text-center p-8 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+              <div 
+                key={index} 
+                className="bg-blue-50 text-center p-8 rounded-xl transition-all duration-300 transform hover:-translate-y-2"
+              >
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold text-[#1e535e] mb-3">{item.title}</h3>
+                <h3 className="text-lg font-semibold text-[#1e535e] mb-3">{item.title}</h3>
                 <p className="text-gray-600">{item.description}</p>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Accreditations Section */}
-      <section className="py-16 bg-blue-50">
-  <div className="container mx-auto px-6 md:px-12 lg:px-20 text-center">
-    {/* Heading */}
-    <h2 className="text-3xl md:text-4xl font-bold text-[#1c515c] mb-6">
-      Trusted Accreditations
-    </h2>
-
-    {/* Description */}
-    <p className="text-gray-600 max-w-3xl mx-auto text-lg mb-10 leading-relaxed">
-      National Accreditation Board for Testing and Calibration Laboratories (NABL) and International Laboratory Accreditation Cooperation (ILAC) accreditations ensure that labs follow the stringent quality protocols set up by these bodies. ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
-    </p>
-
-    {/* Logos */}
-    <div className="flex justify-center items-center gap-12">
-      <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
-        <img
-          src="/images/NABL.png"
-          alt="NABL Accredited"
-          className="object-contain w-full h-full"
-        />
+<section className="py-16 bg-blue-50">
+  <div className="container mx-auto px-6 md:px-12 lg:px-20"> {/* Removed text-center */}
+    
+    {/* Use flexbox for the two-column layout */}
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12">
+      
+      {/* Left side: Content and Heading */}
+      <div className="md:w-1/2 text-center md:text-left">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#1c515c] mb-6">
+          Trusted Accreditations
+        </h2>
+        <p className="text-gray-600 mx-auto md:mx-0 text-lg mb-10 leading-relaxed max-w-xl">
+          National Accreditation Board for Testing and Calibration Laboratories (NABL) and International Laboratory Accreditation Cooperation (ILAC) accreditations ensure that labs follow the stringent quality protocols set up by these bodies. ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
+        </p>
       </div>
-      <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
-        <img
-          src="/images/ILAC.png"
-          alt="ILAC Accredited"
-          className="object-contain w-full h-full"
-        />
+      
+      {/* Right side: Logos */}
+      <div className="md:w-1/2 flex justify-center md:justify-end items-center gap-12">
+        <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+          <img
+            src="/images/ILAC.png"
+            alt="ILAC Accredited"
+            className="object-contain w-full h-full"
+          />
+        </div>
+        <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+          <img
+            src="/images/NABL-FINAL.png"
+            alt="NABL Accredited"
+            className="object-contain w-full h-full"
+          />
+        </div>
       </div>
+      
     </div>
   </div>
 </section>
@@ -217,7 +243,7 @@ const Homepage = () => {
 
     {/* Category Tabs */}
     <div className="flex justify-center mb-12">
-      <div className="flex space-x-2 bg-white rounded-full p-1 shadow-sm">
+      <div className="flex space-x-2 bg-white rounded-full p-1">
         <button className="px-6 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm">
           Most Booked
         </button>
@@ -241,7 +267,7 @@ const Homepage = () => {
           href={`/packages/${pkg.name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()}`}
           passHref
         >
-          <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow duration-300 cursor-pointer">
+          <div className="bg-white p-6 rounded-lg border hover:shadow-md transition-shadow duration-300 cursor-pointer">
             <h3 className="text-lg font-semibold text-teal-700 mb-4">{pkg.name}</h3>
             <div className="mb-3">
               <span className="text-2xl font-bold text-gray-800">INR {pkg.price}</span>
@@ -300,9 +326,9 @@ const Homepage = () => {
       </div>
       
       <div className="relative">
-        <div className="bg-white rounded-2xl p-8 shadow-lg">
+        <div className="bg-white rounded-2xl p-8 overflow-hidden">
           {/* Microscope Image Placeholder */}
-          <div className="w-full h-64 bg-gray-200 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+          <div className="w-full h-64  flex items-center justify-center overflow-hidden">
             <img 
               src="/images/ReportFast.png" 
               alt="Laboratory microscope"
@@ -332,12 +358,11 @@ const Homepage = () => {
       {[
         {
           icon: (
-            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <svg className=" w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2L2 7V10C2 16 6 20.9 12 22C18 20.9 22 16 22 10V7L12 2ZM11 16H13V18H11V16ZM11 10H13V14H11V10Z"/>
             </svg>
           ),
           title: "State of the Art Technology",
-          bgColor: "bg-blue-100"
         },
         {
           icon: (
@@ -346,7 +371,6 @@ const Homepage = () => {
             </svg>
           ),
           title: "Specialized Testing Expertise",
-          bgColor: "bg-blue-100"
         },
         {
           icon: (
@@ -355,7 +379,6 @@ const Homepage = () => {
             </svg>
           ),
           title: "Uncompromised Sample Integrity",
-          bgColor: "bg-blue-100"
         },
         {
           icon: (
@@ -364,14 +387,11 @@ const Homepage = () => {
             </svg>
           ),
           title: "Nationwide Coverage",
-          bgColor: "bg-blue-100"
         }
       ].map((feature, index) => (
-        <div key={index} className="text-center">
-          <div className={`${feature.bgColor} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}>
-            <div className="w-12 h-12 bg-[#1c515c] rounded-full flex items-center justify-center">
-              {feature.icon}
-            </div>
+        <div key={index} className="text-center p-8 rounded-xl bg-blue-50">
+          <div className="bg-[#1c515c] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+            {feature.icon}
           </div>
           <h3 className="text-lg font-semibold text-[#1c515c] leading-tight">
             {feature.title}
@@ -421,7 +441,7 @@ const Homepage = () => {
           avatar: "👩‍🦰"
         }
       ].map((testimonial, index) => (
-        <div key={index} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div key={index} className="bg-white rounded-xl p-6 transition-shadow duration-300">
           <p className="text-gray-700 mb-6 leading-relaxed text-sm">
             {testimonial.text}
           </p>
@@ -451,7 +471,7 @@ const Homepage = () => {
   <div className="container mx-auto px-4">
     <div className="grid lg:grid-cols-2 gap-12 items-center">
       <div className="relative">
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-white rounded-2xl overflow-hidden">
           <img 
             src="/images/GmapsLocation.png" 
             alt="ViLife Diagnostics locations on Google Maps"
@@ -476,16 +496,7 @@ const Homepage = () => {
               address: "Thane Location",
               googleMapsUrl: "https://maps.google.com/?q=Thane+ViLife+Diagnostics"
             },
-            {
-              name: "Bhiwandi", 
-              address: "Bhiwandi Location",
-              googleMapsUrl: "https://maps.google.com/?q=Bhiwandi+ViLife+Diagnostics"
-            },
-            {
-              name: "Vashi",
-              address: "Vashi Location", 
-              googleMapsUrl: "https://maps.google.com/?q=Vashi+ViLife+Diagnostics"
-            },
+           
             {
               name: "Dombivli",
               address: "Dombivli Location",
@@ -513,18 +524,53 @@ const Homepage = () => {
           ))}
         </div>
         
-        <Link href="/locations" passHref>
-          <button className="bg-[#7ac144] hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
-            View All Locations
-          </button>
-        </Link>
+       
       </div>
     </div>
   </div>
 </section>
 
+       
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-6 md:px-12 lg:px-20">
+        <div className="flex flex-col-reverse md:flex-row md:items-center gap-12">
+          
+          {/* Left Side: Text Content and Button */}
+          <div className="md:w-1/2 text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1c515c] mb-6">
+              ViLife Diagnostics
+            </h2>
+            <p className="text-gray-600 mx-auto md:mx-0 text-lg mb-6 leading-relaxed max-w-xl">
+              ViLife Diagnostics believes in the ideology of quality, precision, timeliness. We are equipped with technologically advanced fully automated machinery carefully selected to provide accurate results. We conduct daily quality controls and are a part of several external quality assurance programs.
+            </p>
+            <Link href="/about" passHref>
+              <button className="bg-transparent border border-gray-400 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+                Read More
+              </button>
+            </Link>
+          </div>
+
+          {/* Right Side: Image Grid (Single image for this specific screenshot) */}
+          <div className="md:w-1/2 flex justify-center md:justify-end">
+            <div className="rounded-xl overflow-hidden">
+              <Image
+                src="/images/LabPhoto.webp" // Replace with your image path
+                alt="ViLife Diagnostics Lab"
+                width={700}
+                height={500}
+                layout="responsive"
+              />
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  
+
+
 {/* FAQ Section  */}
-<section className="py-20 bg-gray-50">
+<section className="py-20 bg-blue-50">
   <div className="container mx-auto px-4">
     <div className="text-center mb-16">
       <h2 className="text-4xl font-bold text-gray-800 mb-4">
@@ -584,7 +630,7 @@ const Homepage = () => {
             answer: "Yes, we provide convenient home sample collection services across all our service areas in Mumbai and surrounding regions for most of our packages."
           },
         ].map((faq, index) => (
-          <details key={index} className="group bg-white rounded-lg shadow-sm">
+          <details key={index} className="group bg-white rounded-lg">
             <summary className="flex justify-between items-center p-6 cursor-pointer hover:bg-gray-50 transition-colors duration-200">
               <span className="font-semibold text-gray-800">{faq.question}</span>
               {/* This ChevronDownIcon will rotate 90 degrees when the details tag is open */}
@@ -625,7 +671,7 @@ const Homepage = () => {
       
       <div className="flex-shrink-0">
         <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-          <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+          <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
             Book a Home Visit
           </button>
         </Link>
