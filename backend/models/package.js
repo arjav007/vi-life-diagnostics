@@ -1,4 +1,4 @@
-// backend/models/Package.js
+// backend/models/package.js
 const { pool } = require('../config/database');
 
 class Package {
