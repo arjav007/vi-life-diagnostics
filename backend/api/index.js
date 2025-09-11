@@ -7,25 +7,22 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const path = require('path');
 
-// Import database connection
-const { pool } = require('../config/database'); // We only need the pool for routes
+// FIX: Updated paths to go up one additional directory level
+const { pool } = require('../../config/database');
+const authMiddleware = require('../../middleware/auth');
+const errorHandler = require('../../middleware/errorHandler');
+const validation = require('../../middleware/validation');
+const authRoutes = require('../../routes/auth');
+const userRoutes = require('../../routes/users');
+const packageRoutes = require('../../routes/packages');
+const reportRoutes = require('../../routes/reports');
+const bookingRoutes = require('../../routes/bookings');
 
-// Import middleware
-const authMiddleware = require('../middleware/auth');
-const errorHandler = require('../middleware/errorHandler');
-const validation = require('../middleware/validation');
-
-// Import routes
-const authRoutes = require('../routes/auth');
-const userRoutes = require('../routes/users');
-const packageRoutes = require('../routes/packages');
-const reportRoutes = require('../routes/reports');
-const bookingRoutes = require('../routes/bookings');
-
-// Load environment variables (useful for local development)
 dotenv.config();
 
 const app = express();
+
+// ... (The rest of your code from here is perfectly fine and does not need changes) ...
 
 // Security middleware
 app.use(helmet({
@@ -59,7 +56,6 @@ app.use(limiter);
 app.use('/api/auth', authLimiter);
 
 // CORS configuration
-// ⚠️ REMINDER: Add your Vercel production URL to the origin array below!
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://vi-life-diagnostics.vercel.app', 'https://www.vlifediagnostics.com'] 
@@ -77,7 +73,7 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static files (Vercel handles this differently, but it's safe to keep for local dev)
+// Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Health check endpoint
@@ -105,24 +101,26 @@ app.use('/api/packages', packageRoutes);
 app.use('/api/reports', authMiddleware, reportRoutes);
 app.use('/api/bookings', bookingRoutes);
 
+// ... (The rest of your endpoints are fine) ...
+
 // Contact form endpoint
 app.post('/api/contact', validation.validateContact, async (req, res) => {
-  // ... (your existing logic is fine)
+  // Your logic here
 });
 
 // Location endpoints
 app.get('/api/locations', async (req, res) => {
-  // ... (your existing logic is fine)
+  // Your logic here
 });
 
 // Package search endpoint
 app.get('/api/search/packages', async (req, res) => {
-  // ... (your existing logic is fine)
+  // Your logic here
 });
 
 // Blog endpoints (basic)
 app.get('/api/blogs', async (req, res) => {
-  // ... (your existing logic is fine)
+  // Your logic here
 });
 
 // 404 handler for API routes
@@ -135,11 +133,6 @@ app.use('/api/*', (req, res) => {
 
 // Global error handler
 app.use(errorHandler);
-
-// Vercel will handle the server lifecycle. We no longer need app.listen() or graceful shutdown.
-// All the code below has been removed.
-// - startServer() function
-// - process.on() listeners for SIGTERM, SIGINT, uncaughtException, etc.
 
 // Export the app for Vercel
 module.exports = app;
