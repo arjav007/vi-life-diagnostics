@@ -1,39 +1,34 @@
-// pages/dashboard.js
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { useAuth } from '../context/AuthContext'
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+// FIX 1: Use the robust path alias for the import
+import { useAuth } from '@/context/AuthContext';
 
 export default function Dashboard() {
-  const { user, loading } = useAuth()
-  const router = useRouter()
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
+    // If the authentication check is complete and there's no user, redirect to login
     if (!loading && !user) {
-      router.push('/login')
+      router.push('/auth/login'); // Assuming your login page is at /auth/login
     }
-  }, [user, loading, router])
+  }, [user, loading, router]);
 
-  // Show loading state during authentication check
-  if (loading) {
-    return <div>Loading...</div>
+  // Show a loading state while the user's status is being checked
+  if (loading || !user) {
+    return <div>Loading...</div>;
   }
 
-  // Show login redirect message if not authenticated
-  if (!user) {
-    return <div>Redirecting to login...</div>
-  }
-
+  // If we get here, the user is authenticated
   return (
-    <div>
-      <h1>Dashboard</h1>
-      {/* Your protected content here */}
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold">Welcome to your Dashboard, {user.name || 'User'}!</h1>
+      <p>This is your protected content.</p>
+      {/* Your protected dashboard content here */}
     </div>
-  )
+  );
 }
 
-// This enables static generation
-export async function getStaticProps() {
-  return {
-    props: {}
-  }
-}
+// FIX 2: Removed the getStaticProps function.
+// A protected dashboard page cannot be statically generated at build time.
+// It must be rendered on the client-side to check for a logged-in user.
