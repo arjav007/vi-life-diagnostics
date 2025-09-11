@@ -62,7 +62,7 @@ app.use('/api/auth', authLimiter);
 // ⚠️ REMINDER: Add your Vercel production URL to the origin array below!
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-vercel-url.vercel.app', 'https://www.vlifediagnostics.com'] 
+    ? ['https://vi-life-diagnostics.vercel.app', 'https://www.vlifediagnostics.com'] 
     : ['http://localhost:3001', 'http://127.0.0.1:3001'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
