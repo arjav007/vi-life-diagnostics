@@ -1,5 +1,5 @@
 // backend/controllers/packageController.js
-const Package = require('../models/Package');
+const Package = require('../models/package');
 
 exports.getPackageBySlug = async (req, res) => {
     try {
