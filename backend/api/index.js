@@ -8,19 +8,19 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 // Import database connection
-const { pool } = require('./config/database'); // We only need the pool for routes
+const { pool } = require('../config/database'); // We only need the pool for routes
 
 // Import middleware
-const authMiddleware = require('./middleware/auth');
-const errorHandler = require('./middleware/errorHandler');
-const validation = require('./middleware/validation');
+const authMiddleware = require('../middleware/auth');
+const errorHandler = require('../middleware/errorHandler');
+const validation = require('../middleware/validation');
 
 // Import routes
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const packageRoutes = require('./routes/packages');
-const reportRoutes = require('./routes/reports');
-const bookingRoutes = require('./routes/bookings');
+const authRoutes = require('../routes/auth');
+const userRoutes = require('../routes/users');
+const packageRoutes = require('../routes/packages');
+const reportRoutes = require('../routes/reports');
+const bookingRoutes = require('../routes/bookings');
 
 // Load environment variables (useful for local development)
 dotenv.config();
