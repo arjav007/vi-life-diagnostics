@@ -7,22 +7,20 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const path = require('path');
 
-// FIX: Updated paths to go up one additional directory level
-const { pool } = require('../../config/database');
-const authMiddleware = require('../../middleware/auth');
-const errorHandler = require('../../middleware/errorHandler');
-const validation = require('../../middleware/validation');
-const authRoutes = require('../../routes/auth');
-const userRoutes = require('../../routes/users');
-const packageRoutes = require('../../routes/packages');
-const reportRoutes = require('../../routes/reports');
-const bookingRoutes = require('../../routes/bookings');
+// FIX: Corrected all paths to go up one level ('../') from the 'api' directory
+const { pool } = require('../config/database');
+const authMiddleware = require('../middleware/auth');
+const errorHandler = require('../middleware/errorHandler');
+const validation = require('../middleware/validation');
+const authRoutes = require('../routes/auth');
+const userRoutes = require('../routes/users');
+const packageRoutes = require('../routes/packages');
+const reportRoutes = require('../routes/reports');
+const bookingRoutes = require('../routes/bookings');
 
 dotenv.config();
 
 const app = express();
-
-// ... (The rest of your code from here is perfectly fine and does not need changes) ...
 
 // Security middleware
 app.use(helmet({
@@ -101,27 +99,12 @@ app.use('/api/packages', packageRoutes);
 app.use('/api/reports', authMiddleware, reportRoutes);
 app.use('/api/bookings', bookingRoutes);
 
-// ... (The rest of your endpoints are fine) ...
+// --- Your other endpoints ---
+app.post('/api/contact', validation.validateContact, (req, res) => {});
+app.get('/api/locations', (req, res) => {});
+app.get('/api/search/packages', (req, res) => {});
+app.get('/api/blogs', (req, res) => {});
 
-// Contact form endpoint
-app.post('/api/contact', validation.validateContact, async (req, res) => {
-  // Your logic here
-});
-
-// Location endpoints
-app.get('/api/locations', async (req, res) => {
-  // Your logic here
-});
-
-// Package search endpoint
-app.get('/api/search/packages', async (req, res) => {
-  // Your logic here
-});
-
-// Blog endpoints (basic)
-app.get('/api/blogs', async (req, res) => {
-  // Your logic here
-});
 
 // 404 handler for API routes
 app.use('/api/*', (req, res) => {
@@ -136,3 +119,4 @@ app.use(errorHandler);
 
 // Export the app for Vercel
 module.exports = app;
+
