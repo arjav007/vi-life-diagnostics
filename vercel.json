@@ -5,7 +5,7 @@
       "src": "backend/package.json",
       "use": "@vercel/node",
       "config": {
-        "distDir": "backend/dist"
+        "includeFiles": "dist/**"
       }
     },
     {
@@ -16,7 +16,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/dist/server.js"
+      "destination": "/dist/server.js"
     },
     {
       "source": "/(.*)",
@@ -24,3 +24,4 @@
     }
   ]
 }
+
