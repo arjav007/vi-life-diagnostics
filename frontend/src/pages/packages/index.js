@@ -205,22 +205,24 @@ export default function PackagesPage({ initialPackages }) {
 }
 
 // Fetch data from Supabase directly
-export async function getServerSideProps() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
+export async function getServerSideProps({ req }) {
+  let initialPackages = [];
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://${req.headers.host}`;
+    const response = await fetch(`${baseUrl}/api/packages`);
 
-  let { data: packages, error } = await supabase.from("packages").select("*");
-
-  if (error) {
-    console.error("Supabase fetch error:", error.message);
-    packages = [];
+    if (response.ok) {
+      initialPackages = await response.json();
+    } else {
+      console.error("Failed to fetch packages, status:", response.status);
+    }
+  } catch (error) {
+    console.error("Error fetching packages from API:", error);
   }
 
   return {
     props: {
-      initialPackages: packages,
+      initialPackages,
     },
   };
 }
