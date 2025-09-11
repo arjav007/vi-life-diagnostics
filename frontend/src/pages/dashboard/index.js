@@ -1,16 +1,39 @@
-import { useAuth } from "@/hooks/useAuth";
+// pages/dashboard.js
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useAuth } from '../context/AuthContext'
 
 export default function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user, loading } = useAuth()
+  const router = useRouter()
 
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login')
+    }
+  }, [user, loading, router])
+
+  // Show loading state during authentication check
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  // Show login redirect message if not authenticated
   if (!user) {
-    return <p>Please log in to access your dashboard.</p>;
+    return <div>Redirecting to login...</div>
   }
 
   return (
     <div>
-      <h1>Welcome, {user.name}!</h1>
-      <button onClick={logout}>Logout</button>
+      <h1>Dashboard</h1>
+      {/* Your protected content here */}
     </div>
-  );
+  )
+}
+
+// This enables static generation
+export async function getStaticProps() {
+  return {
+    props: {}
+  }
 }
