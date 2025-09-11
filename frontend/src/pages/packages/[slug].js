@@ -1,51 +1,21 @@
 // frontend/pages/packages/[slug].js
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/20/solid';
-import Image from 'next/image'; // Added this import for the Image component
 
-
-const PackageDetailsPage = () => {
-  const router = useRouter();
-  const { slug } = router.query;
-  const [packageData, setPackageData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPackage = async () => {
-      if (slug) {
-        try {
-          // This API_BASE variable will be defined in your .env.local file
-          const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
-          const response = await fetch(`http://localhost:3000/api/packages/${slug}`);
-          if (!response.ok) {
-            throw new Error('Package not found');
-          }
-          const data = await response.json();
-          setPackageData(data);
-        } catch (error) {
-          console.error('Failed to fetch package:', error);
-          setPackageData(null);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-    fetchPackage();
-  }, [slug]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+// The page component now receives packageData as a prop
+const PackageDetailsPage = ({ packageData }) => {
   
+  // If the package was not found, getServerSideProps will handle it
   if (!packageData) {
     return <div>Package not found.</div>;
   }
   
-  // Convert included_tests object to an array of values for rendering
-  const testParameters = Object.values(packageData.included_tests);
+  // Convert included_tests object to an array for rendering
+  const testParameters = Object.values(packageData.included_tests || {});
+  const reviews = packageData.reviews || [];
 
   return (
     <>
@@ -80,14 +50,14 @@ const PackageDetailsPage = () => {
               </Link>
             </div>
 
-            {/* Right side with an empty space or image if you have one */}
-<div className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
-  <img 
-    src="/images/Diagnostics.jpg" 
-    alt="Medical Laboratory Analysis"
-    className="w-full h-full object-cover"
-  />
-</div>
+            {/* Right side with an image */}
+            <div className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
+              <img 
+                src="/images/Diagnostics.jpg" 
+                alt="Medical Laboratory Analysis"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -112,28 +82,26 @@ const PackageDetailsPage = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Rating & Reviews</h2>
               <div className="space-y-6">
-                {packageData.reviews.map((review, index) => (
+                {reviews.length > 0 ? reviews.map((review, index) => (
                   <div key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
                     <p className="text-gray-700 mb-2 leading-relaxed italic">
                       "{review.text}"
                     </p>
                     <div className="flex items-center space-x-2">
                       <div className="flex text-yellow-400">
-                        <StarIcon className="w-5 h-5" />
-                        <StarIcon className="w-5 h-5" />
-                        <StarIcon className="w-5 h-5" />
-                        <StarIcon className="w-5 h-5" />
-                        <StarIcon className="w-5 h-5" />
+                        {/* Assuming a 5-star rating for simplicity */}
+                        {[...Array(5)].map((_, i) => <StarIcon key={i} className="w-5 h-5" />)}
                       </div>
                       <p className="font-semibold text-gray-800">{review.author}</p>
                     </div>
                   </div>
-                ))}
+                )) : <p className="text-gray-500">No reviews yet.</p>}
               </div>
             </div>
           </div>
         </div>
       </section>
+      
       {/* Sticky WhatsApp Icon */}
       <a
         href="https://wa.me/918828826646"
@@ -143,7 +111,7 @@ const PackageDetailsPage = () => {
       >
         <div className="relative w-16 h-16">
           <Image
-            src="/images/watsapp-icon.png" // Path to your uploaded image
+            src="/images/watsapp-icon.png"
             alt="WhatsApp Chat"
             layout="fill"
             objectFit="contain"
@@ -152,29 +120,20 @@ const PackageDetailsPage = () => {
         </div>
       </a>
       
-      
-       {/* Home Collection CTA Section */}
+      {/* Home Collection CTA Section */}
       <section className="relative py-16 overflow-hidden">
-        {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('/images/BookHomeCollection.jpg')` }}
         >
-          {/* Background Image Overlay */}
           <div className="absolute inset-0 bg-black/80"></div>
         </div>
-
         <div className="relative container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="text-white">
-              <h2 className="text-4xl font-bold mb-4">
-                Book Your Home Collection
-              </h2>
-              <p className="text-xl text-gray-200">
-                Get exclusive packages on your first healthcare test.
-              </p>
+              <h2 className="text-4xl font-bold mb-4">Book Your Home Collection</h2>
+              <p className="text-xl text-gray-200">Get exclusive packages on your first healthcare test.</p>
             </div>
-            
             <div className="flex-shrink-0">
               <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
                 <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
@@ -188,5 +147,33 @@ const PackageDetailsPage = () => {
     </>
   );
 };
+
+// This function runs on the server for every request
+export async function getServerSideProps(context) {
+  const { slug } = context.params;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  try {
+    const response = await fetch(`${apiUrl}/api/packages/${slug}`);
+    
+    // If the package is not found, the API should return a 404
+    if (!response.ok) {
+      return { notFound: true }; // This will render the 404 page
+    }
+    
+    const packageData = await response.json();
+    
+    // Pass the data to the page component as props
+    return {
+      props: {
+        packageData,
+      },
+    };
+  } catch (error) {
+    console.error('Failed to fetch package in getServerSideProps:', error);
+    // You can handle the error by returning a custom error prop or redirecting
+    return { notFound: true };
+  }
+}
 
 export default PackageDetailsPage;
