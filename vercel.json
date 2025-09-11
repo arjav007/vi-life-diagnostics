@@ -4,7 +4,9 @@
     {
       "src": "backend/package.json",
       "use": "@vercel/node",
-      "config": { "distDir": "backend/dist" }
+      "config": {
+        "distDir": "backend/dist"
+      }
     },
     {
       "src": "frontend/package.json",
@@ -15,6 +17,10 @@
     {
       "source": "/api/(.*)",
       "destination": "/backend/dist/server.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/frontend/$1"
     }
   ]
 }
