@@ -1,7 +1,7 @@
-// frontend/src/pages/_app.js - This is the CORRECT code
 import '../styles/globals.css';
-import { AuthProvider } from '../context/AuthContext';
-import Layout from '../components/layout/layout';
+// FIX: Using a more robust path alias
+import { AuthProvider } from '@/context/AuthContext'; 
+import Layout from '@/components/layout/layout';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -14,3 +14,4 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+
