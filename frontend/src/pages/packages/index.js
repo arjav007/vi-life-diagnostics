@@ -3,10 +3,10 @@ import Head from 'next/head';
 import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createClient } from "@supabase/supabase-js";
 
-// The page now receives the 'initialPackages' prop from the server
 export default function PackagesPage({ initialPackages }) {
-  const [packages] = useState(initialPackages); // Use the server-provided data
+  const [packages] = useState(initialPackages);
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     category: '',
@@ -17,7 +17,6 @@ export default function PackagesPage({ initialPackages }) {
 
   const filteredPackages = packages.filter((pkg) => {
     const matchesSearch = pkg.name.toLowerCase().includes(searchTerm.toLowerCase());
-    // Ensure filters match backend data structure
     const matchesCategory = filters.category ? pkg.category === filters.category : true;
     const matchesGender = filters.gender ? pkg.gender === filters.gender || pkg.gender === 'Both' : true;
     return matchesSearch && matchesCategory && matchesGender;
@@ -48,7 +47,7 @@ export default function PackagesPage({ initialPackages }) {
       </Head>
 
       <div className="bg-gray-100 min-h-screen">
-        {/* Header Section with Background Image */}
+        {/* Header Section */}
         <div 
           className="relative bg-cover bg-center text-white py-16 px-6 sm:px-12"
           style={{ backgroundImage: 'url("/images/HealthcarePackage.png")' }}
@@ -79,7 +78,7 @@ export default function PackagesPage({ initialPackages }) {
             </div>
           </div>
 
-          {/* Filter Buttons Container */}
+          {/* Filters */}
           <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-4">
             {/* Category Dropdown */}
             <div className="relative">
@@ -110,7 +109,7 @@ export default function PackagesPage({ initialPackages }) {
             </div>
           </div>
           
-          {/* Active Filter Tags */}
+          {/* Active Filters */}
           <div className="flex items-center space-x-2 my-4 min-h-[2rem]">
             {getActiveFilterTags().map((tag) => (
               <span key={tag} className="bg-[#1e535e] text-white text-sm font-medium px-2.5 py-1 rounded-full flex items-center">
@@ -125,10 +124,10 @@ export default function PackagesPage({ initialPackages }) {
             )}
           </div>
 
-          {/* Total Packages Count */}
+          {/* Count */}
           <p className="text-gray-600 font-medium">Showing {filteredPackages.length} of {packages.length} packages</p>
 
-          {/* Package Cards Grid */}
+          {/* Grid */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredPackages.map((pkg) => (
               <Link 
@@ -159,7 +158,7 @@ export default function PackagesPage({ initialPackages }) {
         </div>
       </div>
       
-      {/* Home Collection CTA Section */}
+      {/* Home Collection CTA */}
       <section className="relative py-16 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -175,7 +174,6 @@ export default function PackagesPage({ initialPackages }) {
             </div>
             <div className="flex-shrink-0">
               <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-                {/* FIX: Removed shadow for consistency */}
                 <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
                   Book a Home Visit
                 </button>
@@ -185,7 +183,7 @@ export default function PackagesPage({ initialPackages }) {
         </div>
       </section>
 
-      {/* Sticky WhatsApp Icon */}
+      {/* Sticky WhatsApp */}
       <a
         href="https://wa.me/918828826646"
         target="_blank"
@@ -206,24 +204,23 @@ export default function PackagesPage({ initialPackages }) {
   );
 }
 
-// This function runs on the server for every request to this page
+// Fetch data from Supabase directly
 export async function getServerSideProps() {
-  let initialPackages = [];
-  try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await fetch(`${apiUrl}/api/packages`);
-    if (response.ok) {
-      initialPackages = await response.json();
-    } else {
-      console.error('Failed to fetch packages, status:', response.status);
-    }
-  } catch (error) {
-    console.error('Error fetching packages from API:', error);
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+
+  let { data: packages, error } = await supabase.from("packages").select("*");
+
+  if (error) {
+    console.error("Supabase fetch error:", error.message);
+    packages = [];
   }
 
   return {
     props: {
-      initialPackages,
+      initialPackages: packages,
     },
   };
 }
