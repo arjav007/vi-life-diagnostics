@@ -88,21 +88,22 @@ const Homepage = () => {
       </Head>
 
       {/* Sticky WhatsApp Icon */}
-      <a 
-        href="https://wa.me/918828826646" 
-        target="_blank" 
-        rel="noopener noreferrer" 
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-3 rounded-full transition-transform hover:scale-110"
-      >
-        <svg 
-          className="w-8 h-8" 
-          fill="currentColor" 
-          viewBox="0 0 24 24" 
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M20.52 3.44A10.82 10.82 0 0012.04 1.5C6.07 1.5 1 6.32 1 12.16c0 1.94.51 3.82 1.48 5.48L1 23l6.55-1.72a10.9 10.9 0 005.49 1.48c5.97 0 10.99-4.82 10.99-10.66C23.03 6.64 21.82 4.67 20.52 3.44zM12.04 21.31a8.91 8.91 0 01-4.63-1.29l-.33-.19L4.41 21.3l1.1-3.95-.21-.34a9.14 9.14 0 01-1.39-5.11C3.91 7.42 7.55 3.75 12.04 3.75c2.47 0 4.79 1 6.55 2.76a8.91 8.91 0 012.63 6.39c0 4.7-3.79 8.54-8.49 8.54zM17.15 15.11c-.24-.12-.42-.19-.8-.38-.4-.2-.59-.28-.84-.33-.2-.04-.42-.04-.61.03-.17.06-.39.19-.59.4-.2.2-.42.22-.59.13-.24-.13-.99-.36-1.89-1.15a8.2 8.2 0 01-1.35-1.57c-.29-.38-.08-.59.18-.84.18-.18.4-.44.59-.65.2-.24.26-.38.4-.7a.9.9 0 00.12-.59c-.06-.15-.59-1.42-.81-1.92-.19-.46-.37-.39-.55-.39-.17 0-.39.03-.59.03-.2 0-.42.06-.61.25-.2.19-.77.75-.77 1.84s.82 2.13.94 2.29c.15.19 1.51 2.31 3.59 3.29.98.47 1.76.75 2.37.95.49.16.8.13 1.05.08.31-.06.99-.4 1.13-.78.14-.37.14-.69.1-.75-.03-.06-.11-.1-.23-.17z" />
-        </svg>
-      </a>
+<a
+  href="https://wa.me/918828826646"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110"
+>
+  <div className="relative w-16 h-16">
+    <Image
+      src="/images/watsapp-icon.png" // Path to your uploaded image
+      alt="WhatsApp Chat"
+      layout="fill"
+      objectFit="contain"
+      className="rounded-full"
+    />
+  </div>
+</a>
 
       {/* Hero Section */}
       <section className="relative min-h-screen bg-gray-900 overflow-hidden">
@@ -120,7 +121,7 @@ const Homepage = () => {
               <div className="space-y-4">
                 <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
                   Your Health, 
-                  <span className="text-emerald-300"> Our Priority</span>
+                  <span className="text-[#7ac144]"> Our Priority</span>
                 </h1>
                 <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed">
                   ViLife Diagnostics provides accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. Whatsapp us for home collection.
@@ -299,22 +300,25 @@ const Homepage = () => {
   </div>
 </section>
 
-      {/* Get Reports Faster Section */}
-      <section className="py-20 bg-blue-50">
+     {/* Get Reports Faster Section */}
+<section className="py-20 bg-blue-50">
   <div className="container mx-auto px-4">
-    <div className="grid lg:grid-cols-2 gap-12 items-center">
+    {/* Use a simple grid. It will automatically match the column heights. */}
+    <div className="grid lg:grid-cols-2 gap-12 items-start">
+      
+      {/* Left side: Text Content flows naturally */}
       <div>
         <h2 className="text-4xl font-bold text-[#1c515c] mb-6">
           Get Your Test Reports Faster Than Ever
         </h2>
+        {/* Added margin-bottom here for natural spacing */}
         <p className="text-lg text-gray-600 mb-8">
           Thanks to cutting-edge automation and thorough expert validation, we process your samples quickly while maintaining the highest quality standards. Most diagnostic reports are completed and shared within just 6–12 hours, ensuring you receive fast, accurate results when you need them most.
         </p>
-        
         <div className="space-y-4">
           {[
             'Same-day report delivery for most tests',
-            'Digital access via WhatsApp and Email', 
+            'Digital access via WhatsApp and Email',
             'Expert-verified for 100% accuracy'
           ].map((item, index) => (
             <div key={index} className="flex items-center space-x-3">
@@ -325,22 +329,18 @@ const Homepage = () => {
         </div>
       </div>
       
-      <div className="relative">
-        <div className="bg-white rounded-2xl p-8 overflow-hidden">
-          {/* Microscope Image Placeholder */}
-          <div className="w-full h-64  flex items-center justify-center overflow-hidden">
-            <img 
-              src="/images/ReportFast.png" 
-              alt="Laboratory microscope"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
+      {/* Right side: Image automatically stretches to the correct height */}
+      <div className="h-96 rounded-xl overflow-hidden">
+        <img 
+          src="/images/ReportFast.png" 
+          alt="Laboratory microscope"
+          className="w-full h-full object-cover"
+        />
       </div>
+
     </div>
   </div>
 </section>
-
        {/* Clinical Trials Section */}
 <section className="py-20 bg-gray-50">
   <div className="container mx-auto px-4">

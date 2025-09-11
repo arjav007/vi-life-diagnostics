@@ -27,6 +27,24 @@ const AboutPage = () => {
           </p>
         </div>
       </section>
+      
+      {/* Sticky WhatsApp Icon */}
+      <a
+        href="https://wa.me/918828826646"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110"
+      >
+        <div className="relative w-16 h-16">
+          <Image
+            src="/images/watsapp-icon.png" // Path to your uploaded image
+            alt="WhatsApp Chat"
+            layout="fill"
+            objectFit="contain"
+            className="rounded-full"
+          />
+        </div>
+      </a>
 
       {/* Lab Director Section */}
       <section className="py-20 bg-white">
@@ -39,7 +57,7 @@ const AboutPage = () => {
                 alt="Dr. Snehal Kosale, Lab Director"
                 width={500}
                 height={500}
-                className="rounded-xl shadow-lg"
+                className="rounded-xl"
               />
             </div>
             
@@ -60,109 +78,104 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
-      {/* Accreditations Section */}
-<section className="py-16 bg-blue-50">
-  <div className="container mx-auto px-6 md:px-12 lg:px-20"> {/* Removed text-center */}
-    
-    {/* Use flexbox for the two-column layout */}
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12">
-      
-      {/* Left side: Content and Heading */}
-      <div className="md:w-1/2 text-center md:text-left">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#1c515c] mb-6">
-          Trusted Accreditations
-        </h2>
-        <p className="text-gray-600 mx-auto md:mx-0 text-lg mb-10 leading-relaxed max-w-xl">
-          National Accreditation Board for Testing and Calibration Laboratories (NABL) and International Laboratory Accreditation Cooperation (ILAC) accreditations ensure that labs follow the stringent quality protocols set up by these bodies. ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
-        </p>
-      </div>
-      
-      {/* Right side: Logos */}
-      <div className="md:w-1/2 flex justify-center md:justify-end items-center gap-12">
-        <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
-          <img
-            src="/images/ILAC.png"
-            alt="ILAC Accredited"
-            className="object-contain w-full h-full"
-          />
-        </div>
-        <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
-          <img
-            src="/images/NABL-FINAL.png"
-            alt="NABL Accredited"
-            className="object-contain w-full h-full"
-          />
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</section>
 
-      {/* Our Values Section */}
-      <section className="py-20 bg-gray-100">
-        <div className="container mx-auto px-4 text-center">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Our Values</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
-            </p>
-          </div>
-          {/* Updated Values Grid with cards and shadows */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-            {[
-              'Quality',
-              'Timeliness',
-              'Excellence',
-              'Humanity',
-              'Teamwork',
-              'Research'
-            ].map((value, index) => (
-              <div 
-                key={index} 
-                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300"
-              >
-                <p className="text-xl font-medium text-gray-800">{value}</p>
+      {/* Accreditations Section */}
+      <section className="py-16 bg-blue-50">
+        <div className="container mx-auto px-6 md:px-12 lg:px-20">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12">
+            {/* Left side: Content and Heading */}
+            <div className="md:w-1/2 text-center md:text-left">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1c515c] mb-6">
+                Trusted Accreditations
+              </h2>
+              <p className="text-gray-600 mx-auto md:mx-0 text-lg mb-10 leading-relaxed max-w-xl">
+                National Accreditation Board for Testing and Calibration Laboratories (NABL) and International Laboratory Accreditation Cooperation (ILAC) accreditations ensure that labs follow the stringent quality protocols set up by these bodies. ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
+              </p>
+            </div>
+            
+            {/* Right side: Logos */}
+            <div className="md:w-1/2 flex justify-center md:justify-end items-center gap-12">
+              <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+                <img
+                  src="/images/ILAC.png"
+                  alt="ILAC Accredited"
+                  className="object-contain w-full h-full"
+                />
               </div>
-            ))}
+              <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+                <img
+                  src="/images/NABL-FINAL.png"
+                  alt="NABL Accredited"
+                  className="object-contain w-full h-full"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
-      
-      {/* Home Collection CTA Section */}
-<section className="relative py-16 overflow-hidden">
-  {/* Background Image */}
-  <div 
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-    style={{
-      backgroundImage: `url('/images/BookHomeCollection.jpg')`
-    }}
-  >
-    {/* Background Image Overlay */}
-    <div className="absolute inset-0 bg-black/80"></div>
-  </div>
 
-  <div className="relative container mx-auto px-4">
-    <div className="flex items-center justify-between">
-      <div className="text-white">
-        <h2 className="text-4xl font-bold mb-4">
-          Book Your Home Collection
-        </h2>
-        <p className="text-xl text-gray-200">
-          Get exclusive packages on your first healthcare test.
-        </p>
-      </div>
-      
-      <div className="flex-shrink-0">
-        <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-          <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
-            Book a Home Visit
-          </button>
-        </Link>
-      </div>
+      {/* Our Values Section */}
+<section className="py-20 bg-white">
+  <div className="container mx-auto px-4 text-center">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Our Values</h2>
+      <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
+      </p>
+    </div>
+    {/* Updated Values Grid with bg-blue-50 boxes */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+      {[
+        'Quality',
+        'Timeliness',
+        'Excellence',
+        'Humanity',
+        'Teamwork',
+        'Research'
+      ].map((value, index) => (
+        <div
+          key={index}
+          className="bg-blue-50 p-6 rounded-lg" // Changed bg-white to bg-blue-50
+        >
+          <p className="text-xl font-medium text-gray-800">{value}</p>
+        </div>
+      ))}
     </div>
   </div>
 </section>
+      
+      {/* Home Collection CTA Section */}
+      <section className="relative py-16 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/images/BookHomeCollection.jpg')`
+          }}
+        >
+          <div className="absolute inset-0 bg-black/80"></div>
+        </div>
+
+        <div className="relative container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            <div className="text-white">
+              <h2 className="text-4xl font-bold mb-4">
+                Book Your Home Collection
+              </h2>
+              <p className="text-xl text-gray-200">
+                Get exclusive packages on your first healthcare test.
+              </p>
+            </div>
+            
+            <div className="flex-shrink-0">
+              <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+                <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+                  Book a Home Visit
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

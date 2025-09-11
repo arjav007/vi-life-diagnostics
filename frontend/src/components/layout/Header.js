@@ -46,8 +46,6 @@ const Header = () => {
 
   return (
     <>
-      {/* Top Bar removed from here */}
-      
       {/* Main Header */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled 
@@ -87,8 +85,6 @@ const Header = () => {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
-              {/* No user menu as per screenshot */}
-
               {/* CTA Button */}
               <Link
                 href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
@@ -163,7 +159,7 @@ const Header = () => {
               </Link>
 
               {/* User Actions Mobile */}
-              {user ? (
+              {user && (
                 <div className="space-y-2 mt-4">
                   <Link
                     href="/dashboard"
@@ -182,14 +178,6 @@ const Header = () => {
                     Sign Out
                   </button>
                 </div>
-              ) : (
-                <Link
-                  href="/auth/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors duration-300 text-center mt-4"
-                >
-                  Sign In
-                </Link>
               )}
             </nav>
           </div>

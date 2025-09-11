@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { StarIcon } from '@heroicons/react/20/solid';
+import Image from 'next/image'; // Added this import for the Image component
+
 
 const PackageDetailsPage = () => {
   const router = useRouter();
@@ -132,6 +134,24 @@ const PackageDetailsPage = () => {
           </div>
         </div>
       </section>
+      {/* Sticky WhatsApp Icon */}
+      <a
+        href="https://wa.me/918828826646"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110"
+      >
+        <div className="relative w-16 h-16">
+          <Image
+            src="/images/watsapp-icon.png" // Path to your uploaded image
+            alt="WhatsApp Chat"
+            layout="fill"
+            objectFit="contain"
+            className="rounded-full"
+          />
+        </div>
+      </a>
+      
       
        {/* Home Collection CTA Section */}
       <section className="relative py-16 overflow-hidden">

@@ -77,7 +77,7 @@ const LocationsPage = () => {
                 >
                   <div className="flex items-start space-x-4">
                     <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white text-sm ${
-                      activeLocation.name === location.name ? 'bg-teal-600' : 'bg-gray-400'
+                      activeLocation.name === location.name ? 'bg-teal-600' : 'bg-[#7ac144]'
                     }`}>
                       {index + 1}
                     </div>
@@ -159,6 +159,24 @@ const LocationsPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Sticky WhatsApp Icon */}
+<a
+  href="https://wa.me/918828826646"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110"
+>
+  <div className="relative w-16 h-16">
+    <Image
+      src="/images/watsapp-icon.png" // Path to your uploaded image
+      alt="WhatsApp Chat"
+      layout="fill"
+      objectFit="contain"
+      className="rounded-full"
+    />
+  </div>
+</a>
 
       {/* Home Collection CTA Section */}
 <section className="relative py-16 overflow-hidden">
