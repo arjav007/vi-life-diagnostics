@@ -2,17 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/package.json",
-      "use": "@vercel/next"
+      "src": "backend/api/index.js",
+      "use": "@vercel/node"
     },
     {
-      "src": "backend/api/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "../dist/**"
-        ]
-      }
+      "src": "frontend/package.json",
+      "use": "@vercel/next"
     }
   ],
   "rewrites": [
@@ -26,3 +21,4 @@
     }
   ]
 }
+
