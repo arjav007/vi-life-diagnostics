@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Bars3Icon, XMarkIcon, PhoneIcon, MapPinIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+// FIX: Removed unused icons (MapPinIcon, UserCircleIcon, PhoneIcon) to clear build warnings
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
@@ -27,12 +28,12 @@ const Header = () => {
   ];
 
   const quickActions = [
-    { name: 'Call', href: 'tel:+919828826646', icon: PhoneIcon },
-    { name: 'Mail', href: 'mailto:info@vlifediagnostics.com', icon: null },
-    { name: 'Whatsapp', href: 'https://wa.me/918828826646', icon: null },
-    { name: 'Upload Prescription', href: 'https://wa.me/918828826646?text=Hello%2CViLife%20Diagnostics.Here%20is%20my%20doctor%27s%20prescription.', icon: null },
-    { name: 'Download Reports', href: 'https://wa.me/918828826646?text=Hello%2C%20ViLife%20Diagnostics.Kindly%20share%20me%20my%20reports.', icon: null },
-    { name: 'Blogs', href: '/blogs', icon: null },
+    { name: 'Call', href: 'tel:+918828826646' },
+    { name: 'Mail', href: 'mailto:info@vlifediagnostics.com' },
+    { name: 'Whatsapp', href: 'https://wa.me/918828826646' },
+    { name: 'Upload Prescription', href: 'https://wa.me/918828826646?text=Hello%2CViLife%20Diagnostics.Here%20is%20my%20doctor%27s%20prescription.' },
+    { name: 'Download Reports', href: 'https://wa.me/918828826646?text=Hello%2C%20ViLife%20Diagnostics.Kindly%20share%20me%20my%20reports.' },
+    { name: 'Blogs', href: '/blogs' },
   ];
 
   const toggleMenu = () => {
@@ -49,7 +50,8 @@ const Header = () => {
       {/* Main Header */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-lg shadow-lg' 
+          // FIX: Removed shadow-lg for consistency
+          ? 'bg-white/95 backdrop-blur-lg shadow-md' 
           : 'bg-white'
       }`}>
         <div className="container mx-auto px-4">
@@ -57,11 +59,11 @@ const Header = () => {
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3">
              <Image
-             src="/images/logo.png"
-             alt="ViLife Diagnostics"
-             width={180}   // adjust as needed
-             height={60}   // adjust as needed
-             priority
+               src="/images/logo.png"
+               alt="ViLife Diagnostics"
+               width={180}
+               height={60}
+               priority
              />
              </Link>
 
@@ -90,7 +92,8 @@ const Header = () => {
                 href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
                 passHref
               >
-                <button className="bg-[#7ac144] text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg  transition-all duration-300 hidden md:block">
+                {/* FIX: Removed shadow-lg for consistency */}
+                <button className="bg-[#7ac144] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-600 transition-all duration-300 hidden md:block">
                   Book a Home Visit
                 </button>
               </Link>
@@ -153,7 +156,8 @@ const Header = () => {
                 href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
                 passHref
               >
-                <button className="w-full bg-[#8fc048] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                {/* FIX: Removed shadow-lg for consistency */}
+                <button className="w-full bg-[#8fc048] text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-all duration-300">
                   Book a Home Visit
                 </button>
               </Link>

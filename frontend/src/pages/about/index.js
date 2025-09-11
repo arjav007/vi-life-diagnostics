@@ -16,7 +16,7 @@ const AboutPage = () => {
       <section className="relative min-h-[50vh] flex items-center justify-center text-center text-white overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/LabPhoto.webp')" }} // Place your image in public/images
+          style={{ backgroundImage: "url('/images/LabPhoto.webp')" }}
         >
           <div className="absolute inset-0 bg-black/50"></div> {/* Dark overlay */}
         </div>
@@ -53,7 +53,7 @@ const AboutPage = () => {
             {/* Director's Photo */}
             <div className="flex justify-center lg:justify-start">
               <Image
-                src="/images/directorPhoto.webp" // Place your image in public/images
+                src="/images/directorPhoto.webp"
                 alt="Dr. Snehal Kosale, Lab Director"
                 width={500}
                 height={500}
@@ -93,20 +93,26 @@ const AboutPage = () => {
               </p>
             </div>
             
-            {/* Right side: Logos */}
+            {/* Right side: Logos - FIXED */}
             <div className="md:w-1/2 flex justify-center md:justify-end items-center gap-12">
               <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
-                <img
+                {/* FIX: Replaced <img> with <Image> */}
+                <Image
                   src="/images/ILAC.png"
                   alt="ILAC Accredited"
-                  className="object-contain w-full h-full"
+                  width={160}
+                  height={160}
+                  className="object-contain"
                 />
               </div>
               <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
-                <img
+                {/* FIX: Replaced <img> with <Image> */}
+                <Image
                   src="/images/NABL-FINAL.png"
                   alt="NABL Accredited"
-                  className="object-contain w-full h-full"
+                  width={160}
+                  height={160}
+                  className="object-contain"
                 />
               </div>
             </div>
@@ -115,34 +121,33 @@ const AboutPage = () => {
       </section>
 
       {/* Our Values Section */}
-<section className="py-20 bg-white">
-  <div className="container mx-auto px-4 text-center">
-    <div className="text-center mb-16">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Our Values</h2>
-      <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-        ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
-      </p>
-    </div>
-    {/* Updated Values Grid with bg-blue-50 boxes */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-      {[
-        'Quality',
-        'Timeliness',
-        'Excellence',
-        'Humanity',
-        'Teamwork',
-        'Research'
-      ].map((value, index) => (
-        <div
-          key={index}
-          className="bg-blue-50 p-6 rounded-lg" // Changed bg-white to bg-blue-50
-        >
-          <p className="text-xl font-medium text-gray-800">{value}</p>
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Our Values</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              ViLife Diagnostics as an organisation works towards meeting industry standards to deliver quality healthcare for you and your loved ones.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              'Quality',
+              'Timeliness',
+              'Excellence',
+              'Humanity',
+              'Teamwork',
+              'Research'
+            ].map((value, index) => (
+              <div
+                key={index}
+                className="bg-blue-50 p-6 rounded-lg"
+              >
+                <p className="text-xl font-medium text-gray-800">{value}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
       
       {/* Home Collection CTA Section */}
       <section className="relative py-16 overflow-hidden">

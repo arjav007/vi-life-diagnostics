@@ -51,11 +51,13 @@ const PackageDetailsPage = ({ packageData }) => {
             </div>
 
             {/* Right side with an image */}
-            <div className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
-              <img 
+            {/* FIX: Replaced <img> with <Image> component */}
+            <div className="relative flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
+              <Image 
                 src="/images/Diagnostics.jpg" 
                 alt="Medical Laboratory Analysis"
-                className="w-full h-full object-cover"
+                layout="fill"
+                objectFit="cover"
               />
             </div>
           </div>
@@ -84,8 +86,9 @@ const PackageDetailsPage = ({ packageData }) => {
               <div className="space-y-6">
                 {reviews.length > 0 ? reviews.map((review, index) => (
                   <div key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
+                    {/* FIX: Escaped quote characters to prevent build error */}
                     <p className="text-gray-700 mb-2 leading-relaxed italic">
-                      "{review.text}"
+                      &quot;{review.text}&quot;
                     </p>
                     <div className="flex items-center space-x-2">
                       <div className="flex text-yellow-400">
@@ -136,7 +139,8 @@ const PackageDetailsPage = ({ packageData }) => {
             </div>
             <div className="flex-shrink-0">
               <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-                <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+                {/* FIX: Removed shadow-lg for consistency */}
+                <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
                   Book a Home Visit
                 </button>
               </Link>

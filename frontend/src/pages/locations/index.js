@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPinIcon } from '@heroicons/react/24/outline';
-import { PhoneIcon, ClockIcon } from '@heroicons/react/24/solid';
+// FIX: Removed unused icons to clear build warnings.
 
 const LocationsPage = () => {
   // Static data for locations and connectivity details
@@ -12,7 +11,7 @@ const LocationsPage = () => {
     { 
       name: 'Thane', 
       address: 'Casting Company, Unit 1A & B, 1st Floor, Shreeji Arcade, opp. Nitin - Cadbury Flyover, Panch Pakhdi, Thane, Maharashtra 400602', 
-      mapLink: 'http://google.com/maps?q=ViLife+Diagnostics+Thane', 
+      mapLink: 'https://maps.google.com/?q=ViLife+Diagnostics+Thane', 
       connectivity: [
         { type: 'Airport', title: 'Airport', description: 'Navi Mumbai International Airport', distance: '30.2 km', duration: '1 hour drive' },
         { type: 'Bus Station', title: 'Bus Station', description: 'MSRTC Bus stand Thane', distance: '1.8 km', duration: '11 min drive' },
@@ -23,7 +22,7 @@ const LocationsPage = () => {
     { 
       name: 'Dombivli', 
       address: 'Hopewell Multispeciality Hospital, Meadows Gate Bungalow No. 46, Cssa Rio Gara No. 2, Palava City, Dombivli - 421204', 
-      mapLink: 'http://google.com/maps?q=Hopewell+Multispeciality+Hospital+Dombivli', 
+      mapLink: 'https://maps.google.com/?q=Hopewell+Multispeciality+Hospital+Dombivli', 
       connectivity: [
         { type: 'Airport', title: 'Airport', description: 'Navi Mumbai International Airport', distance: '28.2 km', duration: '1 hour 6 min drive' },
         { type: 'Train Station', title: 'Train Station', description: 'Dombivli Railway Station', distance: '11 km', duration: '30 min drive' },
@@ -104,11 +103,9 @@ const LocationsPage = () => {
                   />
                 </div>
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center z-10">
-                  <Link href={activeLocation.mapLink} passHref target="_blank" rel="noopener noreferrer">
-                    <button className="bg-white text-gray-800 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100 transition-colors duration-200">
+                  <a href={activeLocation.mapLink} target="_blank" rel="noopener noreferrer" className="bg-white text-gray-800 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100 transition-colors duration-200">
                       Get Directions on Google Maps
-                    </button>
-                  </Link>
+                  </a>
                 </div>
               </div>
 
@@ -124,7 +121,7 @@ const LocationsPage = () => {
                       activeFilter === 'All' ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                   >
-                    All X
+                    All
                   </button>
                   {allConnectivityTypes.map((filterType) => (
                     <button
@@ -161,58 +158,54 @@ const LocationsPage = () => {
       </section>
 
       {/* Sticky WhatsApp Icon */}
-<a
-  href="https://wa.me/918828826646"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110"
->
-  <div className="relative w-16 h-16">
-    <Image
-      src="/images/watsapp-icon.png" // Path to your uploaded image
-      alt="WhatsApp Chat"
-      layout="fill"
-      objectFit="contain"
-      className="rounded-full"
-    />
-  </div>
-</a>
+      <a
+        href="https://wa.me/918828826646"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110"
+      >
+        <div className="relative w-16 h-16">
+          <Image
+            src="/images/watsapp-icon.png"
+            alt="WhatsApp Chat"
+            layout="fill"
+            objectFit="contain"
+            className="rounded-full"
+          />
+        </div>
+      </a>
 
       {/* Home Collection CTA Section */}
-<section className="relative py-16 overflow-hidden">
-  {/* Background Image */}
-  <div 
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-    style={{
-      backgroundImage: `url('/images/BookHomeCollection.jpg')`
-    }}
-  >
-    {/* Background Image Overlay */}
-    <div className="absolute inset-0 bg-black/80"></div>
-  </div>
-
-  <div className="relative container mx-auto px-4">
-    <div className="flex items-center justify-between">
-      <div className="text-white">
-        <h2 className="text-4xl font-bold mb-4">
-          Book Your Home Collection
-        </h2>
-        <p className="text-xl text-gray-200">
-          Get exclusive packages on your first healthcare test.
-        </p>
-      </div>
-      
-      <div className="flex-shrink-0">
-        <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-          <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
-            Book a Home Visit
-          </button>
-        </Link>
-      </div>
-    </div>
-  </div>
-</section>
-      
+      <section className="relative py-16 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/images/BookHomeCollection.jpg')`
+          }}
+        >
+          <div className="absolute inset-0 bg-black/80"></div>
+        </div>
+        <div className="relative container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            <div className="text-white">
+              <h2 className="text-4xl font-bold mb-4">
+                Book Your Home Collection
+              </h2>
+              <p className="text-xl text-gray-200">
+                Get exclusive packages on your first healthcare test.
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+                {/* FIX: Removed shadow-lg for consistency */}
+                <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+                  Book a Home Visit
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Import the Next.js Image component
 import { Phone, MapPin, Mail, Clock } from 'lucide-react';
 
 const Footer = () => {
@@ -17,15 +18,18 @@ const Footer = () => {
           {/* Company Info Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3 mb-6">
-              <img 
+              {/* FIX 1: Replaced <img> with next/image <Image> for optimization */}
+              <Image 
                 src="/images/footer-logo.png" 
                 alt="ViLife Diagnostics" 
-                className="h-12 w-auto"
+                width={180} // Specify width
+                height={48}  // Specify height
               />
             </div>
             <h3 className="text-xl font-semibold mb-4">Your Health Our Priority</h3>
             <p className="text-gray-300 leading-relaxed">
-              ViLife Diagnostics delivers accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. With expert professionals and trusted accreditations, we're committed to your well-being at every step.
+              {/* FIX 2: Escaped the apostrophe in "we're" */}
+              ViLife Diagnostics delivers accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. With expert professionals and trusted accreditations, we&apos;re committed to your well-being at every step.
             </p>
           </div>
 
@@ -69,9 +73,10 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#blogs" className="text-gray-300 hover:text-white transition-colors">
+                {/* FIX 3: Changed to a proper Link component for the /blogs page */}
+                <Link href="/blogs" className="text-gray-300 hover:text-white transition-colors">
                   Blogs
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -112,14 +117,12 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom Section (The /locations link was already correctly using <Link>) */}
         <div className="border-t border-teal-100 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-300 text-sm">
               © 2025 ViLife Diagnostics. All Rights Reserved.
             </p>
-            
-            {/* Social Media Icons */}
             <div className="flex space-x-3 mt-4 md:mt-0">
               <a 
                 href={`tel:+${whatsappNumber}`} 
@@ -128,13 +131,13 @@ const Footer = () => {
               >
                 <Phone className="h-5 w-5 text-white" />
               </a>
-              <a 
+              <Link 
                 href="/locations" 
                 className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
                 aria-label="Location"
               >
                 <MapPin className="h-5 w-5 text-white" />
-              </a>
+              </Link>
               <a 
                 href="mailto:info@viliifediagnostics.com" 
                 className="bg-lime-500 hover:bg-lime-600 transition-colors rounded-full p-2"
