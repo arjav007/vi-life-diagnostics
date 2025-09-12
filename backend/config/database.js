@@ -7,7 +7,7 @@ require('dotenv').config();
 const isProduction = process.env.NODE_ENV === 'production';
 
 // Load the Supabase CA certificate
-const supabaseCA = fs.readFileSync(path.join(__dirname, '../certs/supabase.crt')).toString();
+const supabaseCA = fs.readFileSync(path.join(__dirname, '../cert/supabase.crt')).toString();
 
 // Start with the base connection string from your environment variables.
 let connectionString = process.env.DATABASE_URL;
