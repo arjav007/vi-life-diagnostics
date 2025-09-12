@@ -46,18 +46,14 @@ const PackageDetailsPage = ({ packageData }) => {
                   <span className="text-lg text-gray-500 line-through">{packageData.original_price}</span>
                 )}
               </div>
-              <Link
-                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                passHref
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300"
-                >
-                  Book Now
-                </a>
-              </Link>
+              <a
+  href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300"
+>
+  Book Now
+</a>
             </div>
             {/* Image Side */}
             <div className="relative flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">

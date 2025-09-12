@@ -197,16 +197,14 @@ const LocationsPage = () => {
       </div>
 
       {/* Button */}
-      <div className="flex-shrink-0">
-        <Link 
-          href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
-          passHref
-        >
-          <a className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
-            Book a Home Visit
-          </a>
-        </Link>
-      </div>
+<div className="flex-shrink-0">
+  <Link 
+    href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
+    className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
+  >
+    Book a Home Visit
+  </Link>
+</div>
 
     </div>
   </div>
