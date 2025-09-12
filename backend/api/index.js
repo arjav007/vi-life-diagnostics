@@ -22,6 +22,9 @@ dotenv.config();
 
 const app = express();
 
+// CRITICAL FIX: Trust proxy for Vercel deployment
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: {
@@ -56,7 +59,7 @@ app.use('/api/auth', authLimiter);
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://vi-life-diagnostics.vercel.app', 'https://www.vlifediagnostics.com'] 
+    ? ['https://vi-life-diagnostics.vercel.app', 'https://www.vlifediagnostics.com']
     : ['http://localhost:3001', 'http://127.0.0.1:3001'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -84,6 +87,7 @@ app.get('/api/health', async (req, res) => {
       server_time: result.rows[0].now,
     });
   } catch (error) {
+    console.error('Health check failed:', error);
     res.status(503).json({
       status: 'unhealthy',
       database: 'disconnected',
@@ -100,11 +104,21 @@ app.use('/api/reports', authMiddleware, reportRoutes);
 app.use('/api/bookings', bookingRoutes);
 
 // --- Your other endpoints ---
-app.post('/api/contact', validation.validateContact, (req, res) => {});
-app.get('/api/locations', (req, res) => {});
-app.get('/api/search/packages', (req, res) => {});
-app.get('/api/blogs', (req, res) => {});
+app.post('/api/contact', validation.validateContact, (req, res) => {
+  res.json({ message: 'Contact endpoint placeholder' });
+});
 
+app.get('/api/locations', (req, res) => {
+  res.json({ message: 'Locations endpoint placeholder' });
+});
+
+app.get('/api/search/packages', (req, res) => {
+  res.json({ message: 'Package search endpoint placeholder' });
+});
+
+app.get('/api/blogs', (req, res) => {
+  res.json({ message: 'Blogs endpoint placeholder' });
+});
 
 // 404 handler for API routes
 app.use('/api/*', (req, res) => {
@@ -119,4 +133,3 @@ app.use(errorHandler);
 
 // Export the app for Vercel
 module.exports = app;
-
