@@ -1,3 +1,6 @@
+// Disable SSL certificate validation globally (for backend connection to Supabase)
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -6,6 +9,7 @@ const compression = require('compression');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const path = require('path');
+
 
 // FIX: Corrected all paths to go up one level ('../') from the 'api' directory
 const { pool } = require('../config/database');
@@ -18,12 +22,15 @@ const packageRoutes = require('../routes/packages');
 const reportRoutes = require('../routes/reports');
 const bookingRoutes = require('../routes/bookings');
 
+
 dotenv.config();
 
 const app = express();
 
+
 // CRITICAL FIX: Trust proxy for Vercel deployment
 app.set('trust proxy', 1);
+
 
 // Security middleware
 app.use(helmet({
@@ -38,6 +45,7 @@ app.use(helmet({
   },
 }));
 
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -47,14 +55,17 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
   message: { error: 'Too many authentication attempts, please try again later.' },
 });
 
+
 app.use(limiter);
 app.use('/api/auth', authLimiter);
+
 
 // CORS configuration
 app.use(cors({
@@ -66,16 +77,20 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
 
+
 // Compression and logging
 app.use(compression());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Health check endpoint
 app.get('/api/health', async (req, res) => {
@@ -96,6 +111,7 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', authMiddleware, userRoutes);
@@ -103,22 +119,27 @@ app.use('/api/packages', packageRoutes);
 app.use('/api/reports', authMiddleware, reportRoutes);
 app.use('/api/bookings', bookingRoutes);
 
+
 // --- Your other endpoints ---
 app.post('/api/contact', validation.validateContact, (req, res) => {
   res.json({ message: 'Contact endpoint placeholder' });
 });
 
+
 app.get('/api/locations', (req, res) => {
   res.json({ message: 'Locations endpoint placeholder' });
 });
+
 
 app.get('/api/search/packages', (req, res) => {
   res.json({ message: 'Package search endpoint placeholder' });
 });
 
+
 app.get('/api/blogs', (req, res) => {
   res.json({ message: 'Blogs endpoint placeholder' });
 });
+
 
 // 404 handler for API routes
 app.use('/api/*', (req, res) => {
@@ -128,8 +149,10 @@ app.use('/api/*', (req, res) => {
   });
 });
 
+
 // Global error handler
 app.use(errorHandler);
+
 
 // Export the app for Vercel
 module.exports = app;
