@@ -16,7 +16,8 @@ if (isProduction && connectionString && !connectionString.includes('sslmode')) {
 
 const pool = new Pool({
   connectionString: connectionString,
-  // This ssl object is kept as a fallback for maximum compatibility with various clients.
+  // This ssl object is also crucial. It tells the client to allow
+  // certificates that may not be in its default trusted list.
   ssl: isProduction ? { rejectUnauthorized: false } : false,
 });
 
