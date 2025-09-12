@@ -24,7 +24,7 @@ if (isProduction && connectionString && !connectionString.includes('sslmode')) {
 
 // DEBUG LOG: Log final connection string and SSL config
 console.log('Final connection string:', connectionString);
-console.log('Using SSL config:', isProduction ? { ca: supabaseCA, rejectUnauthorized: true } : false);
+console.log('Using SSL config:', isProduction ? { ca: supabaseCA, rejectUnauthorized: false } : false);
 
 const pool = new Pool({
   connectionString: connectionString,
