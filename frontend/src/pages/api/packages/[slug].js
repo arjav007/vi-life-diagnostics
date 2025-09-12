@@ -1,5 +1,4 @@
-// frontend/src/pages/api/packages/[slug].js
-import { supabase } from '../../../lib/supabaseClient';
+import supabase from '../../../lib/supabaseClient';
 
 export default async function handler(req, res) {
   const { slug } = req.query;
