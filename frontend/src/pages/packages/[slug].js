@@ -62,7 +62,7 @@ const PackageDetailsPage = ({ packageData }) => {
             {/* Image Side */}
             <div className="relative flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
               <Image
-                src="/images/Diagnostics.jpg"
+                src="/images/diagnostics.jpg"
                 alt="Medical Laboratory Analysis"
                 layout="fill"
                 objectFit="cover"
