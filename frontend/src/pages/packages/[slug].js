@@ -4,9 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/20/solid';
 
-// IMPORTANT: Import your database connection pool.
-// You might need to adjust the path '../..' depending on your project structure.
-import { pool } from '../../../backend/config/database';
 
 const PackageDetailsPage = ({ packageData }) => {
   // Your UI component remains unchanged.
@@ -155,31 +152,27 @@ const PackageDetailsPage = ({ packageData }) => {
 export async function getServerSideProps(context) {
   const { slug } = context.params;
   
-  try {
-    const query = 'SELECT * FROM packages WHERE slug = $1 AND is_active = true';
-    const { rows } = await pool.query(query, [slug]);
-    const packageData = rows[0] || null;
+  const apiBase =
+    process.env.NEXT_PUBLIC_API_URL ||
+    `https://${context.req.headers.host}`;
 
-    if (!packageData) {
-      // This tells Next.js to render the 404 page
-      return { notFound: true };
-    }
-    
-    // Data from the database needs to be serializable.
-    // JSON.stringify and then JSON.parse is a safe way to handle complex types like Dates.
-    const serializablePackageData = JSON.parse(JSON.stringify(packageData));
+  // --- ADD THIS DEBUG LINE ---
+  const fullApiUrl = `${apiBase}/api/package-api/${slug}`;
+  console.log('Attempting to fetch package data from URL:', fullApiUrl);
+  // -------------------------
 
-    return {
-      props: {
-        packageData: serializablePackageData,
-      },
-    };
+  const res = await fetch(fullApiUrl); // Use the new variable here
 
-  } catch (error) {
-    console.error(`Database error fetching package for slug "${slug}":`, error);
-    // If there's a database error, also return notFound.
+  if (!res.ok) {
+    // Also log the failure status
+    console.error(`Failed to fetch from ${fullApiUrl}, status: ${res.status}`);
     return { notFound: true };
   }
-}
 
+  const packageData = await res.json();
+
+  return {
+    props: { packageData }
+  };
+}
 export default PackageDetailsPage;
