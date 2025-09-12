@@ -1,19 +1,18 @@
-// frontend/pages/packages/[slug].js
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/20/solid';
 
-// The page component now receives packageData as a prop
 const PackageDetailsPage = ({ packageData }) => {
-  
-  // If the package was not found, getServerSideProps will handle it
   if (!packageData) {
-    return <div>Package not found.</div>;
+    return (
+      <div className="text-center py-20">
+        <h1 className="text-2xl font-semibold">Package not found.</h1>
+      </div>
+    );
   }
-  
-  // Convert included_tests object to an array for rendering
+
   const testParameters = Object.values(packageData.included_tests || {});
   const reviews = packageData.reviews || [];
 
@@ -24,11 +23,10 @@ const PackageDetailsPage = ({ packageData }) => {
         <meta name="description" content={packageData.description} />
       </Head>
 
-      {/* Package Details Hero Section */}
+      {/* Package Details Hero */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-4">
           <div className="md:flex md:justify-between md:items-center">
-            {/* Left side with package info */}
             <div className="mb-8 md:mb-0">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
                 {packageData.name}
@@ -38,20 +36,17 @@ const PackageDetailsPage = ({ packageData }) => {
               </p>
               <div className="flex items-center mb-6">
                 <span className="text-2xl font-bold text-gray-800 mr-2">INR {packageData.price}</span>
-                <span className="text-lg text-gray-500 line-through">{packageData.original_price}</span>
+                {packageData.original_price && (
+                  <span className="text-lg text-gray-500 line-through">{packageData.original_price}</span>
+                )}
               </div>
-              <Link 
-                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                passHref
-              >
-                <button className="bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300">
+              <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+                <a target="_blank" rel="noopener noreferrer" className="inline-block bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300">
                   Book Now
-                </button>
+                </a>
               </Link>
             </div>
 
-            {/* Right side with an image */}
-            {/* FIX: Replaced <img> with <Image> component */}
             <div className="relative flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
               <Image 
                 src="/images/Diagnostics.jpg" 
@@ -64,11 +59,10 @@ const PackageDetailsPage = ({ packageData }) => {
         </div>
       </section>
 
-      {/* Test Parameters and Reviews Section */}
+      {/* Test Parameters and Reviews */}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Test Parameters */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Test Parameters ({testParameters.length})</h2>
               <div className="grid grid-cols-2 gap-x-4 gap-y-2">
@@ -80,19 +74,14 @@ const PackageDetailsPage = ({ packageData }) => {
               </div>
             </div>
 
-            {/* Ratings and Reviews */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Rating & Reviews</h2>
               <div className="space-y-6">
                 {reviews.length > 0 ? reviews.map((review, index) => (
                   <div key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
-                    {/* FIX: Escaped quote characters to prevent build error */}
-                    <p className="text-gray-700 mb-2 leading-relaxed italic">
-                      &quot;{review.text}&quot;
-                    </p>
+                    <p className="text-gray-700 mb-2 leading-relaxed italic">&quot;{review.text}&quot;</p>
                     <div className="flex items-center space-x-2">
                       <div className="flex text-yellow-400">
-                        {/* Assuming a 5-star rating for simplicity */}
                         {[...Array(5)].map((_, i) => <StarIcon key={i} className="w-5 h-5" />)}
                       </div>
                       <p className="font-semibold text-gray-800">{review.author}</p>
@@ -104,8 +93,8 @@ const PackageDetailsPage = ({ packageData }) => {
           </div>
         </div>
       </section>
-      
-      {/* Sticky WhatsApp Icon */}
+
+      {/* Whatsapp Icon Sticky */}
       <a
         href="https://wa.me/918828826646"
         target="_blank"
@@ -122,8 +111,8 @@ const PackageDetailsPage = ({ packageData }) => {
           />
         </div>
       </a>
-      
-      {/* Home Collection CTA Section */}
+
+      {/* Home Collection CTA */}
       <section className="relative py-16 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -139,10 +128,9 @@ const PackageDetailsPage = ({ packageData }) => {
             </div>
             <div className="flex-shrink-0">
               <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-                {/* FIX: Removed shadow-lg for consistency */}
-                <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+                <a className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
                   Book a Home Visit
-                </button>
+                </a>
               </Link>
             </div>
           </div>
@@ -152,22 +140,19 @@ const PackageDetailsPage = ({ packageData }) => {
   );
 };
 
-// This function runs on the server for every request
 export async function getServerSideProps(context) {
   const { slug } = context.params;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   try {
     const response = await fetch(`${apiUrl}/api/packages/${slug}`);
-    
-    // If the package is not found, the API should return a 404
+
     if (!response.ok) {
-      return { notFound: true }; // This will render the 404 page
+      return { notFound: true };
     }
-    
+
     const packageData = await response.json();
-    
-    // Pass the data to the page component as props
+
     return {
       props: {
         packageData,
@@ -175,7 +160,6 @@ export async function getServerSideProps(context) {
     };
   } catch (error) {
     console.error('Failed to fetch package in getServerSideProps:', error);
-    // You can handle the error by returning a custom error prop or redirecting
     return { notFound: true };
   }
 }
