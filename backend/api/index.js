@@ -116,7 +116,7 @@ app.get('/api/health', async (req, res) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', authMiddleware, userRoutes);
-app.use('/api/packages', packageRoutes);
+app.use('/api/package-api', packageRoutes);
 app.use('/api/reports', authMiddleware, reportRoutes);
 app.use('/api/bookings', bookingRoutes);
 
