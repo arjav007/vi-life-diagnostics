@@ -148,7 +148,7 @@ export async function getServerSideProps(context) {
 
 
   try {
-    const response = await fetch(`${apiUrl}/api/packages/${slug}`);
+    const response = await fetch(`${apiUrl}/api/package-api/${slug}`);
     if (!response.ok) {
       return { notFound: true };
     }
