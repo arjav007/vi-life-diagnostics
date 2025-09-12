@@ -3,14 +3,16 @@ import Head from 'next/head';
 import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createClient } from "@supabase/supabase-js";
 
-// The page receives the 'initialPackages' prop from the server
 export default function PackagesPage({ initialPackages }) {
-  const [packages] = useState(initialPackages || []);
+  const [packages] = useState(initialPackages);
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     category: '',
     gender: '',
+    age: '',
+    popular: '',
   });
 
   const filteredPackages = packages.filter((pkg) => {
@@ -29,7 +31,7 @@ export default function PackagesPage({ initialPackages }) {
 
   const clearAllFilters = () => {
     setSearchTerm('');
-    setFilters({ category: '', gender: '' });
+    setFilters({ category: '', gender: '', age: '', popular: '' });
   };
 
   const removeFilter = (tagToRemove) => {
@@ -62,53 +64,57 @@ export default function PackagesPage({ initialPackages }) {
         {/* Main Content Section */}
         <div className="container mx-auto py-8 px-6 sm:px-12">
           
-          {/* Search Bar & Filters */}
-          <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
-            <div className="relative w-full max-w-lg mb-4">
+          {/* Search Bar */}
+          <div className="bg-white rounded-full shadow-sm w-full max-w-lg p-1 flex items-center mb-6">
+            <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Search by package name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-900 placeholder-gray-500 pl-5 pr-12 py-3"
+                className="w-full bg-transparent border-none focus:outline-none focus:ring-0 text-gray-900 placeholder-gray-500 pl-5 pr-12 py-2"
               />
               <MagnifyingGlassIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="relative">
-                <select 
-                  className="appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-                  value={filters.category}
-                  onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                >
-                  <option value="">All Categories</option>
-                  <option value="General">General</option>
-                  <option value="Diabetes">Diabetes</option>
-                  <option value="Health Checkup">Health Checkup</option>
-                </select>
-                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              </div>
-              <div className="relative">
-                <select 
-                  className="appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-                  value={filters.gender}
-                  onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
-                >
-                  <option value="">Any Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              </div>
+          </div>
+
+          {/* Filters */}
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-4">
+            {/* Category Dropdown */}
+            <div className="relative">
+              <select 
+                className="w-full px-4 py-2 bg-blue-50 text-gray-700 rounded-full appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm"
+                value={filters.category}
+                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+              >
+                <option value="">Category</option>
+                <option value="General">General</option>
+                <option value="Diabetes">Diabetes</option>
+              </select>
+              <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
+
+            {/* Gender Dropdown */}
+            <div className="relative">
+              <select 
+                className="w-full px-4 py-2 bg-blue-50 text-gray-700 rounded-full appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm"
+                value={filters.gender}
+                onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
+              >
+                <option value="">Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             </div>
           </div>
           
-          {/* Active Filter Tags */}
+          {/* Active Filters */}
           <div className="flex items-center space-x-2 my-4 min-h-[2rem]">
             {getActiveFilterTags().map((tag) => (
-              <span key={tag} className="bg-[#1e535e] text-white text-sm font-medium px-3 py-1 rounded-full flex items-center">
+              <span key={tag} className="bg-[#1e535e] text-white text-sm font-medium px-2.5 py-1 rounded-full flex items-center">
                 {tag} 
-                <button onClick={() => removeFilter(tag)} className="text-white hover:text-gray-200 ml-2 text-xs font-bold">✕</button>
+                <button onClick={() => removeFilter(tag)} className="text-white hover:text-gray-200 ml-2 text-xs">✕</button>
               </span>
             ))}
             {getActiveFilterTags().length > 0 && (
@@ -118,15 +124,17 @@ export default function PackagesPage({ initialPackages }) {
             )}
           </div>
 
-          {/* Total Packages Count */}
-          <p className="text-gray-600 font-medium mb-6">Showing {filteredPackages.length} of {packages.length} packages</p>
+          {/* Count */}
+          <p className="text-gray-600 font-medium">Showing {filteredPackages.length} of {packages.length} packages</p>
 
-          {/* Package Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Grid */}
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredPackages.map((pkg) => (
-              // THIS IS THE CRITICAL FIX
-              // We now use pkg.slug, which is the correct identifier from the database
-              <Link key={pkg.id} href={`/packages/${pkg.slug}`} passHref>
+              <Link 
+                key={pkg.id} 
+                href={`/packages/${pkg.slug || pkg.name.replace(/\s+/g, '-').toLowerCase()}`}
+                passHref
+              >
                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
                   <h3 className="text-lg font-semibold mb-2 text-[#1e535e] flex-grow">{pkg.name}</h3>
                   <p className="text-gray-600 mb-2">
@@ -150,7 +158,7 @@ export default function PackagesPage({ initialPackages }) {
         </div>
       </div>
       
-      {/* Home Collection CTA Section */}
+      {/* Home Collection CTA */}
       <section className="relative py-16 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -175,7 +183,7 @@ export default function PackagesPage({ initialPackages }) {
         </div>
       </section>
 
-      {/* Sticky WhatsApp Icon */}
+      {/* Sticky WhatsApp */}
       <a
         href="https://wa.me/918828826646"
         target="_blank"
@@ -196,20 +204,20 @@ export default function PackagesPage({ initialPackages }) {
   );
 }
 
-// This function runs on the server for every request to this page
-export async function getServerSideProps() {
+// Fetch data from Supabase directly
+export async function getServerSideProps({ req }) {
   let initialPackages = [];
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await fetch(`${apiUrl}/api/packages`);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://${req.headers.host}`;
+    const response = await fetch(`${baseUrl}/api/packages`);
+
     if (response.ok) {
-      const data = await response.json();
-      initialPackages = data.packages || []; // Assuming the API returns { packages: [...] }
+      initialPackages = await response.json();
     } else {
-      console.error('Failed to fetch packages, status:', response.status);
+      console.error("Failed to fetch packages, status:", response.status);
     }
   } catch (error) {
-    console.error('Error fetching packages from API:', error);
+    console.error("Error fetching packages from API:", error);
   }
 
   return {
