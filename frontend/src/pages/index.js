@@ -127,8 +127,8 @@ const Homepage = ({ packages }) => {
           <Image 
             src="/images/ILAC.png" 
             alt="ILAC Accredited" 
-            width={120} // Explicit width for consistent rendering
-            height={120} // Explicit height for consistent rendering
+            width={160} // Explicit width for consistent rendering
+            height={160} // Explicit height for consistent rendering
             className="object-contain" 
           />
         </div>

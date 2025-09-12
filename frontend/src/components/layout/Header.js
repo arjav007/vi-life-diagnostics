@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-// FIX: Removed unused icons (MapPinIcon, UserCircleIcon, PhoneIcon) to clear build warnings
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../../context/AuthContext';
 
@@ -50,13 +49,12 @@ const Header = () => {
       {/* Main Header */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled 
-          // FIX: Removed shadow-lg for consistency
           ? 'bg-white/95 backdrop-blur-lg shadow-md' 
           : 'bg-white'
       }`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
-            {/* Logo */}
+            {/* Logo and Accreditations */}
             <Link href="/" className="flex items-center space-x-3">
              <Image
                src="/images/logo.png"
@@ -65,7 +63,24 @@ const Header = () => {
                height={60}
                priority
              />
-             </Link>
+             {/* Accreditation Logos - NEWLY ADDED */}
+             <div className="flex items-center space-x-2"> {/* Container for the small logos */}
+                <Image 
+                    src="/images/ILAC.png" 
+                    alt="ILAC Accredited" 
+                    width={40} // Small size
+                    height={40} // Small size
+                    className="object-contain" 
+                />
+                <Image 
+                    src="/images/NABL-FINAL.png" 
+                    alt="NABL Accredited" 
+                    width={40} // Small size
+                    height={40} // Small size
+                    className="object-contain" 
+                />
+             </div>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
@@ -88,15 +103,15 @@ const Header = () => {
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
               {/* CTA Button */}
-              <Link
+              {/* Corrected: Using standard <a> tag for external link */}
+              <a
                 href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                passHref
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#7ac144] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-600 transition-all duration-300 hidden md:block"
               >
-                {/* FIX: Removed shadow-lg for consistency */}
-                <button className="bg-[#7ac144] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-600 transition-all duration-300 hidden md:block">
-                  Book a Home Visit
-                </button>
-              </Link>
+                Book a Home Visit
+              </a>
 
               {/* Mobile Menu Button */}
               <button
@@ -138,29 +153,43 @@ const Header = () => {
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Quick Actions</h3>
                 {quickActions.slice(0, 4).map((action, index) => (
-                  <Link
-                    key={index}
-                    href={action.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block text-gray-600 hover:text-teal-600 transition-colors duration-200 py-1"
-                  >
-                    {action.name}
-                  </Link>
+                  // Corrected: Using standard <a> tag for external link if it's one of them
+                  action.href.startsWith('http') || action.href.startsWith('tel') || action.href.startsWith('mailto') ? (
+                    <a
+                      key={index}
+                      href={action.href}
+                      target={action.href.startsWith('http') ? "_blank" : undefined}
+                      rel={action.href.startsWith('http') ? "noopener noreferrer" : undefined}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block text-gray-600 hover:text-teal-600 transition-colors duration-200 py-1"
+                    >
+                      {action.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={index}
+                      href={action.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block text-gray-600 hover:text-teal-600 transition-colors duration-200 py-1"
+                    >
+                      {action.name}
+                    </Link>
+                  )
                 ))}
               </div>
 
               <hr className="my-4" />
               
               {/* CTA Button Mobile */}
-              <Link
+              {/* Corrected: Using standard <a> tag for external link */}
+              <a
                 href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                passHref
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#8fc048] text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-all duration-300"
               >
-                {/* FIX: Removed shadow-lg for consistency */}
-                <button className="w-full bg-[#8fc048] text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-all duration-300">
-                  Book a Home Visit
-                </button>
-              </Link>
+                Book a Home Visit
+              </a>
 
               {/* User Actions Mobile */}
               {user && (
