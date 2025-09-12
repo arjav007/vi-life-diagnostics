@@ -31,7 +31,7 @@ const pool = new Pool({
   ssl: isProduction 
     ? { 
         ca: supabaseCA, 
-        rejectUnauthorized: true 
+        rejectUnauthorized: false
       } 
     : false,
 });
