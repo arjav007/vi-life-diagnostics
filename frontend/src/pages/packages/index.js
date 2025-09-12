@@ -262,7 +262,7 @@ Clear All
 
 key={pkg.id}
 
-href={`/packages/${pkg.slug || pkg.name.replace(/\s+/g, '-').toLowerCase()}`}
+href={`/packages/${pkg.slug}`}
 
 passHref
 
