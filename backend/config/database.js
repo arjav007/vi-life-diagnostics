@@ -4,9 +4,11 @@ require('dotenv').config();
 // Use connection string for serverless deployment (preferred method)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  },
+  ssl: process.env.NODE_ENV === 'production' ? {
+    rejectUnauthorized: false,
+    ca: false,
+    checkServerIdentity: () => undefined
+  } : false,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000, // Increased for serverless
