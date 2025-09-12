@@ -1,31 +1,21 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Use connection string for serverless deployment (preferred method)
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Use connection string for Supabase (serverless/production safe)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? {
-    rejectUnauthorized: false,
-    ca: false,
-    checkServerIdentity: () => undefined
-  } : false,
+  ssl: isProduction ? { rejectUnauthorized: false } : false,
   max: 20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000, // Increased for serverless
+  connectionTimeoutMillis: 10000,
 });
 
-// Alternative: Individual environment variables (if you prefer this approach)
-// const pool = new Pool({
-//   host: process.env.DB_HOST,
-//   port: process.env.DB_PORT,
-//   database: process.env.DB_NAME,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-//   max: 20,
-//   idleTimeoutMillis: 30000,
-//   connectionTimeoutMillis: 10000,
-// });
+// Handle pool errors
+pool.on('error', (err, client) => {
+  console.error('❌ Unexpected error on idle client', err);
+});
 
 const connectDB = async () => {
   try {
@@ -36,17 +26,12 @@ const connectDB = async () => {
   } catch (error) {
     console.error('❌ Database connection error:', error.message);
     console.error('Check your DATABASE_URL environment variable');
-    // Don't exit process in serverless environment
-    if (process.env.NODE_ENV !== 'production') {
+    // Don't exit process in serverless production environment
+    if (!isProduction) {
       process.exit(1);
     }
     throw error;
   }
 };
-
-// Handle pool errors
-pool.on('error', (err, client) => {
-  console.error('❌ Unexpected error on idle client', err);
-});
 
 module.exports = { pool, connectDB };
