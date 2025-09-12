@@ -6,7 +6,7 @@ import { StarIcon } from '@heroicons/react/20/solid';
 
 // IMPORTANT: Import your database connection pool.
 // You might need to adjust the path '../..' depending on your project structure.
-import { pool } from '../../backend/config/database';
+import { pool } from '../../../backend/config/database';
 
 const PackageDetailsPage = ({ packageData }) => {
   // Your UI component remains unchanged.
