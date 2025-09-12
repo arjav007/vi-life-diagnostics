@@ -1,23 +1,23 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// This line correctly checks if the code is running on Vercel (production) or your local machine.
+// This line correctly checks if the code is running on Vercel (production).
 const isProduction = process.env.NODE_ENV === 'production';
 
 // Start with the base connection string from your environment variables.
 let connectionString = process.env.DATABASE_URL;
 
-// This is the critical fix for the "self-signed certificate" error.
+// This is the CRITICAL FIX.
 // In production, we programmatically add a parameter to the connection string
-// to enforce a secure, required SSL connection, which cloud databases demand.
+// to enforce a secure connection. This is required by cloud database providers.
 if (isProduction && connectionString && !connectionString.includes('sslmode')) {
   connectionString = `${connectionString}?sslmode=require`;
 }
 
 const pool = new Pool({
   connectionString: connectionString,
-  // This ssl object is also crucial. It tells the client to allow
-  // certificates that may not be in its default trusted list.
+  // This ssl object is ALSO CRITICAL. It tells the client to allow
+  // the 'self-signed certificate' that the database is presenting.
   ssl: isProduction ? { rejectUnauthorized: false } : false,
 });
 
@@ -26,8 +26,8 @@ pool.on('error', (err, client) => {
   console.error('❌ Unexpected error on idle client', err);
 });
 
-// FIX: We now export the initialized pool directly.
-// This solves the "Cannot read properties of undefined (reading 'query')" error
-// by ensuring all other files import the exact same, initialized connection pool instance.
+// We export the initialized pool directly to ensure all other files
+// import the exact same, correctly configured connection pool instance.
 module.exports = pool;
+
 
