@@ -134,33 +134,42 @@ const PackageDetailsPage = ({ packageData }) => {
         </div>
       </a>
 
-      {/* Home Collection CTA */}
-      <section className="relative py-16 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/images/BookHomeCollection.jpg')` }}
+      {/* Home Collection CTA Section */}
+<section className="relative py-16 md:py-20 overflow-hidden">
+  <div 
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+    style={{ backgroundImage: `url('/images/BookHomeCollection.jpg')` }}
+  >
+    <div className="absolute inset-0 bg-black/80"></div>
+  </div>
+  <div className="relative container mx-auto px-4">
+    {/* This container is now responsive:
+      - On mobile (default): it's a vertical column (flex-col), with centered text and a gap.
+      - On medium screens and up (md:): it becomes a horizontal row (md:flex-row) with space between items.
+    */}
+    <div className="flex flex-col items-center text-center gap-8 md:flex-row md:justify-between md:text-left">
+      
+      {/* Text Content */}
+      <div className="text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-3">Book Your Home Collection</h2>
+        <p className="text-lg md:text-xl text-gray-200">Get exclusive packages on your first healthcare test.</p>
+      </div>
+
+      {/* Button */}
+      <div className="flex-shrink-0">
+        <Link 
+          href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
+          passHref
         >
-          <div className="absolute inset-0 bg-black/80"></div>
-        </div>
-        <div className="relative container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="text-white">
-              <h2 className="text-4xl font-bold mb-4">Book Your Home Collection</h2>
-              <p className="text-xl text-gray-200">Get exclusive packages on your first healthcare test.</p>
-            </div>
-            <div className="flex-shrink-0">
-              <Link
-                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                passHref
-              >
-                <a className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
-                  Book a Home Visit
-                </a>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+          <a className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+            Book a Home Visit
+          </a>
+        </Link>
+      </div>
+
+    </div>
+  </div>
+</section>
     </>
   );
 };

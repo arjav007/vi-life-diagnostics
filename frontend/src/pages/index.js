@@ -134,56 +134,70 @@ const Homepage = ({ packages }) => {
       </section>
 
       {/* Healthcare Packages Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
-              Healthcare Packages for Everyone
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Find the most suitable package for you from our range of ViLife Packages
-            </p>
-          </div>
-          <div className="flex justify-center mb-12">
-            <div className="flex space-x-2 bg-white rounded-full p-1">
-              <button className="px-6 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm">Most Booked</button>
-              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">Heart Health</button>
-              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">Full Body Checkup</button>
-              <button className="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-full font-medium text-sm">Sexual Health</button>
+<section className="py-20 bg-white">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
+        Healthcare Packages for Everyone
+      </h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        Find the most suitable package for you from our range of ViLife Packages
+      </p>
+    </div>
+
+    {/* Filter Buttons */}
+    <div className="flex justify-center mb-12">
+      <div className="flex flex-wrap justify-center space-x-2">
+        <button className="px-5 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm transition-colors duration-300">
+          Most Booked
+        </button>
+        <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">
+          Heart Health
+        </button>
+        <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">
+          Full Body Checkup
+        </button>
+        <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">
+          Sexual Health
+        </button>
+      </div>
+    </div>
+
+    {/* Package Cards Grid - Sliced to show only 4 */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      {packages.slice(0, 4).map((pkg) => (
+        <Link 
+          key={pkg.id} 
+          href={`/packages/${pkg.slug || pkg.name.replace(/\s+/g, '-').toLowerCase()}`} 
+          passHref
+        >
+          <a className="block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <h3 className="text-lg font-semibold text-[#1c515c] mb-3 h-14">{pkg.name}</h3>
+            <div className="mb-4">
+              <span className="text-2xl font-bold text-gray-800">₹{pkg.price}</span>
+              {pkg.original_price && (
+                 <span className="text-sm text-gray-500 line-through ml-2">₹{pkg.original_price}</span>
+              )}
             </div>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {packages.map((pkg) => (
-              <Link key={pkg.id} href={`/packages/${pkg.slug || pkg.name.replace(/\s+/g, '-').toLowerCase()}`} passHref>
-                <div className="bg-white p-6 rounded-lg border hover:shadow-md transition-shadow duration-300 cursor-pointer">
-                  <h3 className="text-lg font-semibold text-teal-700 mb-4">{pkg.name}</h3>
-                  <div className="mb-3">
-                    <span className="text-2xl font-bold text-gray-800">INR {pkg.price}</span>
-                    <span className="text-sm text-gray-500 line-through ml-2">{pkg.original_price}</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-6">{pkg.parameter_count} Parameters</p>
-                  <button 
-                    className="w-full bg-[#7ac144] hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-colors duration-300"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open("https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit.", "_blank");
-                    }}
-                  >
-                    Book Now
-                  </button>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="text-center">
-            <Link href="/packages" passHref>
-              <button className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
-                View All Packages
-              </button>
-            </Link>
-          </div>
-        </div>
-      </section>
+            <p className="text-sm text-gray-600 mb-5">{pkg.parameter_count} Parameters</p>
+            <div className="w-full bg-[#7ac144] text-white text-center py-2.5 rounded-md font-medium transition-colors duration-300">
+              Book Now
+            </div>
+          </a>
+        </Link>
+      ))}
+    </div>
+
+    {/* View All Button */}
+    <div className="text-center">
+      <Link href="/packages" passHref>
+        <a className="inline-block border border-gray-400 text-gray-800 px-8 py-3 rounded-md hover:bg-gray-100 font-semibold transition-colors duration-300">
+          View All Packages
+        </a>
+      </Link>
+    </div>
+  </div>
+</section>
 
       {/* Get Reports Faster Section */}
       <section className="py-20 bg-blue-50">
@@ -402,49 +416,69 @@ const Homepage = ({ packages }) => {
         </div>
       </section>
 
-      {/* Home Collection CTA Section */}
-      <section className="relative py-16 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('/images/BookHomeCollection.jpg')` }}>
-          <div className="absolute inset-0 bg-black/80"></div>
-        </div>
-        <div className="relative container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="text-white">
-              <h2 className="text-4xl font-bold mb-4">Book Your Home Collection</h2>
-              <p className="text-xl text-gray-200">Get exclusive packages on your first healthcare test.</p>
-            </div>
-            <div className="flex-shrink-0">
-              <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-                <button className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
-                  Book a Home Visit
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+     {/* Home Collection CTA Section */}
+<section className="relative py-16 md:py-20 overflow-hidden">
+  <div 
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+    style={{ backgroundImage: `url('/images/BookHomeCollection.jpg')` }}
+  >
+    <div className="absolute inset-0 bg-black/80"></div>
+  </div>
+  <div className="relative container mx-auto px-4">
+    {/* This container is now responsive:
+      - On mobile (default): it's a vertical column (flex-col), with centered text and a gap.
+      - On medium screens and up (md:): it becomes a horizontal row (md:flex-row) with space between items.
+    */}
+    <div className="flex flex-col items-center text-center gap-8 md:flex-row md:justify-between md:text-left">
+      
+      {/* Text Content */}
+      <div className="text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-3">Book Your Home Collection</h2>
+        <p className="text-lg md:text-xl text-gray-200">Get exclusive packages on your first healthcare test.</p>
+      </div>
+
+      {/* Button */}
+      <div className="flex-shrink-0">
+        <Link 
+          href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
+          passHref
+        >
+          <a className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+            Book a Home Visit
+          </a>
+        </Link>
+      </div>
+
+    </div>
+  </div>
+</section>
     </>
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let packages = [];
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await fetch(`${apiUrl}/api/packages`);
+    // This URL should point to your live site when in production
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    
+    // Fetching from the correct API endpoint
+    const response = await fetch(`${baseUrl}/api/package-api`);
+
     if (response.ok) {
-      const data = await response.json();
-      packages = data.slice(0, 4) || [];
+      packages = await response.json();
+    } else {
+      console.error("Failed to fetch packages for homepage, status:", response.status);
     }
   } catch (error) {
-    console.error('Error fetching packages for homepage:', error);
+    console.error("Error fetching packages for homepage:", error);
   }
 
+  // The fetched packages are passed to your page as a prop
   return {
     props: {
       packages,
     },
-    revalidate: 3600,
   };
 }
 
