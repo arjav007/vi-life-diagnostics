@@ -142,22 +142,22 @@ const PackageDetailsPage = ({ packageData }) => {
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
-  
-  // For Vercel, use the resolved domain or fallback to NEXT_PUBLIC_API_URL
-  const apiBase =
-    process.env.NEXT_PUBLIC_API_URL ||
-    `https://${context.req.headers.host}`;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || `https://${context.req.headers.host}`;
+  console.log('Slug:', slug);
 
-  const res = await fetch(`${apiBase}/api/packages/${slug}`);
-  if (!res.ok) {
+
+  try {
+    const response = await fetch(`${apiUrl}/api/packages/${slug}`);
+    if (!response.ok) {
+      return { notFound: true };
+    }
+    const packageData = await response.json();
+    return { props: { packageData } };
+  } catch (error) {
     return { notFound: true };
   }
-  const packageData = await res.json();
-
-  return {
-    props: { packageData }
-  };
 }
+
 
 
 export default PackageDetailsPage;
