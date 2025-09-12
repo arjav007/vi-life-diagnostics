@@ -20,8 +20,8 @@ const PackageDetailsPage = ({ packageData }) => {
   return (
     <>
       <Head>
-        <title>{packageData.name} - Package | ViLife Diagnostics</title>
-        <meta name="description" content={packageData.description} />
+        <title>{`${packageData.name} - Package | ViLife Diagnostics`}</title>
+        <meta name="description" content={packageData.description || ''} />
       </Head>
 
       {/* Package Details Hero */}
@@ -41,16 +41,23 @@ const PackageDetailsPage = ({ packageData }) => {
                   <span className="text-lg text-gray-500 line-through">{packageData.original_price}</span>
                 )}
               </div>
-              <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
-                <a target="_blank" rel="noopener noreferrer" className="inline-block bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300">
+              <Link
+                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+                passHref
+              >
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300"
+                >
                   Book Now
                 </a>
               </Link>
             </div>
 
             <div className="relative flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
-              <Image 
-                src="/images/Diagnostics.jpg" 
+              <Image
+                src="/images/Diagnostics.jpg"
                 alt="Medical Laboratory Analysis"
                 layout="fill"
                 objectFit="cover"
@@ -65,7 +72,9 @@ const PackageDetailsPage = ({ packageData }) => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Test Parameters ({testParameters.length})</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                Test Parameters ({testParameters.length})
+              </h2>
               <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 {testParameters.map((param, index) => (
                   <p key={index} className="text-gray-600">
@@ -78,17 +87,27 @@ const PackageDetailsPage = ({ packageData }) => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Rating & Reviews</h2>
               <div className="space-y-6">
-                {reviews.length > 0 ? reviews.map((review, index) => (
-                  <div key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
-                    <p className="text-gray-700 mb-2 leading-relaxed italic">&quot;{review.text}&quot;</p>
-                    <div className="flex items-center space-x-2">
-                      <div className="flex text-yellow-400">
-                        {[...Array(5)].map((_, i) => <StarIcon key={i} className="w-5 h-5" />)}
+                {reviews.length > 0 ? (
+                  reviews.map((review, index) => (
+                    <div
+                      key={index}
+                      className="border-b pb-4 last:border-b-0 last:pb-0"
+                      aria-label={`Review by ${review.author}`}
+                    >
+                      <p className="text-gray-700 mb-2 leading-relaxed italic">&quot;{review.text}&quot;</p>
+                      <div className="flex items-center space-x-2">
+                        <div className="flex text-yellow-400">
+                          {[...Array(5)].map((_, i) => (
+                            <StarIcon key={i} className="w-5 h-5" />
+                          ))}
+                        </div>
+                        <p className="font-semibold text-gray-800">{review.author}</p>
                       </div>
-                      <p className="font-semibold text-gray-800">{review.author}</p>
                     </div>
-                  </div>
-                )) : <p className="text-gray-500">No reviews yet.</p>}
+                  ))
+                ) : (
+                  <p className="text-gray-500">No reviews yet.</p>
+                )}
               </div>
             </div>
           </div>
@@ -115,7 +134,7 @@ const PackageDetailsPage = ({ packageData }) => {
 
       {/* Home Collection CTA */}
       <section className="relative py-16 overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('/images/BookHomeCollection.jpg')` }}
         >
@@ -128,7 +147,10 @@ const PackageDetailsPage = ({ packageData }) => {
               <p className="text-xl text-gray-200">Get exclusive packages on your first healthcare test.</p>
             </div>
             <div className="flex-shrink-0">
-              <Link href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." passHref>
+              <Link
+                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+                passHref
+              >
                 <a className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
                   Book a Home Visit
                 </a>
@@ -143,7 +165,7 @@ const PackageDetailsPage = ({ packageData }) => {
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
-  const apiUrl =`https://${context.req.headers.host}`;
+  const apiUrl = `https://${context.req.headers.host}`;
   const endpoint = `${apiUrl}/api/package-api/${slug}`;
   console.log('SSR slug:', slug);
   console.log('SSR apiUrl:', apiUrl);
@@ -162,9 +184,6 @@ export async function getServerSideProps(context) {
     console.error('SSR fetch error:', error);
     return { notFound: true };
   }
-}
-
-
-
+};
 
 export default PackageDetailsPage;
