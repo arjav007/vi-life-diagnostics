@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/20/solid';
 
 const PackageDetailsPage = ({ packageData }) => {
+  console.log('Rendering with packageData:', packageData);
   if (!packageData) {
     return (
       <div className="text-center py-20">
