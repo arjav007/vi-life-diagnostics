@@ -62,44 +62,47 @@ export default function PackagesPage({ initialPackages }) {
         {/* Main Content Section */}
         <div className="container mx-auto py-8 px-6 sm:px-12">
           
-          {/* Search Bar & Filters */}
-          <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
-            <div className="relative w-full max-w-lg mb-4">
+          {/* Search & Filter Section (UI Restored) */}
+          <div className="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-wrap items-center gap-4">
+            {/* Search Bar */}
+            <div className="relative flex-grow min-w-[300px] sm:min-w-[400px]">
               <input
                 type="text"
                 placeholder="Search by package name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-900 placeholder-gray-500 pl-5 pr-12 py-3"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-900 placeholder-gray-500 pl-5 pr-12 py-3"
               />
               <MagnifyingGlassIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="relative">
-                <select 
-                  className="appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-                  value={filters.category}
-                  onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                >
-                  <option value="">All Categories</option>
-                  <option value="General">General</option>
-                  <option value="Diabetes">Diabetes</option>
-                  <option value="Health Checkup">Health Checkup</option>
-                </select>
-                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              </div>
-              <div className="relative">
-                <select 
-                  className="appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-                  value={filters.gender}
-                  onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
-                >
-                  <option value="">Any Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              </div>
+            
+            {/* Category Dropdown */}
+            <div className="relative">
+              <select 
+                className="appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                value={filters.category}
+                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+              >
+                <option value="">All Categories</option>
+                <option value="General">General</option>
+                <option value="Diabetes">Diabetes</option>
+                <option value="Health Checkup">Health Checkup</option>
+              </select>
+              <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
+
+            {/* Gender Dropdown */}
+            <div className="relative">
+              <select 
+                className="appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                value={filters.gender}
+                onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
+              >
+                <option value="">Any Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             </div>
           </div>
           
@@ -124,8 +127,7 @@ export default function PackagesPage({ initialPackages }) {
           {/* Package Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredPackages.map((pkg) => (
-              // THIS IS THE CRITICAL FIX
-              // We now use pkg.slug, which is the correct identifier from the database.
+              // CRITICAL FIX: The link now correctly uses pkg.slug
               <Link key={pkg.id} href={`/packages/${pkg.slug}`} passHref>
                 <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
                   <h3 className="text-lg font-semibold mb-2 text-[#1e535e] flex-grow">{pkg.name}</h3>
@@ -208,7 +210,8 @@ export async function getServerSideProps() {
     } else {
       console.error('Failed to fetch packages, status:', response.status);
     }
-  } catch (error) {
+  } catch (error)
+  {
     console.error('Error fetching packages from API:', error);
   }
 
