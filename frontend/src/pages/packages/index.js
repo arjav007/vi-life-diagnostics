@@ -415,7 +415,7 @@ try {
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://${req.headers.host}`;
 
-const response = await fetch(`${baseUrl}/api/packages`);
+const response = await fetch(`${baseUrl}/api/package-api`);
 
 
 
