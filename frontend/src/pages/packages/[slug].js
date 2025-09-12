@@ -143,21 +143,27 @@ const PackageDetailsPage = ({ packageData }) => {
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || `https://${context.req.headers.host}`;
-  console.log('Slug:', slug);
-
+  const apiUrl =`https://${context.req.headers.host}`;
+  const endpoint = `${apiUrl}/api/package-api/${slug}`;
+  console.log('SSR slug:', slug);
+  console.log('SSR apiUrl:', apiUrl);
+  console.log('SSR endpoint:', endpoint);
 
   try {
-    const response = await fetch(`${apiUrl}/api/package-api/${slug}`);
+    const response = await fetch(endpoint);
+    console.log('SSR fetch status:', response.status);
     if (!response.ok) {
       return { notFound: true };
     }
     const packageData = await response.json();
+    console.log('SSR packageData:', !!packageData, packageData);
     return { props: { packageData } };
   } catch (error) {
+    console.error('SSR fetch error:', error);
     return { notFound: true };
   }
 }
+
 
 
 
