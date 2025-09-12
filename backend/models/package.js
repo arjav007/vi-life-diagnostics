@@ -1,5 +1,5 @@
-// backend/models/package.js
-const { pool } = require('../config/database');
+// FIX: Import the pool instance directly, not from a destructured object
+const pool = require('../config/database');
 
 class Package {
     static async findBySlug(slug) {

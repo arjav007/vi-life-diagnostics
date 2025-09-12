@@ -1,42 +1,32 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+// This line correctly checks if the code is running on Vercel (production) or your local machine.
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Start with the base connection string from your environment variables
+// Start with the base connection string from your environment variables.
 let connectionString = process.env.DATABASE_URL;
 
-// FIX: This is the final and most important change.
-// In production, we will programmatically add a parameter to the connection string
-// to enforce a secure connection, which resolves the 'self-signed certificate' error.
+// This is the critical fix for the "self-signed certificate" error.
+// In production, we programmatically add a parameter to the connection string
+// to enforce a secure, required SSL connection, which cloud databases demand.
 if (isProduction && connectionString && !connectionString.includes('sslmode')) {
   connectionString = `${connectionString}?sslmode=require`;
 }
 
 const pool = new Pool({
   connectionString: connectionString,
-  // This ssl object is kept as a fallback for maximum compatibility.
+  // This ssl object is kept as a fallback for maximum compatibility with various clients.
   ssl: isProduction ? { rejectUnauthorized: false } : false,
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
 });
 
+// This helps debug any unexpected connection drops.
 pool.on('error', (err, client) => {
   console.error('❌ Unexpected error on idle client', err);
 });
 
-const connectDB = async () => {
-  try {
-    const client = await pool.connect();
-    console.log('✅ PostgreSQL Connected');
-    client.release();
-    return true;
-  } catch (error) {
-    console.error('❌ Database connection error:', error.message);
-    if (!isProduction) {
-      process.exit(1);
-    }
-    throw error;
-  }
-};
+// FIX: We now export the initialized pool directly.
+// This solves the "Cannot read properties of undefined (reading 'query')" error
+// by ensuring all other files import the exact same, initialized connection pool instance.
+module.exports = pool;
+
