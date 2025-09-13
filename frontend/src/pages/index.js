@@ -271,7 +271,7 @@ const Homepage = ({ packages }) => {
               Why Customers Love ViLife Diagnostics?
             </h2>
             <p className="text-lg text-gray-600 max-w-4xl mx-auto">
-              Here are some reviews of what our customers are saying about us and that&apos;s what makes us work hard each and every day.
+              Here are some reviews of what our customers are saying about us and that's what makes us work hard each and every day.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
