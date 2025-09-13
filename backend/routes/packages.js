@@ -1,12 +1,26 @@
-// backend/routes/packages.js
+// routes/packages.js
 const express = require('express');
 const router = express.Router();
-const packageController = require('../controllers/packageController');
+const supabase = require('../lib/supabaseClient');
 
-// Route to get a single package by its slug
-router.get('/:slug', packageController.getPackageBySlug); 
+// GET all packages
+router.get('/', async (req, res) => {
+  const { data, error } = await supabase.from('packages').select('*');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
 
-// Route to get all packages
-router.get('/', packageController.getAllPackages);
+// GET package by slug
+router.get('/:slug', async (req, res) => {
+  const { slug } = req.params;
+  const { data, error } = await supabase
+    .from('packages')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error || !data) return res.status(404).json({ error: 'Package not found' });
+  res.json(data);
+});
 
 module.exports = router;
