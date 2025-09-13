@@ -251,7 +251,12 @@ const Homepage = ({ packages }) => {
             ))}
           </div>
           <div className="text-center">
-            <a href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." target="_blank" rel="noopener noreferrer" className="inline-block bg-[#7ac144] hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300">
+            <a 
+              href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-block bg-[#7ac144] hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300"
+            >
               Connect for Clinical Trial Support
             </a>
           </div>
@@ -266,7 +271,7 @@ const Homepage = ({ packages }) => {
               Why Customers Love ViLife Diagnostics?
             </h2>
             <p className="text-lg text-gray-600 max-w-4xl mx-auto">
-              Here are some reviews of what our customers are saying about us and that's what makes us work hard each and every day.
+              Here are some reviews of what our customers are saying about us and that&apos;s what makes us work hard each and every day.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -416,7 +421,12 @@ const Homepage = ({ packages }) => {
               <p className="text-lg md:text-xl text-gray-200">Get exclusive packages on your first healthcare test.</p>
             </div>
             <div className="flex-shrink-0">
-              <a href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
+              <a 
+                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
+              >
                 Book a Home Visit
               </a>
             </div>
