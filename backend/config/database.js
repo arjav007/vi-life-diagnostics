@@ -6,29 +6,29 @@ const isProduction = process.env.NODE_ENV === 'production';
 // Create a secure SSL configuration object for production
 let sslConfig = false;
 if (isProduction) {
-  // Check if the certificate content is available in the environment variable
   if (process.env.SUPABASE_CA_CERT) {
     sslConfig = {
-      rejectUnauthorized: true, // This is crucial for security
-      ca: process.env.SUPABASE_CA_CERT, // Provide the certificate content from the variable
+      rejectUnauthorized: true, // This is the secure default
+      ca: process.env.SUPABASE_CA_CERT, // Provide the certificate from the environment variable
     };
-    console.log('✅ SSL configuration loaded from environment variable.');
+    console.log('✅ Production SSL configuration loaded.');
   } else {
     console.error('❌ FATAL: SUPABASE_CA_CERT environment variable not set for production.');
   }
 }
 
+// Create a single, reusable pool instance
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // Use the secure SSL config in production, or no SSL in development
-  ssl: sslConfig,
+  ssl: sslConfig, // Use the secure config in production, or no SSL in development
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
 });
 
 pool.on('error', (err) => {
-  console.error('❌ Unexpected error on idle client', err);
+  console.error('❌ Unexpected error on idle database client', err);
 });
 
+// Export the single pool instance
 module.exports = pool;
