@@ -1,6 +1,4 @@
 const { Pool } = require('pg');
-const fs = require('fs');
-const path = require('path');
 require('dotenv').config();
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -8,25 +6,21 @@ const isProduction = process.env.NODE_ENV === 'production';
 // Create a secure SSL configuration object for production
 let sslConfig = false;
 if (isProduction) {
-  // 1. Build a reliable, absolute path to your certificate file
-  // This path goes from this file (in 'config'), up one level to 'backend', then into 'cert'
-  const certPath = path.resolve(__dirname, '..', 'cert', 'supabase.crt');
-
-  // 2. Check if the certificate file exists before trying to read it
-  if (fs.existsSync(certPath)) {
+  // Check if the certificate content is available in the environment variable
+  if (process.env.SUPABASE_CA_CERT) {
     sslConfig = {
       rejectUnauthorized: true, // This is crucial for security
-      ca: fs.readFileSync(certPath).toString(), // Provide the certificate content
+      ca: process.env.SUPABASE_CA_CERT, // Provide the certificate content from the variable
     };
-    console.log('✅ SSL certificate loaded for production.');
+    console.log('✅ SSL configuration loaded from environment variable.');
   } else {
-    console.error('❌ SSL certificate not found at:', certPath);
+    console.error('❌ FATAL: SUPABASE_CA_CERT environment variable not set for production.');
   }
 }
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // 3. Use the secure SSL config in production, or no SSL in development
+  // Use the secure SSL config in production, or no SSL in development
   ssl: sslConfig,
   max: 20,
   idleTimeoutMillis: 30000,
