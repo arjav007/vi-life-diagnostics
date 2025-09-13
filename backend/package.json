@@ -10,6 +10,7 @@
     "migrate": "psql -h localhost -p 5432 -U postgres -d vilife_diagnostics -f migrations/001_initial_schema.sql"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
     "bcryptjs": "^3.0.2",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
@@ -30,4 +31,3 @@
     "typescript": "^5.2.2"
   }
 }
-
