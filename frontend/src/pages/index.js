@@ -82,32 +82,33 @@ const Homepage = ({ packages }) => {
       </section>
 
       {/* Why Choose Vi-Life Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
-              Why Choose ViLife Diagnostics?
-            </h2>
-            <p className="text-xl text-gray-800 max-w-3xl mx-auto">
-              ViLife Diagnostics firmly believes in providing quality healthcare with excellent customer service. Here are top 4 reasons why you should choose us.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { icon: '🎯', title: 'Quality Assurance', description: 'Reliable diagnostics backed by strict quality control standards' },
-              { icon: '🔬', title: 'Precision Testing', description: 'Accurate and detailed results for informed healthcare decisions.' },
-              { icon: '👨‍⚕️', title: 'Experienced Pathologists', description: 'Our team of experts brings years of experience to every diagnosis' },
-              { icon: '⭐', title: '4.9 out of 5', description: 'Highly rated by patients for service excellence and reliable results.' }
-            ].map((item, index) => (
-              <div key={index} className="bg-blue-50 text-center p-8 rounded-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-lg font-semibold text-[#1e535e] mb-3">{item.title}</h3>
-                <p className="text-gray-600">{item.description}</p>
-              </div>
-            ))}
-          </div>
+<section className="py-16 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
+        Why Choose ViLife Diagnostics?
+      </h2>
+      <p className="text-xl text-gray-800 max-w-3xl mx-auto">
+        ViLife Diagnostics firmly believes in providing quality healthcare with excellent customer service. Here are top 4 reasons why you should choose us.
+      </p>
+    </div>
+    {/* MODIFIED: gap-y-4 added for smaller vertical gap on mobile, gap-8 for larger screens */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 md:gap-y-8"> 
+      {[
+        { icon: '🎯', title: 'Quality Assurance', description: 'Reliable diagnostics backed by strict quality control standards' },
+        { icon: '🔬', title: 'Precision Testing', description: 'Accurate and detailed results for informed healthcare decisions.' },
+        { icon: '👨‍⚕️', title: 'Experienced Pathologists', description: 'Our team of experts brings years of experience to every diagnosis' },
+        { icon: '⭐', title: '4.9 out of 5', description: 'Highly rated by patients for service excellence and reliable results.' }
+      ].map((item, index) => (
+        <div key={index} className="bg-blue-50 text-center p-8 rounded-xl transition-all duration-300 transform hover:-translate-y-2">
+          <div className="text-4xl mb-4">{item.icon}</div>
+          <h3 className="text-lg font-semibold text-[#1e535e] mb-3">{item.title}</h3>
+          <p className="text-gray-600">{item.description}</p>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Accreditations Section */}
       <section className="py-16 bg-blue-50">
@@ -146,48 +147,49 @@ const Homepage = ({ packages }) => {
       </section>
 
       {/* Healthcare Packages Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
-              Healthcare Packages for Everyone
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Find the most suitable package for you from our range of ViLife Packages
-            </p>
-          </div>
-          <div className="flex justify-center mb-12">
-            <div className="flex flex-wrap justify-center gap-2">
-              <button className="px-5 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm transition-colors duration-300">Most Booked</button>
-              <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">Heart Health</button>
-              <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">Full Body Checkup</button>
-              <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">Sexual Health</button>
+<section className="py-16 bg-white">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
+        Healthcare Packages for Everyone
+      </h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        Find the most suitable package for you from our range of ViLife Packages
+      </p>
+    </div>
+    <div className="flex justify-center mb-12">
+      <div className="flex flex-wrap justify-center gap-2">
+        <button className="px-5 py-2 bg-[#1c515c] text-white rounded-full font-medium text-sm transition-colors duration-300">Most Booked</button>
+        <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">Heart Health</button>
+        <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">Full Body Checkup</button>
+        <button className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-full font-medium text-sm border border-gray-300 transition-colors duration-300">Sexual Health</button>
+      </div>
+    </div>
+    {/* MODIFIED: Changed gap-8 to responsive gap classes */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 sm:gap-y-8 mb-12">
+      {packages.slice(0, 4).map((pkg) => (
+        <Link key={pkg.id} href={`/packages/${pkg.slug || pkg.name.replace(/\s+/g, '-').toLowerCase()}`}>
+          <a className="block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <h3 className="text-lg font-semibold text-[#1c515c] mb-3 h-14">{pkg.name}</h3>
+            <div className="mb-4">
+              <span className="text-2xl font-bold text-gray-800">₹{pkg.price}</span>
+              {pkg.original_price && (<span className="text-sm text-gray-500 line-through ml-2">₹{pkg.original_price}</span>)}
             </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {packages.slice(0, 4).map((pkg) => (
-              <Link key={pkg.id} href={`/packages/${pkg.slug || pkg.name.replace(/\s+/g, '-').toLowerCase()}`}>
-                <a className="block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                  <h3 className="text-lg font-semibold text-[#1c515c] mb-3 h-14">{pkg.name}</h3>
-                  <div className="mb-4">
-                    <span className="text-2xl font-bold text-gray-800">₹{pkg.price}</span>
-                    {pkg.original_price && (<span className="text-sm text-gray-500 line-through ml-2">₹{pkg.original_price}</span>)}
-                  </div>
-                  <p className="text-sm text-gray-600 mb-6">{pkg.parameter_count} Parameters</p>
-                  <div className="w-full bg-[#7ac144] text-white text-center py-2.5 rounded-md font-medium transition-colors duration-300">Book Now</div>
-                </a>
-              </Link>
-            ))}
-          </div>
-          <div className="text-center">
-            <Link href="/packages">
-              <a className="inline-block border border-gray-400 text-gray-800 px-8 py-3 rounded-md hover:bg-gray-100 font-semibold transition-colors duration-300">
-                View All Packages
-              </a>
-            </Link>
-          </div>
-        </div>
-      </section>
+            <p className="text-sm text-gray-600 mb-6">{pkg.parameter_count} Parameters</p>
+            <div className="w-full bg-[#7ac144] text-white text-center py-2.5 rounded-md font-medium transition-colors duration-300">Book Now</div>
+          </a>
+        </Link>
+      ))}
+    </div>
+    <div className="text-center">
+      <Link href="/packages">
+        <a className="inline-block border border-gray-400 text-gray-800 px-8 py-3 rounded-md hover:bg-gray-100 font-semibold transition-colors duration-300">
+          View All Packages
+        </a>
+      </Link>
+    </div>
+  </div>
+</section>
 
       {/* Get Reports Faster Section */}
       <section className="py-16 bg-blue-50">
@@ -198,7 +200,7 @@ const Homepage = ({ packages }) => {
                 Get Your Test Reports Faster Than Ever
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Thanks to cutting-edge automation and thorough expert validation, we process your samples quickly while maintaining the highest quality standards. Most diagnostic reports are completed and shared within just 6–12 hours, ensuring you receive fast, accurate results when you need them most.
+                Thanks to cutting-edge automation and thorough expert validation, we process your samples quickly while maintaining the highest quality standards. Most diagnostic reports are completed and shared within just 6 to 12 hours, ensuring you receive fast, accurate results when you need them most.
               </p>
               <div className="space-y-4">
                 {[
@@ -227,73 +229,75 @@ const Homepage = ({ packages }) => {
       </section>
 
       {/* Clinical Trials Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
-              Centralized Pathology Laboratory for Multicentric Clinical Trials
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Reliable end-to-end sample solutions tailored for clinical trials
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {[
-              { icon: <svg className=" w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7V10C2 16 6 20.9 12 22C18 20.9 22 16 22 10V7L12 2ZM11 16H13V18H11V16ZM11 10H13V14H11V10Z"/></svg>, title: "State of the Art Technology" },
-              { icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.9 1 3 1.9 3 3V21C3 22.1 3.9 23 5 23H19C20.1 23 21 22.1 21 21V9ZM19 21H5V3H13V9H19V21ZM12 13C13.1 13 14 13.9 14 15S13.1 17 12 17 10 16.1 10 15 10.9 13 12 13M8 18H16V19H8V18Z"/></svg>, title: "Specialized Testing Expertise" },
-              { icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12L11 14L15 10M21 12C21 16.97 17.97 21 12 21C7.03 21 2 16.97 2 12C2 7.03 7.03 2 12 2C16.97 2 21 7.03 21 12Z"/></svg>, title: "Uncompromised Sample Integrity" },
-              { icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/></svg>, title: "Nationwide Coverage" }
-            ].map((feature, index) => (
-              <div key={index} className="text-center p-8 rounded-xl bg-blue-50">
-                <div className="bg-[#1c515c] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">{feature.icon}</div>
-                <h3 className="text-lg font-semibold text-[#1c515c] leading-tight">{feature.title}</h3>
-              </div>
-            ))}
-          </div>
-          <div className="text-center">
-            <a 
-              href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="inline-block bg-[#7ac144] hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300"
-            >
-              Connect for Clinical Trial Support
-            </a>
-          </div>
+<section className="py-16 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
+        Centralized Pathology Laboratory for Multicentric Clinical Trials
+      </h2>
+      <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        Reliable end-to-end sample solutions tailored for clinical trials
+      </p>
+    </div>
+    {/* MODIFIED: Changed gap-8 to responsive gap classes */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 md:gap-y-8 mb-12">
+      {[
+        { icon: <svg className=" w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7V10C2 16 6 20.9 12 22C18 20.9 22 16 22 10V7L12 2ZM11 16H13V18H11V16ZM11 10H13V14H11V10Z"/></svg>, title: "State of the Art Technology" },
+        { icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.9 1 3 1.9 3 3V21C3 22.1 3.9 23 5 23H19C20.1 23 21 22.1 21 21V9ZM19 21H5V3H13V9H19V21ZM12 13C13.1 13 14 13.9 14 15S13.1 17 12 17 10 16.1 10 15 10.9 13 12 13M8 18H16V19H8V18Z"/></svg>, title: "Specialized Testing Expertise" },
+        { icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12L11 14L15 10M21 12C21 16.97 17.97 21 12 21C7.03 21 2 16.97 2 12C2 7.03 7.03 2 12 2C16.97 2 21 7.03 21 12Z"/></svg>, title: "Uncompromised Sample Integrity" },
+        { icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/></svg>, title: "Nationwide Coverage" }
+      ].map((feature, index) => (
+        <div key={index} className="text-center p-8 rounded-xl bg-blue-50">
+          <div className="bg-[#1c515c] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">{feature.icon}</div>
+          <h3 className="text-lg font-semibold text-[#1c515c] leading-tight">{feature.title}</h3>
         </div>
-      </section>
+      ))}
+    </div>
+    <div className="text-center">
+      <a 
+        href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit." 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="inline-block bg-[#7ac144] hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300"
+      >
+        Connect for Clinical Trial Support
+      </a>
+    </div>
+  </div>
+</section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-blue-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
-              Why Customers Love ViLife Diagnostics?
-            </h2>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto">
-              Here are some reviews of what our customers are saying about us and that's what makes us work hard each and every day.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 transition-shadow duration-300">
-                <p className="text-gray-700 mb-6 leading-relaxed text-sm">{testimonial.text}</p>
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl">{testimonial.avatar}</div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
-                    <div className="flex space-x-1 mt-1">
-                      {[...Array(5)].map((_, i) => (
-                        <svg key={i} className="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+<section className="py-16 bg-blue-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <h2 className="text-4xl font-bold text-[#1c515c] mb-4">
+        Why Customers Love ViLife Diagnostics?
+      </h2>
+      <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+        Here are some reviews of what our customers are saying about us and that&apos;s what makes us work hard each and every day.
+      </p>
+    </div>
+    {/* MODIFIED: Changed gap-8 to responsive gap classes */}
+    <div className="grid md:grid-cols-3 gap-x-8 gap-y-4 md:gap-y-8">
+      {testimonials.map((testimonial, index) => (
+        <div key={index} className="bg-white rounded-xl p-6 transition-shadow duration-300">
+          <p className="text-gray-700 mb-6 leading-relaxed text-sm">{testimonial.text}</p>
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl">{testimonial.avatar}</div>
+            <div>
+              <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
+              <div className="flex space-x-1 mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Multiple Clinics Section */}
       <section className="py-16 bg-white">
