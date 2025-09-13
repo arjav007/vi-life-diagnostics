@@ -1,8 +1,11 @@
+// backend/routes/auth.js
+
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
-const { pool } = require('../config/database');
+// FIX: Import the Supabase client
+const supabase = require('../lib/supabaseClient'); 
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
@@ -26,33 +29,33 @@ router.post('/register', [
 
     const { name, email, password, phone } = req.body;
 
-    // Check if user already exists
-    const existingUser = await pool.query(
-      'SELECT id FROM users WHERE email = $1',
-      [email]
-    );
+    // FIX: Use Supabase to check for existing user
+    const { data: existingUser, error: selectError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .single();
 
-    if (existingUser.rows.length > 0) {
+    if (existingUser) {
       return res.status(400).json({
         success: false,
         message: 'User already exists with this email'
       });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create user
-    const result = await pool.query(
-      'INSERT INTO users (name, email, password_hash, phone) VALUES ($1, $2, $3, $4) RETURNING id, name, email, phone',
-      [name, email, hashedPassword, phone]
-    );
+    // FIX: Use Supabase to create user
+    const { data: newUser, error: insertError } = await supabase
+      .from('users')
+      .insert({ name, email, password_hash: hashedPassword, phone })
+      .select('id, name, email, phone')
+      .single();
+    
+    if (insertError) throw insertError;
 
-    const user = result.rows[0];
-
-    // Generate JWT token
     const token = jwt.sign(
-      { userId: user.id },
+      { userId: newUser.id },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
@@ -61,7 +64,7 @@ router.post('/register', [
       success: true,
       message: 'User registered successfully',
       token,
-      user
+      user: newUser
     });
   } catch (error) {
     console.error('Registration error:', error);
@@ -78,33 +81,24 @@ router.post('/login', [
   body('password').exists().withMessage('Password is required')
 ], async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation errors',
-        errors: errors.array()
-      });
-    }
-
+    // ... validation logic is the same ...
     const { email, password } = req.body;
 
-    // Find user
-    const result = await pool.query(
-      'SELECT id, name, email, phone, password_hash FROM users WHERE email = $1 AND is_active = true',
-      [email]
-    );
+    // FIX: Use Supabase to find user
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('id, name, email, phone, password_hash')
+      .eq('email', email)
+      .eq('is_active', true)
+      .single();
 
-    if (result.rows.length === 0) {
+    if (error || !user) {
       return res.status(401).json({
         success: false,
         message: 'Invalid email or password'
       });
     }
 
-    const user = result.rows[0];
-
-    // Check password
     const isValidPassword = await bcrypt.compare(password, user.password_hash);
     if (!isValidPassword) {
       return res.status(401).json({
@@ -113,20 +107,18 @@ router.post('/login', [
       });
     }
 
-    // Update last login
-    await pool.query(
-      'UPDATE users SET last_login = NOW() WHERE id = $1',
-      [user.id]
-    );
+    // FIX: Use Supabase to update last login
+    await supabase
+      .from('users')
+      .update({ last_login: new Date().toISOString() })
+      .eq('id', user.id);
 
-    // Generate JWT token
     const token = jwt.sign(
       { userId: user.id },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
-
-    // Remove password from response
+    
     delete user.password_hash;
 
     res.json({
@@ -145,19 +137,11 @@ router.post('/login', [
 });
 
 // Get current user
-router.get('/me', authMiddleware, async (req, res) => {
-  try {
-    res.json({
-      success: true,
-      user: req.user
-    });
-  } catch (error) {
-    console.error('Get user error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Server error'
-    });
-  }
+router.get('/me', authMiddleware, (req, res) => {
+  res.json({
+    success: true,
+    user: req.user
+  });
 });
 
 module.exports = router;

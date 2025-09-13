@@ -1,5 +1,8 @@
+// backend/middleware/auth.js
+
 const jwt = require('jsonwebtoken');
-const { pool } = require('../config/database');
+// FIX: Import the Supabase client instead of the old database pool
+const supabase = require('../lib/supabaseClient');
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -14,20 +17,22 @@ const authMiddleware = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Get user from database
-    const result = await pool.query(
-      'SELECT id, email, name, phone FROM users WHERE id = $1 AND is_active = true',
-      [decoded.userId]
-    );
+    // FIX: Use Supabase to get the user
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('id, email, name, phone')
+      .eq('id', decoded.userId)
+      .eq('is_active', true)
+      .single(); // .single() gets one record or returns an error
 
-    if (result.rows.length === 0) {
+    if (error || !user) {
       return res.status(401).json({ 
         success: false, 
         message: 'Invalid token.' 
       });
     }
 
-    req.user = result.rows[0];
+    req.user = user;
     next();
   } catch (error) {
     res.status(401).json({ 
