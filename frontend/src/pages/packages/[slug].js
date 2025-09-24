@@ -192,28 +192,37 @@ const PackageDetailsPage = ({ packageData }) => {
 export async function getServerSideProps(context) {
   const { slug } = context.params;
 
-  // Re-use the reliable base URL logic
   const protocol = context.req.headers['x-forwarded-proto'] || 'http';
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${context.req.headers.host}`;
   const endpoint = `${baseUrl}/api/package-api/${slug}`;
 
   try {
     const response = await fetch(endpoint);
-    // It's good practice to also check for server errors (5xx)
     if (!response.ok) {
       console.error(`Failed to fetch package ${slug}. Status: ${response.status}`);
       return { notFound: true };
     }
-    const packageData = await response.json();
     
-    // This handles cases where the API returns a valid but empty response
+    let packageData = await response.json();
+
+    // --- THIS IS THE FIX ---
+    // Check if included_tests is a string, and if so, parse it into an array.
+    if (packageData.included_tests && typeof packageData.included_tests === 'string') {
+      try {
+        packageData.included_tests = JSON.parse(packageData.included_tests);
+      } catch (e) {
+        console.error("Failed to parse included_tests JSON string:", e);
+        packageData.included_tests = []; // Default to empty array on parsing error
+      }
+    }
+    // --- END OF FIX ---
+
     if (!packageData || Object.keys(packageData).length === 0) {
       return { notFound: true };
     }
 
     return { 
       props: { 
-        // Ensure data is serializable (handles Date objects, etc.)
         packageData: JSON.parse(JSON.stringify(packageData))
       } 
     };
