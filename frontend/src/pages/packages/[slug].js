@@ -5,24 +5,32 @@ import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/20/solid';
 
 const PackageDetailsPage = ({ packageData }) => {
+  // This check is good, it prevents errors if props are empty
   if (!packageData || Object.keys(packageData).length === 0) {
     return (
       <div className="text-center py-20">
         <h1 className="text-2xl font-semibold">Package not found.</h1>
+        <p className="text-gray-600 mt-2">
+          The package you are looking for does not exist or may have been removed.
+        </p>
+        <Link href="/packages" className="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+          Back to Packages
+        </Link>
       </div>
     );
   }
 
-  const testParameters = packageData.included_tests
-    ? Object.values(packageData.included_tests)
+  // Safely access nested data
+  const testParameters = Array.isArray(packageData.included_tests)
+    ? packageData.included_tests
     : [];
   const reviews = Array.isArray(packageData.reviews) ? packageData.reviews : [];
 
   return (
     <>
       <Head>
-        <title>{`${packageData.name || ''} - Package | ViLife Diagnostics`}</title>
-        <meta name="description" content={packageData.description || ''} />
+        <title>{`${packageData.name} - Package | ViLife Diagnostics`}</title>
+        <meta name="description" content={packageData.description} />
       </Head>
 
       {/* Package Details Hero */}
@@ -30,7 +38,7 @@ const PackageDetailsPage = ({ packageData }) => {
         <div className="container mx-auto px-4">
           <div className="md:flex md:justify-between md:items-center">
             {/* Info Side */}
-            <div className="mb-8 md:mb-0">
+            <div className="mb-8 md:mb-0 md:w-1/2">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
                 {packageData.name}
               </h1>
@@ -48,21 +56,22 @@ const PackageDetailsPage = ({ packageData }) => {
                 )}
               </div>
               <a
-                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
+                href={`https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20the%20'${packageData.name}'%20package.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300"
+                className="inline-block bg-[#7ac144] text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
               >
                 Book Now
               </a>
             </div>
             {/* Image Side */}
-            <div className="relative flex-shrink-0 w-full md:w-1/2 lg:w-1/3 h-64 bg-gray-200 rounded-xl overflow-hidden">
+            <div className="relative flex-shrink-0 w-full md:w-5/12 h-64 bg-gray-200 rounded-xl overflow-hidden">
               <Image
                 src="/images/diagnostics.jpg"
                 alt="Medical Laboratory Analysis"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />
             </div>
@@ -79,15 +88,16 @@ const PackageDetailsPage = ({ packageData }) => {
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
                 Test Parameters ({testParameters.length})
               </h2>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                {testParameters.map((param, index) => (
-                  <p key={index} className="text-gray-600">
-                    <span className="font-semibold text-teal-600 mr-2">✓</span>
-                    {param}
-                  </p>
-                ))}
-                {testParameters.length === 0 && (
-                  <p className="text-gray-400">No test parameters listed.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                {testParameters.length > 0 ? (
+                  testParameters.map((param, index) => (
+                    <p key={index} className="text-gray-600">
+                      <span className="font-semibold text-teal-600 mr-2">✓</span>
+                      {param}
+                    </p>
+                  ))
+                ) : (
+                  <p className="text-gray-400 col-span-2">No test parameters listed for this package.</p>
                 )}
               </div>
             </div>
@@ -119,7 +129,7 @@ const PackageDetailsPage = ({ packageData }) => {
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-500">No reviews yet.</p>
+                  <p className="text-gray-500">No reviews yet for this package.</p>
                 )}
               </div>
             </div>
@@ -154,7 +164,6 @@ const PackageDetailsPage = ({ packageData }) => {
         </div>
         <div className="relative container mx-auto px-4">
           <div className="flex flex-col items-center text-center gap-8 md:flex-row md:justify-between md:text-left">
-            {/* Text Content */}
             <div className="text-white">
               <h2 className="text-3xl md:text-4xl font-bold mb-3">
                 Book Your Home Collection
@@ -163,16 +172,15 @@ const PackageDetailsPage = ({ packageData }) => {
                 Get exclusive packages on your first healthcare test.
               </p>
             </div>
-            {/* Button */}
             <div className="flex-shrink-0">
-              <Link
+              <a
                 href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20home%20visit."
-                passHref
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
-                <a className="inline-block bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
-                  Book a Home Visit
-                </a>
-              </Link>
+                Book a Home Visit
+              </a>
             </div>
           </div>
         </div>
@@ -184,20 +192,33 @@ const PackageDetailsPage = ({ packageData }) => {
 export async function getServerSideProps(context) {
   const { slug } = context.params;
 
-  // Same base URL logic as index.js
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || `https://${context.req.headers.host}`;
+  // Re-use the reliable base URL logic
+  const protocol = context.req.headers['x-forwarded-proto'] || 'http';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${context.req.headers.host}`;
   const endpoint = `${baseUrl}/api/package-api/${slug}`;
 
   try {
     const response = await fetch(endpoint);
+    // It's good practice to also check for server errors (5xx)
     if (!response.ok) {
+      console.error(`Failed to fetch package ${slug}. Status: ${response.status}`);
       return { notFound: true };
     }
     const packageData = await response.json();
-    return { props: { packageData } };
+    
+    // This handles cases where the API returns a valid but empty response
+    if (!packageData || Object.keys(packageData).length === 0) {
+      return { notFound: true };
+    }
+
+    return { 
+      props: { 
+        // Ensure data is serializable (handles Date objects, etc.)
+        packageData: JSON.parse(JSON.stringify(packageData))
+      } 
+    };
   } catch (error) {
-    console.error("Error fetching package:", error);
+    console.error(`Error fetching package data for slug "${slug}":`, error);
     return { notFound: true };
   }
 }

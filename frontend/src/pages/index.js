@@ -49,37 +49,41 @@ const Homepage = ({ packages }) => {
       </a>
 
       {/* Hero Section */}
-      <section className="relative h-[90vh] md:min-h-screen bg-gray-900 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('/images/HomePhoto.jpg')` }}
-        >
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        <div className="relative container mx-auto px-4 h-full flex items-center">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white space-y-6">
-              <div className="space-y-4">
-                <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                  Your Health, 
-                  <span className="text-[#7ac144]"> Our Priority</span>
-                </h1>
-                <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed">
-                  ViLife Diagnostics provides accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. Whatsapp us for home collection.
-                </p>
-              </div>
-              <a
-                href="https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20a%20test."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-[#7ac144] hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
-              >
-                Book a Test Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+<section className="relative h-[90vh] md:min-h-screen bg-gray-900 overflow-hidden flex items-center">
+  {/* The Image component is now the background and is prioritized */}
+  <Image
+    src="/images/HomePhoto.jpg"
+    alt="ViLife Diagnostics lab with a microscope"
+    layout="fill"
+    objectFit="cover"
+    className="z-0"
+    priority // This tells Next.js to load this image first
+  />
+  <div className="absolute inset-0 bg-black/50 z-10"></div> {/* This is the dark overlay */}
+  
+  {/* All text and button content is now relative to the section */}
+  <div className="relative container mx-auto px-4 z-20">
+    <div className="max-w-2xl text-white space-y-6">
+      <div className="space-y-4">
+        <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
+          Your Health, 
+          <span className="text-[#7ac144]"> Our Priority</span>
+        </h1>
+        <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed">
+          ViLife Diagnostics provides accurate, reliable, and timely pathology testing services to help you make confident, informed decisions about your health. Whatsapp us for home collection.
+        </p>
+      </div>
+      <a
+        href="https://wa.me/918828826646?text=Hello%20ViLife%2DDiagnostics.%20I%20would%20like%20to%20book%20a%20test."
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block bg-[#7ac144] hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105"
+      >
+        Book a Test Now
+      </a>
+    </div>
+  </div>
+</section>
 
       {/* Why Choose Vi-Life Section */}
 <section className="py-16 bg-gray-50">

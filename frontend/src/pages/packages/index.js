@@ -2,7 +2,6 @@ import { useState } from "react";
 import Head from 'next/head';
 import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import Image from 'next/image';
 import { fetchPackages } from '@/services/packages'; // <-- new service import
 
 export default function PackagesPage({ initialPackages }) {
@@ -35,8 +34,13 @@ export default function PackagesPage({ initialPackages }) {
   };
 
   const removeFilter = (tagToRemove) => {
-    if (tagToRemove === filters.gender) setFilters({ ...filters, gender: '' });
-    if (tagToRemove === filters.category) setFilters({ ...filters, category: '' });
+    // Correct way to update state based on previous state
+    setFilters(currentFilters => {
+      const newFilters = { ...currentFilters };
+      if (tagToRemove === newFilters.gender) newFilters.gender = '';
+      if (tagToRemove === newFilters.category) newFilters.category = '';
+      return newFilters;
+    });
   };
 
   return (
@@ -132,28 +136,28 @@ export default function PackagesPage({ initialPackages }) {
           {/* Grid */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredPackages.map((pkg) => (
-              <Link key={pkg.id} href={`/packages/${pkg.slug}`} passHref>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+              <div key={pkg.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col h-full">
+                <Link href={`/packages/${pkg.slug}`} className="flex flex-col flex-grow">
                   <h3 className="text-lg font-semibold mb-2 text-[#1e535e] flex-grow">{pkg.name}</h3>
                   <p className="text-gray-600 mb-2">
                     <span className="text-xl font-bold">₹{pkg.price}</span>{" "}
-                    <span className="line-through text-sm">₹{pkg.original_price}</span>
+                    {pkg.original_price && <span className="line-through text-sm">₹{pkg.original_price}</span>}
                   </p>
                   <p className="text-gray-500 text-sm mb-4">{pkg.parameter_count} Parameters</p>
-                  <button
-                    className="w-full mt-auto bg-[#7ac144] text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open(
-                        `https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20the%20'${pkg.name}'%20package.`,
-                        "_blank"
-                      );
-                    }}
-                  >
-                    Book Now
-                  </button>
-                </div>
-              </Link>
+                </Link>
+                <button
+                  className="w-full mt-auto bg-[#7ac144] text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent link navigation
+                    window.open(
+                      `https://wa.me/918828826646?text=Hello%20ViLife%20Diagnostics.%20I%20would%20like%20to%20book%20the%20'${pkg.name}'%20package.`,
+                      "_blank"
+                    );
+                  }}
+                >
+                  Book Now
+                </button>
+              </div>
             ))}
           </div>
         </div>
@@ -164,7 +168,7 @@ export default function PackagesPage({ initialPackages }) {
 
 // Server-side fetching from services
 export async function getServerSideProps({ req }) {
-  const protocol = req.headers["x-forwarded-proto"] || "http"; // works on Vercel too
+  const protocol = req.headers["x-forwarded-proto"] || "http";
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${req.headers.host}`;
   const initialPackages = await fetchPackages(baseUrl);
 
