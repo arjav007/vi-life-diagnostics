@@ -21,7 +21,7 @@ const PackageDetailsPage = ({ packageData }) => {
   }
 
   // Safely access nested data
-  const testParameters = Array.isArray(packageData.included_tests)
+  const testParameters = packageData.included_tests
     ? Object.values(packageData.included_tests)
     : [];
   const reviews = Array.isArray(packageData.reviews) ? packageData.reviews : [];
